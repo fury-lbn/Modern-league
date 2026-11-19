@@ -531,33 +531,23 @@ tailwind.config = {
 
       <!-- ==================== VIEW: ADMIN PORTAL ==================== -->
       <section id="view-admin" class="app-view hidden space-y-6">
-        <!-- Admin Login Gate -->
+        <!-- Admin Login Gate (Access Code Only) -->
         <div id="adminAuthGate" class="max-w-md mx-auto liquid-glass rounded-[32px] p-7 sm:p-8 space-y-5 mt-4">
           <div class="text-center space-y-2">
             <span class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-amber-400/15 border border-amber-400/35 text-2xl">🔐</span>
             <h2 data-i18n="admin_login_title" class="font-display font-black text-2xl text-white">بوابة الإدارة</h2>
-            <p data-i18n="admin_login_sub" class="text-xs sm:text-sm text-slate-400">سجّل الدخول بمعرّف المشرف وكلمة المرور للوصول إلى لوحة التحكم.</p>
+            <p data-i18n="admin_login_sub" class="text-xs sm:text-sm text-slate-400">أدخل كود الدخول الإداري الخاص بك للوصول إلى لوحة التحكم.</p>
           </div>
 
-          <form id="adminLoginForm" class="space-y-3.5">
+          <form id="adminLoginForm" class="space-y-4">
             <div>
-              <label for="adminLoginEmail" data-i18n="admin_email_label" class="block text-xs text-slate-400 mb-1">معرّف الدخول / البريد الإلكتروني</label>
-              <input id="adminLoginEmail" type="email" required placeholder="admin@school.edu" dir="ltr" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white text-left focus:outline-none focus:border-emerald-400">
+              <label for="adminLoginCode" data-i18n="admin_code_label" class="block text-xs text-slate-400 mb-1.5">كود الدخول الإداري</label>
+              <input id="adminLoginCode" type="password" required placeholder="MSS-SUP-2026" dir="ltr" autocomplete="off" class="w-full bg-obsidian/80 border border-white/15 rounded-2xl px-4 py-3 text-center tracking-widest font-mono text-base text-amber-300 uppercase focus:outline-none focus:border-emerald-400">
             </div>
-            <div>
-              <label for="adminLoginPassword" data-i18n="admin_pass_label" class="block text-xs text-slate-400 mb-1">كلمة المرور</label>
-              <input id="adminLoginPassword" type="password" required placeholder="••••••••" dir="ltr" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white text-left focus:outline-none focus:border-emerald-400">
-            </div>
-            <button id="adminLoginSubmitBtn" type="submit" data-i18n="admin_login_btn" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm transition">
-              تسجيل الدخول
+            <button id="adminLoginSubmitBtn" type="submit" data-i18n="admin_login_btn" class="w-full py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm transition">
+              دخول بالكود
             </button>
           </form>
-
-          <div class="pt-3 border-t border-white/10">
-            <button id="quickSuperAdminBtn" type="button" data-i18n="admin_quick_access" class="liquid-pill w-full py-2.5 rounded-2xl text-amber-300 font-display font-bold text-xs">
-              دخول سريع بحساب المشرف العام [SUP-01]
-            </button>
-          </div>
         </div>
 
         <!-- Unlocked Admin Workspace -->
@@ -663,7 +653,10 @@ tailwind.config = {
                 <form id="createAdminForm" class="space-y-3">
                   <input id="newAdminName" type="text" placeholder="اسم المشرف" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
                   <div class="grid grid-cols-2 gap-3">
-                    <input id="newAdminEmail" type="email" placeholder="ref@school.edu" dir="ltr" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white text-left">
+                    <div class="flex gap-1.5">
+                      <input id="newAdminCode" type="text" placeholder="كود الدخول" dir="ltr" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-emerald-300 font-mono uppercase text-left">
+                      <button id="genAdminCodeBtn" type="button" title="توليد كود عشوائي" class="shrink-0 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs text-white font-bold">↻</button>
+                    </div>
                     <input id="newAdminTag" type="text" placeholder="التاغ (مثلاً REF-02)" dir="ltr" maxlength="10" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-amber-300 font-bold uppercase text-left">
                   </div>
                   <select id="newAdminRole" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
@@ -887,11 +880,9 @@ const I18N = {
     suggestions_title: 'صندوق الاقتراحات',
     btn_send_suggestion: 'إرسال الاقتراح',
     admin_login_title: 'بوابة الإدارة',
-    admin_login_sub: 'سجّل الدخول بمعرّف المشرف وكلمة المرور للوصول إلى لوحة التحكم.',
-    admin_email_label: 'معرّف الدخول / البريد الإلكتروني',
-    admin_pass_label: 'كلمة المرور',
-    admin_login_btn: 'تسجيل الدخول',
-    admin_quick_access: 'دخول بحساب المشرف العام [SUP-01]',
+    admin_login_sub: 'أدخل كود الدخول الإداري الخاص بك للوصول إلى لوحة التحكم.',
+    admin_code_label: 'كود الدخول الإداري',
+    admin_login_btn: 'دخول بالكود',
     admin_panel_title: 'لوحة التحكم',
     atab_matches: 'المباريات والمباشر',
     atab_teams: 'الفرق واللاعبون',
@@ -989,11 +980,9 @@ const I18N = {
     suggestions_title: 'Suggestions Box',
     btn_send_suggestion: 'Submit Suggestion',
     admin_login_title: 'Admin Portal',
-    admin_login_sub: 'Sign in with your administrator credentials to manage the league.',
-    admin_email_label: 'Admin Login ID / Email',
-    admin_pass_label: 'Password',
-    admin_login_btn: 'Sign In',
-    admin_quick_access: 'Sign In as Super Admin [SUP-01]',
+    admin_login_sub: 'Enter your administrator access code to unlock the control center.',
+    admin_code_label: 'Admin Access Code',
+    admin_login_btn: 'Unlock with Code',
     admin_panel_title: 'Control Center',
     atab_matches: 'Matches & Live',
     atab_teams: 'Teams & Players',
@@ -1145,9 +1134,9 @@ function getInitialState() {
       { id: 's1', sender: 'خالد 10-ب', category: 'idea', message: 'يا ريت إضافة جائزة لأفضل هدف في الجولة بالتصويت.', created_at: new Date(now - 86400000).toISOString() }
     ],
     admins: [
-      { id: 'adm1', email: 'super@school.edu', name: 'المشرف العام', tag: 'SUP-01', role: 'super_admin', active: true, permissions: { matches: true, teams: true, season: true, admins: true } },
-      { id: 'adm2', email: 'referee@school.edu', name: 'حكم الملعب', tag: 'REF-02', role: 'referee', active: true, permissions: { matches: true, teams: false, season: false, admins: false } },
-      { id: 'adm3', email: 'media@school.edu', name: 'منسق الإعلام', tag: 'MED-03', role: 'media', active: true, permissions: { matches: false, teams: true, season: true, admins: false } }
+      { id: 'adm1', code: 'MSS-SUP-2026', name: 'المشرف العام', tag: 'SUP-01', role: 'super_admin', active: true, permissions: { matches: true, teams: true, season: true, admins: true } },
+      { id: 'adm2', code: 'MSS-REF-102', name: 'حكم الملعب', tag: 'REF-02', role: 'referee', active: true, permissions: { matches: true, teams: false, season: false, admins: false } },
+      { id: 'adm3', code: 'MSS-MED-103', name: 'منسق الإعلام', tag: 'MED-03', role: 'media', active: true, permissions: { matches: false, teams: true, season: true, admins: false } }
     ],
     auditLogs: [
       { id: 'log1', tag: 'SUP-01', adminName: 'المشرف العام', action: 'إنشاء الموسم', details: 'تفعيل جدول الجولة الأولى والثانية', created_at: new Date(now - 7200000).toISOString() },
@@ -2056,7 +2045,7 @@ function updateAdminGateUI() {
   document.getElementById('adminWorkspace').classList.toggle('hidden', !unlocked);
   const adm = getActiveAdmin();
   document.getElementById('activeAdminTagBadge').textContent = adm.tag;
-  document.getElementById('adminUserEmailBar').textContent = `${adm.name} (${adm.email})`;
+  document.getElementById('adminUserEmailBar').textContent = `${adm.name} · ${currentLang === 'en' ? 'Access Code Verified' : 'تم التحقق بالكود الإداري'}`;
 }
 
 function renderAdminView() {
@@ -2134,7 +2123,7 @@ function renderAdminView() {
             <strong class="text-white text-sm">${a.name}</strong>
             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${a.active ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${a.active ? (currentLang === 'en' ? 'Active' : 'مفعّل') : (currentLang === 'en' ? 'Disabled' : 'موقوف')}</span>
           </div>
-          <p class="text-slate-400" dir="ltr">${a.email} — ${perms}</p>
+          <p class="text-slate-400 font-mono" dir="ltr">${a.code || "••••"} — ${perms}</p>
         </div>
         <div class="flex items-center gap-2">
           <button type="button" data-toggle-admin="${a.id}" class="px-3 py-1.5 rounded-xl font-bold ${a.active ? 'bg-amber-500/15 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}">${a.active ? (currentLang === 'en' ? 'Disable' : 'إلغاء التفعيل') : (currentLang === 'en' ? 'Activate' : 'تفعيل')}</button>
@@ -2172,21 +2161,53 @@ function renderAdminView() {
 // =========================================================================
 // 9. Supabase Cloud Sync (Optional, Silent Until Configured)
 // =========================================================================
-function isCloudWriteActive() { return Boolean(supabaseClient && adminSession && adminSession.user); }
+function isCloudWriteActive() { return Boolean(supabaseClient && adminUnlocked); }
+
+async function syncFromSupabase() {
+  if (!supabaseClient) return;
+  try {
+    const [sRes, tRes, pRes, mRes, eRes, aRes, lRes] = await Promise.all([
+      supabaseClient.from('seasons').select('*').order('created_at', { ascending: false }).limit(1),
+      supabaseClient.from('teams').select('*').order('created_at', { ascending: true }),
+      supabaseClient.from('players').select('*').order('jersey_no', { ascending: true }),
+      supabaseClient.from('matches').select('*').order('kickoff_at', { ascending: true }),
+      supabaseClient.from('match_events').select('*').order('minute', { ascending: true }),
+      supabaseClient.from('admin_profiles').select('*').order('created_at', { ascending: true }),
+      supabaseClient.from('admin_audit_logs').select('*').order('created_at', { ascending: false }).limit(50)
+    ]);
+    if (sRes.data && sRes.data[0]) {
+      const s = sRes.data[0];
+      state.season = { id: s.id, name: s.name, format: s.format || 'flexible', announcement: s.announcement || '', discord_url: s.discord_url || '', contact_email: s.contact_email || 'league.students@mss.edu' };
+    }
+    if (tRes.data && tRes.data.length) state.teams = tRes.data;
+    if (pRes.data && pRes.data.length) state.players = pRes.data;
+    if (mRes.data && mRes.data.length) state.matches = mRes.data;
+    if (eRes.data) state.events = eRes.data;
+    if (aRes.data && aRes.data.length) {
+      state.admins = aRes.data.map(a => ({ id: a.id, code: a.login_code, name: a.display_name, tag: a.admin_tag, role: a.role, active: a.is_active, permissions: a.permissions || {} }));
+    }
+    if (lRes.data && lRes.data.length) {
+      state.auditLogs = lRes.data.map(l => ({ id: l.id, tag: l.admin_tag, adminName: l.admin_name, action: l.action_type, details: l.details, created_at: l.created_at }));
+    }
+    renderAll();
+  } catch (e) {}
+}
 
 async function tryConnectSupabase(url, key) {
   if (!url || !key || typeof window.supabase === 'undefined') return;
   try {
     supabaseClient = window.supabase.createClient(url, key);
-    const { data } = await supabaseClient.auth.getSession();
-    adminSession = data ? data.session : null;
-    supabaseClient.auth.onAuthStateChange((_e, sess) => { adminSession = sess; updateAdminGateUI(); });
+    await syncFromSupabase();
     if (realtimeChannel) { try { supabaseClient.removeChannel(realtimeChannel); } catch (e) {} }
-    realtimeChannel = supabaseClient.channel('league-live').on('postgres_changes', { event: '*', schema: 'public', table: 'matches' }, () => renderAll()).subscribe();
-    showToast(currentLang === 'en' ? 'Cloud database connected.' : 'تم الربط بقاعدة البيانات بنجاح.');
+    realtimeChannel = supabaseClient
+      .channel('league-live')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'matches' }, () => syncFromSupabase())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'teams' }, () => syncFromSupabase())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'players' }, () => syncFromSupabase())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'match_events' }, () => syncFromSupabase())
+      .subscribe();
   } catch (e) {
     supabaseClient = null;
-    showToast(currentLang === 'en' ? 'Connection failed.' : 'تعذر الاتصال بقاعدة البيانات.', 'error');
   }
 }
 
@@ -2367,43 +2388,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const em = document.getElementById('eventModal'); em.classList.add('hidden'); em.classList.remove('flex');
   });
 
-  // Admin Auth Gate
+  // Admin Auth Gate (Access Code Verification via Supabase RPC + Local Fallback)
   document.getElementById('adminLoginForm').addEventListener('submit', async e => {
     e.preventDefault();
-    const email = document.getElementById('adminLoginEmail').value.trim().toLowerCase();
-    const password = document.getElementById('adminLoginPassword').value;
+    const code = document.getElementById('adminLoginCode').value.trim().toUpperCase();
+    if (!code) return;
+
     if (supabaseClient) {
       try {
-        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        adminSession = data.session;
-        adminUnlocked = true;
-        updateAdminGateUI();
-        showToast(currentLang === 'en' ? 'Signed in successfully.' : 'تم تسجيل الدخول بنجاح.');
-        return;
-      } catch (err) {
-        showToast(err.message || 'Auth error', 'error');
-        return;
-      }
+        const { data, error } = await supabaseClient.rpc('verify_admin_code', { p_code: code });
+        if (!error && data && data.length) {
+          const row = data[0];
+          if (!row.is_active) {
+            showToast(currentLang === 'en' ? 'This access code is disabled.' : 'هذا الكود الإداري موقوف حاليًا.', 'error');
+            return;
+          }
+          const existing = state.admins.find(a => a.tag === row.admin_tag);
+          if (existing) activeAdminId = existing.id;
+          else {
+            state.admins.push({ id: row.id, code, name: row.display_name, tag: row.admin_tag, role: row.role, active: true, permissions: row.permissions || {} });
+            activeAdminId = row.id;
+          }
+          adminUnlocked = true;
+          document.getElementById('adminLoginCode').value = '';
+          updateAdminGateUI();
+          renderAdminView();
+          showToast(currentLang === 'en' ? `Welcome [${row.admin_tag}]!` : `أهلًا بك [${row.admin_tag}]!`);
+          return;
+        }
+      } catch (err) {}
     }
-    const found = state.admins.find(a => a.email.toLowerCase() === email);
-    if (found && !found.active) {
-      showToast(currentLang === 'en' ? 'This admin ID is disabled.' : 'هذا المعرّف الإداري موقوف حاليًا.', 'error');
+
+    const found = state.admins.find(a => (a.code || '').toUpperCase() === code);
+    if (!found) {
+      showToast(currentLang === 'en' ? 'Invalid access code.' : 'كود الدخول غير صحيح.', 'error');
       return;
     }
-    if (found) activeAdminId = found.id;
+    if (!found.active) {
+      showToast(currentLang === 'en' ? 'This access code is disabled.' : 'هذا الكود الإداري موقوف حاليًا.', 'error');
+      return;
+    }
+    activeAdminId = found.id;
     adminUnlocked = true;
+    document.getElementById('adminLoginCode').value = '';
     updateAdminGateUI();
     renderAdminView();
-    showToast(currentLang === 'en' ? 'Signed in to Admin Portal.' : 'مرحبًا بك في لوحة التحكم.');
+    showToast(currentLang === 'en' ? `Welcome [${found.tag}]!` : `أهلًا بك [${found.tag}]!`);
   });
 
-  document.getElementById('quickSuperAdminBtn').addEventListener('click', () => {
-    const sup = state.admins.find(a => a.role === 'super_admin' && a.active) || state.admins[0];
-    if (sup) activeAdminId = sup.id;
-    adminUnlocked = true;
-    updateAdminGateUI();
-    renderAdminView();
+  document.getElementById('genAdminCodeBtn').addEventListener('click', () => {
+    const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
+    document.getElementById('newAdminCode').value = `MSS-${rand}`;
   });
 
   document.getElementById('adminLogoutBtn').addEventListener('click', async () => {
@@ -2624,24 +2659,29 @@ document.addEventListener('DOMContentLoaded', () => {
     e.target.reset(); saveState(); renderAll(); showToast(currentLang === 'en' ? 'Player added!' : 'تمت إضافة اللاعب!');
   });
 
-  document.getElementById('createAdminForm').addEventListener('submit', e => {
+  document.getElementById('createAdminForm').addEventListener('submit', async e => {
     e.preventDefault();
     const name = document.getElementById('newAdminName').value.trim();
-    const email = document.getElementById('newAdminEmail').value.trim().toLowerCase();
+    const code = document.getElementById('newAdminCode').value.trim().toUpperCase();
     const tag = document.getElementById('newAdminTag').value.trim().toUpperCase();
     const role = document.getElementById('newAdminRole').value;
-    state.admins.push({
-      id: uid('adm'), name, email, tag, role, active: true,
-      permissions: {
-        matches: document.getElementById('permMatches').checked,
-        teams: document.getElementById('permTeams').checked,
-        season: document.getElementById('permSeason').checked,
-        admins: document.getElementById('permAdmins').checked
-      }
-    });
-    logAdminAction('إنشاء معرّف مشرف', `${name} [${tag}]`);
+    const permissions = {
+      matches: document.getElementById('permMatches').checked,
+      teams: document.getElementById('permTeams').checked,
+      season: document.getElementById('permSeason').checked,
+      admins: document.getElementById('permAdmins').checked
+    };
+    if (isCloudWriteActive()) {
+      try {
+        await supabaseClient.from('admin_profiles').insert({
+          display_name: name, login_code: code, admin_tag: tag, role, permissions, is_active: true
+        });
+      } catch (err) {}
+    }
+    state.admins.push({ id: uid('adm'), name, code, tag, role, active: true, permissions });
+    logAdminAction('إنشاء كود مشرف', `${name} [${tag}]`);
     e.target.reset(); saveState(); renderAdminView();
-    showToast(currentLang === 'en' ? `Admin [${tag}] created!` : `تم إنشاء وتفعيل المشرف [${tag}]!`);
+    showToast(currentLang === 'en' ? `Admin [${tag}] code created!` : `تم إنشاء كود المشرف [${tag}] بنجاح!`);
   });
 
   document.getElementById('seasonSettingsForm').addEventListener('submit', e => {
