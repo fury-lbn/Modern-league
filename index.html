@@ -8,9 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
 <script src="./config.js"></script>
 <script>
 tailwind.config = {
@@ -88,11 +87,9 @@ tailwind.config = {
   }
 
   .liquid-glass-subtle {
-    background: linear-gradient(150deg, rgba(255, 255, 255, 0.055), rgba(14, 21, 32, 0.54));
-    backdrop-filter: blur(18px) saturate(150%);
-    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.06), rgba(14, 21, 32, 0.72));
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
   }
 
   .liquid-pill {
@@ -202,7 +199,7 @@ tailwind.config = {
 </div>
 
 <!-- Toast Container -->
-<div id="toastContainer" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2 max-w-sm"></div>
+<div id="toastContainer" aria-live="polite" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2 max-w-sm"></div>
 
 <!-- Mobile Sidebar Backdrop -->
 <div id="sidebarBackdrop" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm hidden lg:hidden"></div>
@@ -224,7 +221,7 @@ tailwind.config = {
             <span data-i18n="brand_sub" class="block text-[11px] text-slate-400">المنصة الكروية</span>
           </span>
         </button>
-        <button id="closeSidebarBtn" type="button" class="lg:hidden w-8 h-8 rounded-xl bg-white/10 text-slate-200 flex items-center justify-center text-sm">✕</button>
+        <button id="closeSidebarBtn" type="button" aria-label="Close menu" class="lg:hidden w-8 h-8 rounded-xl bg-white/10 text-slate-200 flex items-center justify-center text-sm">✕</button>
       </div>
 
       <!-- Vertical Navigation Items -->
@@ -364,7 +361,7 @@ tailwind.config = {
 
             <!-- Subtle Balanced Three.js 3D Football -->
             <div class="lg:col-span-5 relative h-64 sm:h-76 lg:h-[380px] flex items-center justify-center">
-              <div id="threeHeroContainer" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+              <div id="threeHeroContainer" class="w-[min(86vw,360px)] aspect-square mx-auto cursor-grab active:cursor-grabbing select-none" style="touch-action:pan-y;"></div>
             </div>
           </div>
         </div>
@@ -424,7 +421,7 @@ tailwind.config = {
         <div class="flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 data-i18n="matches_title" class="font-display font-black text-2xl sm:text-3xl text-white">المباريات والجدول</h2>
-            <p data-i18n="matches_sub" class="text-sm text-slate-400 mt-1">اضغط على أي مباراة لفتح التعليقات، التصويت، ومشاركة بطاقة ستوري إنستغرام.</p>
+            <p data-i18n="matches_sub" class="text-sm text-slate-400 mt-1">اضغط على أي مباراة لفتح التعليقات، التصويت، ومشاركة بطاقة سناب.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <select id="matchStatusFilter" class="liquid-glass-subtle rounded-xl px-3 py-2 text-xs sm:text-sm text-white"></select>
@@ -488,7 +485,7 @@ tailwind.config = {
           <div id="foundersDrawer" class="founders-reveal max-h-0 opacity-0">
             <div class="pt-3 border-t border-white/[0.08] flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-slate-400">
               <span data-i18n="founders_label" class="text-slate-500">المبادرون:</span>
-              <span class="text-slate-300 font-medium" dir="ltr">Bilal.M · Saad.T · Ali.D · Rayan.B · Sadi.S · Amir.S</span>
+              <span class="text-slate-300 font-medium" dir="ltr"><span class="text-emerald-300 font-extrabold px-1.5 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-400/30">Bilal.M ★</span> · Saad.T · Ali.D · Rayan.B · Sadi.S · Amir.S</span>
             </div>
           </div>
         </div>
@@ -517,10 +514,10 @@ tailwind.config = {
             <h3 data-i18n="suggestions_title" class="font-display font-extrabold text-lg text-white">صندوق الاقتراحات</h3>
             <form id="suggestionForm" class="space-y-3">
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <input id="sugName" type="text" class="w-full bg-obsidian/70 border border-white/12 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-400">
+                <input id="sugName" type="text" maxlength="60" class="w-full bg-obsidian/70 border border-white/12 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-400">
                 <select id="sugCategory" class="w-full bg-obsidian/70 border border-white/12 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-400"></select>
               </div>
-              <textarea id="sugMessage" rows="4" required class="w-full bg-obsidian/70 border border-white/12 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-400"></textarea>
+              <textarea id="sugMessage" rows="4" maxlength="600" required class="w-full bg-obsidian/70 border border-white/12 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-400"></textarea>
               <button type="submit" data-i18n="btn_send_suggestion" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm transition">
                 إرسال الاقتراح
               </button>
@@ -531,21 +528,25 @@ tailwind.config = {
 
       <!-- ==================== VIEW: ADMIN PORTAL ==================== -->
       <section id="view-admin" class="app-view hidden space-y-6">
-        <!-- Admin Login Gate (Access Code Only) -->
+        <!-- Admin Login Gate (Server-Verified Supabase Auth) -->
         <div id="adminAuthGate" class="max-w-md mx-auto liquid-glass rounded-[32px] p-7 sm:p-8 space-y-5 mt-4">
           <div class="text-center space-y-2">
             <span class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-amber-400/15 border border-amber-400/35 text-2xl">🔐</span>
             <h2 data-i18n="admin_login_title" class="font-display font-black text-2xl text-white">بوابة الإدارة</h2>
-            <p data-i18n="admin_login_sub" class="text-xs sm:text-sm text-slate-400">أدخل كود الدخول الإداري الخاص بك للوصول إلى لوحة التحكم.</p>
+            <p data-i18n="admin_login_sub" class="text-xs sm:text-sm text-slate-400">سجّل الدخول بحساب المشرف الموثّق في Supabase Auth.</p>
           </div>
 
-          <form id="adminLoginForm" class="space-y-4">
+          <form id="adminLoginForm" class="space-y-3.5">
             <div>
-              <label for="adminLoginCode" data-i18n="admin_code_label" class="block text-xs text-slate-400 mb-1.5">كود الدخول الإداري</label>
-              <input id="adminLoginCode" type="password" required placeholder="MSS-SUP-2026" dir="ltr" autocomplete="off" class="w-full bg-obsidian/80 border border-white/15 rounded-2xl px-4 py-3 text-center tracking-widest font-mono text-base text-amber-300 uppercase focus:outline-none focus:border-emerald-400">
+              <label for="adminLoginEmail" data-i18n="admin_email_label" class="block text-xs text-slate-400 mb-1">البريد الإلكتروني للمشرف</label>
+              <input id="adminLoginEmail" type="email" required placeholder="admin@mss.edu" dir="ltr" autocomplete="username" class="w-full bg-obsidian/80 border border-white/15 rounded-2xl px-4 py-2.5 text-sm text-white text-left focus:outline-none focus:border-emerald-400">
+            </div>
+            <div>
+              <label for="adminLoginPassword" data-i18n="admin_pass_label" class="block text-xs text-slate-400 mb-1">كلمة المرور</label>
+              <input id="adminLoginPassword" type="password" required placeholder="••••••••" dir="ltr" autocomplete="current-password" class="w-full bg-obsidian/80 border border-white/15 rounded-2xl px-4 py-2.5 text-sm text-white text-left focus:outline-none focus:border-emerald-400">
             </div>
             <button id="adminLoginSubmitBtn" type="submit" data-i18n="admin_login_btn" class="w-full py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm transition">
-              دخول بالكود
+              تسجيل الدخول الآمن
             </button>
           </form>
         </div>
@@ -563,8 +564,9 @@ tailwind.config = {
             <div class="flex flex-wrap items-center gap-2">
               <button type="button" data-admin-tab="live" data-i18n="atab_matches" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold">المباريات والمباشر</button>
               <button type="button" data-admin-tab="teams" data-i18n="atab_teams" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold">الفرق واللاعبون</button>
+              <button type="button" data-admin-tab="moderation" data-i18n="atab_mod" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold">محتوى الطلاب</button>
               <button type="button" data-admin-tab="governance" data-i18n="atab_gov" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold">المشرفون والسجل</button>
-              <button type="button" data-admin-tab="settings" data-i18n="atab_settings" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold">الإعدادات والاقتراحات</button>
+              <button type="button" data-admin-tab="settings" data-i18n="atab_settings" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold">الإعدادات</button>
               <button id="adminLogoutBtn" type="button" data-i18n="btn_logout" class="px-3 py-2 rounded-xl text-xs font-bold bg-rose-500/15 text-rose-300 border border-rose-400/25 hover:bg-rose-500/25 transition">خروج</button>
             </div>
           </div>
@@ -582,7 +584,7 @@ tailwind.config = {
                   <select id="newMatchAway" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white"></select>
                 </div>
                 <div>
-                  <input id="newMatchRound" type="text" value="الجولة 4" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                  <input id="newMatchRound" type="text" value="Round 4" dir="ltr" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
                 </div>
                 <input id="newMatchTime" type="datetime-local" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
                 <button type="submit" data-i18n="btn_save_match" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm">حفظ المباراة</button>
@@ -604,17 +606,17 @@ tailwind.config = {
                   <select id="newTeamPreset" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white"></select>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
-                  <input id="newTeamName" type="text" placeholder="اسم النادي (مثلاً: ريال مدريد)" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
-                  <input id="newTeamGrade" type="text" placeholder="الصف / الشعبة" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                  <input id="newTeamName" type="text" placeholder="Club Name in English (e.g. Real Madrid)" dir="ltr" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                  <input id="newTeamGrade" type="text" placeholder="Grade (e.g. 12-A)" dir="ltr" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
                 </div>
                 <div class="grid grid-cols-3 gap-3">
-                  <input id="newTeamGroup" type="text" value="المجموعة أ" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                  <input id="newTeamGroup" type="text" value="Group A" dir="ltr" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
                   <input id="newTeamBadge" type="text" maxlength="3" value="RMA" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white uppercase">
                   <input id="newTeamColor" type="color" value="#F59E0B" class="w-full h-10 bg-obsidian/80 border border-white/15 rounded-xl p-1 cursor-pointer">
                 </div>
                 <div>
                   <label for="newTeamLogoFile" data-i18n="lbl_upload_png" class="block text-xs text-slate-400 mb-1">رفع شعار PNG مخصص (اختياري)</label>
-                  <input id="newTeamLogoFile" type="file" accept="image/png,image/webp,image/svg+xml" class="w-full text-xs text-slate-300 file:me-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:bg-white/10 file:text-white hover:file:bg-white/20">
+                  <input id="newTeamLogoFile" type="file" accept="image/png,image/jpeg,image/webp" class="w-full text-xs text-slate-300 file:me-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:bg-white/10 file:text-white hover:file:bg-white/20">
                 </div>
                 <button type="submit" data-i18n="btn_save_team" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm">حفظ الفريق</button>
               </form>
@@ -625,7 +627,7 @@ tailwind.config = {
               <h3 data-i18n="add_player_title" class="font-display font-extrabold text-base text-white">إضافة لاعب</h3>
               <form id="addPlayerForm" class="space-y-3">
                 <div class="grid grid-cols-2 gap-3">
-                  <input id="newPlayerName" type="text" placeholder="اسم اللاعب" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                  <input id="newPlayerName" type="text" placeholder="Player Name in English (e.g. Kareem Mansour)" dir="ltr" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
                   <select id="newPlayerTeam" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white"></select>
                 </div>
                 <div class="grid grid-cols-3 gap-3">
@@ -651,39 +653,32 @@ tailwind.config = {
               <div class="lg:col-span-5 liquid-glass rounded-[28px] p-5 space-y-4">
                 <h3 data-i18n="gov_create_title" class="font-display font-extrabold text-base text-amber-300">إنشاء معرّف مشرف جديد</h3>
                 <form id="createAdminForm" class="space-y-3">
-                  <input id="newAdminName" type="text" placeholder="اسم المشرف" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                  <input id="newAdminName" type="text" maxlength="60" placeholder="اسم المشرف" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                  <input id="newAdminAuthId" type="text" placeholder="Auth User UUID (من Supabase Users)" dir="ltr" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-emerald-300 font-mono text-left">
                   <div class="grid grid-cols-2 gap-3">
-                    <div class="flex gap-1.5">
-                      <input id="newAdminCode" type="text" placeholder="كود الدخول" dir="ltr" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-emerald-300 font-mono uppercase text-left">
-                      <button id="genAdminCodeBtn" type="button" title="توليد كود عشوائي" class="shrink-0 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs text-white font-bold">↻</button>
-                    </div>
-                    <input id="newAdminTag" type="text" placeholder="التاغ (مثلاً REF-02)" dir="ltr" maxlength="10" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-amber-300 font-bold uppercase text-left">
+                    <input id="newAdminEmail" type="email" placeholder="ref@mss.edu" dir="ltr" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white text-left">
+                    <input id="newAdminTag" type="text" placeholder="Tag (e.g. REF-02)" dir="ltr" maxlength="10" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-amber-300 font-bold uppercase text-left">
                   </div>
                   <select id="newAdminRole" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
-                    <option value="moderator">مشرف مباريات (Moderator)</option>
-                    <option value="referee">حكم مباشر (Referee)</option>
-                    <option value="media">إعلام وأخبار (Media)</option>
-                    <option value="super_admin">مشرف عام (Super Admin)</option>
+                    <option value="moderator">Moderator</option>
+                    <option value="referee">Referee</option>
+                    <option value="media">Media</option>
+                    <option value="super_admin">Super Admin</option>
                   </select>
                   <div class="grid grid-cols-2 gap-2 pt-1 text-xs text-slate-300">
                     <label class="flex items-center gap-2"><input id="permMatches" type="checkbox" checked class="accent-emerald-500"> <span data-i18n="perm_matches">إدارة المباريات</span></label>
                     <label class="flex items-center gap-2"><input id="permTeams" type="checkbox" class="accent-emerald-500"> <span data-i18n="perm_teams">إدارة الفرق</span></label>
+                    <label class="flex items-center gap-2"><input id="permModeration" type="checkbox" checked class="accent-sky-400"> <span data-i18n="perm_mod">محتوى الطلاب</span></label>
                     <label class="flex items-center gap-2"><input id="permSeason" type="checkbox" class="accent-emerald-500"> <span data-i18n="perm_season">الأخبار والإعدادات</span></label>
                     <label class="flex items-center gap-2"><input id="permAdmins" type="checkbox" class="accent-amber-400"> <span data-i18n="perm_admins">إدارة المشرفين</span></label>
                   </div>
-                  <button type="submit" data-i18n="btn_create_admin" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm">إنشاء المعرّف وتفعيله</button>
+                  <button type="submit" data-i18n="btn_create_admin" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm">ربط المشرف وتفعيله</button>
                 </form>
               </div>
 
               <!-- Manage Existing Admins -->
               <div class="lg:col-span-7 liquid-glass rounded-[28px] p-5 space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                  <h3 data-i18n="gov_list_title" class="font-display font-extrabold text-base text-white">المشرفون النشطون والصلاحيات</h3>
-                  <div class="flex items-center gap-2 text-xs">
-                    <span data-i18n="act_as_label" class="text-slate-400">التصرف بصلاحية:</span>
-                    <select id="activeAdminSwitcher" class="bg-obsidian/80 border border-white/15 rounded-lg px-2 py-1 text-xs text-amber-300 font-bold"></select>
-                  </div>
-                </div>
+                <h3 data-i18n="gov_list_title" class="font-display font-extrabold text-base text-white">المشرفون النشطون والصلاحيات</h3>
                 <div id="adminsListContainer" class="space-y-2.5 max-h-[340px] overflow-y-auto"></div>
               </div>
             </div>
@@ -698,6 +693,26 @@ tailwind.config = {
                 <select id="auditTagFilter" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-1.5 text-xs text-white"></select>
               </div>
               <div id="auditLogsContainer" class="space-y-2 max-h-72 overflow-y-auto"></div>
+            </div>
+          </div>
+
+          <!-- Admin Tab: Student Content Moderation (Comments, Clips/Photos, Suggestions) -->
+          <div id="admin-tab-moderation" class="admin-tab hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="liquid-glass rounded-[28px] p-5 space-y-4">
+                <div class="flex items-center justify-between">
+                  <h3 data-i18n="mod_comments_title" class="font-display font-extrabold text-base text-white">تعليقات الطلاب العلنية</h3>
+                  <span id="modCommentsCount" class="text-xs px-2.5 py-0.5 rounded-full bg-white/10 text-slate-300">0</span>
+                </div>
+                <div id="modCommentsList" class="space-y-2.5 max-h-80 overflow-y-auto"></div>
+              </div>
+              <div class="liquid-glass rounded-[28px] p-5 space-y-4">
+                <div class="flex items-center justify-between">
+                  <h3 data-i18n="mod_clips_title" class="font-display font-extrabold text-base text-sky-300">اللقطات والصور المرفوعة</h3>
+                  <span id="modClipsCount" class="text-xs px-2.5 py-0.5 rounded-full bg-white/10 text-slate-300">0</span>
+                </div>
+                <div id="modClipsList" class="space-y-2.5 max-h-80 overflow-y-auto"></div>
+              </div>
             </div>
           </div>
 
@@ -736,15 +751,7 @@ tailwind.config = {
               </div>
             </div>
 
-            <!-- Quiet Cloud Sync Config (Supabase) -->
-            <details class="liquid-glass rounded-[24px] p-5">
-              <summary data-i18n="cloud_sync_summary" class="cursor-pointer font-display font-bold text-sm text-slate-300 select-none">إعدادات قاعدة البيانات والمزامنة السحابية (Supabase)</summary>
-              <form id="supabaseConfigForm" class="grid grid-cols-1 sm:grid-cols-12 gap-3 mt-4">
-                <input id="sbUrlInput" type="url" placeholder="https://your-project.supabase.co" dir="ltr" class="sm:col-span-5 bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white text-left">
-                <input id="sbKeyInput" type="text" placeholder="Anon Public Key" dir="ltr" class="sm:col-span-5 bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white text-left">
-                <button type="submit" data-i18n="btn_connect_cloud" class="sm:col-span-2 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-xs">ربط</button>
-              </form>
-            </details>
+
           </div>
         </div>
       </section>
@@ -754,22 +761,22 @@ tailwind.config = {
 </div>
 
 <!-- ==================== MATCH DETAILS + COMMENTS + REACTIONS MODAL ==================== -->
-<div id="matchModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-md p-4">
+<div id="matchModal" role="dialog" aria-modal="true" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-md p-4">
   <div class="liquid-glass rounded-[32px] max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-5">
     <div class="flex items-center justify-between border-b border-white/10 pb-3">
       <h3 id="modalMatchTitle" class="font-display font-extrabold text-lg text-white"></h3>
-      <button id="closeMatchModal" type="button" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold">✕</button>
+      <button id="closeMatchModal" type="button" aria-label="Close" class="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold">✕</button>
     </div>
     <div id="modalMatchBody" class="space-y-5"></div>
   </div>
 </div>
 
 <!-- ==================== INSTAGRAM STORY STUDIO MODAL (9:16 CANVAS) ==================== -->
-<div id="storyModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4">
+<div id="storyModal" role="dialog" aria-modal="true" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4">
   <div class="liquid-glass rounded-[32px] max-w-md w-full max-h-[92vh] overflow-y-auto p-5 space-y-4">
     <div class="flex items-center justify-between">
-      <h3 data-i18n="story_studio_title" class="font-display font-extrabold text-base text-white">بطاقة ستوري إنستغرام</h3>
-      <button id="closeStoryModal" type="button" class="w-8 h-8 rounded-xl bg-white/10 text-white font-bold">✕</button>
+      <h3 data-i18n="story_studio_title" class="font-display font-extrabold text-base text-white">بطاقة سناب</h3>
+      <button id="closeStoryModal" type="button" aria-label="Close" class="w-8 h-8 rounded-xl bg-white/10 text-white font-bold">✕</button>
     </div>
     <div class="flex gap-2">
       <button type="button" data-story-theme="victory" data-i18n="story_theme_victory" class="story-theme-btn flex-1 py-2 rounded-xl text-xs font-bold bg-emerald-500 text-obsidian">ستايل الفوز</button>
@@ -779,14 +786,14 @@ tailwind.config = {
       <canvas id="storyCanvas" width="1080" height="1920" class="w-full max-w-[260px] rounded-2xl border border-white/15 shadow-2xl"></canvas>
     </div>
     <div class="grid grid-cols-2 gap-2.5">
-      <button id="downloadStoryBtn" type="button" data-i18n="btn_download_story" class="py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-xs">تحميل الستوري (PNG)</button>
+      <button id="downloadStoryBtn" type="button" data-i18n="btn_download_story" class="py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-xs">حفظ للسناب (PNG)</button>
       <button id="nativeShareStoryBtn" type="button" data-i18n="btn_share_story" class="liquid-pill py-2.5 rounded-2xl text-white font-display font-bold text-xs">مشاركة مباشرة</button>
     </div>
   </div>
 </div>
 
 <!-- ==================== DISCORD SERVER MODAL ==================== -->
-<div id="discordModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-md p-4">
+<div id="discordModal" role="dialog" aria-modal="true" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-md p-4">
   <div class="liquid-glass rounded-[32px] max-w-md w-full p-6 text-center space-y-4">
     <div class="w-14 h-14 mx-auto rounded-2xl bg-indigo-500/20 border border-indigo-400/35 flex items-center justify-center text-indigo-300">
       <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
@@ -803,11 +810,11 @@ tailwind.config = {
 </div>
 
 <!-- ==================== RECORD EVENT MODAL (ADMIN) ==================== -->
-<div id="eventModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-md p-4">
+<div id="eventModal" role="dialog" aria-modal="true" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-md p-4">
   <div class="liquid-glass rounded-[28px] max-w-md w-full p-6 space-y-4">
     <div class="flex items-center justify-between">
       <h3 id="eventModalTitle" class="font-display font-extrabold text-base text-amber-300"></h3>
-      <button id="closeEventModal" type="button" class="w-8 h-8 rounded-xl bg-white/10 text-white font-bold">✕</button>
+      <button id="closeEventModal" type="button" aria-label="Close" class="w-8 h-8 rounded-xl bg-white/10 text-white font-bold">✕</button>
     </div>
     <form id="recordEventForm" class="space-y-3">
       <input type="hidden" id="evMatchId">
@@ -831,8 +838,7 @@ const SUPABASE_CONFIG = {
   url: (window.APP_CONFIG && window.APP_CONFIG.supabaseUrl) || '',
   anonKey: (window.APP_CONFIG && window.APP_CONFIG.supabaseAnonKey) || ''
 };
-const STORAGE_KEY = 'school_league_v4_mss_state';
-const SB_CRED_KEY = 'school_league_v3_sb';
+const STORAGE_KEY = 'school_league_v8_overhaul';
 const LANG_KEY = 'school_league_v3_lang';
 
 const I18N = {
@@ -857,11 +863,11 @@ const I18N = {
     home_top3: 'صدارة الترتيب',
     view_full_table: 'الجدول الكامل',
     standings_title: 'جدول الترتيب',
-    standings_sub: 'يُحتسب تلقائيًا من نتائج المباريات (فوز 3 · تعادل 1 · خسارة 0).',
-    th_team: 'الفريق', th_played: 'لعب', th_won: 'فوز', th_drawn: 'تعادل', th_lost: 'خسارة',
-    th_gf: 'له', th_ga: 'عليه', th_gd: 'الفارق', th_pts: 'النقاط', th_form: 'آخر 5',
+    standings_sub: 'تُحتسب النقاط تلقائيًا فقط بعد إعلان نهاية المباراة (فوز 3 · تعادل 1 · خسارة 0).',
+    th_team: 'الفريق', th_played: 'P', th_won: 'W', th_drawn: 'D', th_lost: 'L',
+    th_gf: 'GF', th_ga: 'GA', th_gd: 'GD', th_pts: 'PTS', th_form: 'FORM',
     matches_title: 'المباريات والجدول',
-    matches_sub: 'اضغط على أي مباراة لفتح اللقطات، التعليقات، التصويت، ومشاركة بطاقة ستوري وسناب.',
+    matches_sub: 'اضغط على أي مباراة لفتح اللقطات، التعليقات، التصويت، ومشاركة بطاقة سناب.',
     teams_title: 'الفرق وبطاقات اللاعبين',
     teams_sub: 'استعرض التشكيلة وبطاقات اللاعبين بتأثير ثلاثي الأبعاد ناعم.',
     stats_title: 'الإحصائيات وقوائم الشرف',
@@ -880,14 +886,18 @@ const I18N = {
     suggestions_title: 'صندوق الاقتراحات',
     btn_send_suggestion: 'إرسال الاقتراح',
     admin_login_title: 'بوابة الإدارة',
-    admin_login_sub: 'أدخل كود الدخول الإداري الخاص بك للوصول إلى لوحة التحكم.',
-    admin_code_label: 'كود الدخول الإداري',
-    admin_login_btn: 'دخول بالكود',
+    admin_login_sub: 'سجّل الدخول بحساب المشرف الموثّق في Supabase Auth.',
+    admin_email_label: 'البريد الإلكتروني للمشرف',
+    admin_pass_label: 'كلمة المرور',
+    admin_login_btn: 'تسجيل الدخول الآمن',
+    perm_mod: 'محتوى الطلاب',
+    mod_comments_title: 'تعليقات الطلاب العلنية',
+    mod_clips_title: 'اللقطات والصور المرفوعة',
     admin_panel_title: 'لوحة التحكم',
     atab_matches: 'المباريات والمباشر',
     atab_teams: 'الفرق واللاعبون',
     atab_gov: 'المشرفون والسجل',
-    atab_settings: 'الإعدادات والاقتراحات',
+    atab_mod: 'محتوى الطلاب', atab_settings: 'الإعدادات',
     btn_logout: 'خروج',
     add_match_title: 'إضافة مباراة للجدول',
     btn_gen_round: 'توليد جولة',
@@ -916,10 +926,10 @@ const I18N = {
     inbox_suggestions_title: 'صندوق اقتراحات الطلاب',
     cloud_sync_summary: 'إعدادات قاعدة البيانات والمزامنة السحابية',
     btn_connect_cloud: 'ربط',
-    story_studio_title: 'بطاقة ستوري وسناب',
-    story_theme_victory: 'ستايل الفوز',
-    story_theme_liquid: 'زجاجي داكن',
-    btn_download_story: 'حفظ للستوري والسناب',
+    story_studio_title: 'بطاقة سناب',
+    story_theme_victory: 'Aura Glow',
+    story_theme_liquid: 'Midnight Chrome',
+    btn_download_story: 'حفظ للسناب (PNG)',
     btn_share_story: 'مشاركة مباشرة',
     discord_modal_title: 'سيرفر الديسكورد للطلاب',
     btn_join_discord: 'انضم إلى السيرفر',
@@ -948,7 +958,7 @@ const I18N = {
     nav_admin: 'Admin Portal',
     lang_label: 'Display Language',
     hero_title: 'Modern Systems School Football League',
-    hero_desc: 'Follow live scores, automated standings, player cards, match clips, and share matchday wins straight to Snapchat & Stories.',
+    hero_desc: 'Follow live scores, automated standings, player cards, match clips, and share matchday wins straight to Snap.',
     btn_view_matches: 'Match Schedule',
     btn_view_teams: 'Teams & Players',
     stat_teams: 'Teams',
@@ -957,11 +967,11 @@ const I18N = {
     home_top3: 'Top 3 Standings',
     view_full_table: 'Full Table',
     standings_title: 'League Standings',
-    standings_sub: 'Calculated automatically from match results (Win 3 · Draw 1 · Loss 0).',
+    standings_sub: 'Points are awarded strictly after Full Time is declared (Win 3 · Draw 1 · Loss 0).',
     th_team: 'Team', th_played: 'P', th_won: 'W', th_drawn: 'D', th_lost: 'L',
     th_gf: 'GF', th_ga: 'GA', th_gd: 'GD', th_pts: 'PTS', th_form: 'Form',
     matches_title: 'Matches & Schedule',
-    matches_sub: 'Select any match for clips, timeline, comments, reactions, and Story / Snap card.',
+    matches_sub: 'Select any match for clips, timeline, comments, reactions, and Snap card.',
     teams_title: 'Teams & Player Cards',
     teams_sub: 'Explore squad formations and smooth 3D player cards.',
     stats_title: 'Statistics & Leaderboards',
@@ -980,14 +990,18 @@ const I18N = {
     suggestions_title: 'Suggestions Box',
     btn_send_suggestion: 'Submit Suggestion',
     admin_login_title: 'Admin Portal',
-    admin_login_sub: 'Enter your administrator access code to unlock the control center.',
-    admin_code_label: 'Admin Access Code',
-    admin_login_btn: 'Unlock with Code',
+    admin_login_sub: 'Sign in with your verified Supabase Auth administrator account.',
+    admin_email_label: 'Admin Email',
+    admin_pass_label: 'Password',
+    admin_login_btn: 'Secure Sign In',
+    perm_mod: 'Moderation',
+    mod_comments_title: 'Public Student Comments',
+    mod_clips_title: 'Uploaded Clips & Photos',
     admin_panel_title: 'Control Center',
     atab_matches: 'Matches & Live',
     atab_teams: 'Teams & Players',
     atab_gov: 'Admins & Audit Logs',
-    atab_settings: 'Settings & Inbox',
+    atab_mod: 'Moderation', atab_settings: 'Settings',
     btn_logout: 'Sign Out',
     add_match_title: 'Schedule Match',
     btn_gen_round: 'Generate Round',
@@ -1016,10 +1030,10 @@ const I18N = {
     inbox_suggestions_title: 'Student Suggestions Inbox',
     cloud_sync_summary: 'Cloud Database & Sync Configuration',
     btn_connect_cloud: 'Connect',
-    story_studio_title: 'Story & Snap Card',
-    story_theme_victory: 'Victory Glow',
-    story_theme_liquid: 'Liquid Dark',
-    btn_download_story: 'Save for Story & Snap',
+    story_studio_title: 'Snap Card',
+    story_theme_victory: 'Aura Glow',
+    story_theme_liquid: 'Midnight Chrome',
+    btn_download_story: 'Save for Snap (PNG)',
     btn_share_story: 'Quick Share',
     discord_modal_title: 'Student Discord Server',
     btn_join_discord: 'Join Server',
@@ -1072,35 +1086,35 @@ function getInitialState() {
       contact_email: 'league.students@mss.edu'
     },
     teams: [
-      { id: 't1', name: 'ريال مدريد', grade: '12-أ', group_name: 'المجموعة أ', primary_color: '#F59E0B', badge_code: 'RMA', logo_preset: 'real_madrid', logo_url: '' },
-      { id: 't2', name: 'مانشستر سيتي', grade: '11-ب', group_name: 'المجموعة أ', primary_color: '#38BDF8', badge_code: 'MCI', logo_preset: 'man_city', logo_url: '' },
-      { id: 't3', name: 'أرسنال', grade: '10-أ', group_name: 'المجموعة أ', primary_color: '#EF4444', badge_code: 'ARS', logo_preset: 'arsenal', logo_url: '' },
-      { id: 't4', name: 'بايرن ميونخ', grade: '9-ج', group_name: 'المجموعة ب', primary_color: '#DC2626', badge_code: 'FCB', logo_preset: 'bayern', logo_url: '' }
+      { id: 't1', name: 'Real Madrid', grade: '12-A', group_name: 'Group A', primary_color: '#F59E0B', badge_code: 'RMA', logo_preset: 'real_madrid', logo_url: '' },
+      { id: 't2', name: 'Man City', grade: '11-B', group_name: 'Group A', primary_color: '#38BDF8', badge_code: 'MCI', logo_preset: 'man_city', logo_url: '' },
+      { id: 't3', name: 'Arsenal', grade: '10-A', group_name: 'Group A', primary_color: '#EF4444', badge_code: 'ARS', logo_preset: 'arsenal', logo_url: '' },
+      { id: 't4', name: 'Bayern Munich', grade: '9-C', group_name: 'Group B', primary_color: '#DC2626', badge_code: 'FCB', logo_preset: 'bayern', logo_url: '' }
     ],
     players: [
-      { id: 'p1', team_id: 't1', full_name: 'كريم المنصور', jersey_no: 10, position: 'FWD', rating: 91 },
-      { id: 'p2', team_id: 't1', full_name: 'عمر الخطيب', jersey_no: 8, position: 'MID', rating: 87 },
-      { id: 'p3', team_id: 't1', full_name: 'طارق العلي', jersey_no: 4, position: 'DEF', rating: 84 },
-      { id: 'p4', team_id: 't1', full_name: 'يوسف حامد', jersey_no: 1, position: 'GK', rating: 86 },
-      { id: 'p5', team_id: 't2', full_name: 'زيد السالم', jersey_no: 9, position: 'FWD', rating: 90 },
-      { id: 'p6', team_id: 't2', full_name: 'رامي ناصر', jersey_no: 7, position: 'MID', rating: 86 },
-      { id: 'p7', team_id: 't2', full_name: 'باسل خوري', jersey_no: 5, position: 'DEF', rating: 83 },
-      { id: 'p8', team_id: 't2', full_name: 'سيف الدين', jersey_no: 1, position: 'GK', rating: 85 },
-      { id: 'p9', team_id: 't3', full_name: 'آدم الشامي', jersey_no: 11, position: 'FWD', rating: 88 },
-      { id: 'p10', team_id: 't3', full_name: 'مازن حداد', jersey_no: 6, position: 'MID', rating: 84 },
-      { id: 'p11', team_id: 't3', full_name: 'ليث مراد', jersey_no: 3, position: 'DEF', rating: 81 },
-      { id: 'p12', team_id: 't3', full_name: 'نور رشيد', jersey_no: 1, position: 'GK', rating: 82 },
-      { id: 'p13', team_id: 't4', full_name: 'فارس جابر', jersey_no: 9, position: 'FWD', rating: 86 },
-      { id: 'p14', team_id: 't4', full_name: 'حمزة عواد', jersey_no: 14, position: 'MID', rating: 82 },
-      { id: 'p15', team_id: 't4', full_name: 'يزن بدر', jersey_no: 2, position: 'DEF', rating: 80 },
-      { id: 'p16', team_id: 't4', full_name: 'أنس فؤاد', jersey_no: 1, position: 'GK', rating: 83 }
+      { id: 'p1', team_id: 't1', full_name: 'Kareem Mansour', jersey_no: 10, position: 'FWD', rating: 91 },
+      { id: 'p2', team_id: 't1', full_name: 'Omar Khatib', jersey_no: 8, position: 'MID', rating: 87 },
+      { id: 'p3', team_id: 't1', full_name: 'Tarek Ali', jersey_no: 4, position: 'DEF', rating: 84 },
+      { id: 'p4', team_id: 't1', full_name: 'Youssef Hamed', jersey_no: 1, position: 'GK', rating: 86 },
+      { id: 'p5', team_id: 't2', full_name: 'Zaid Salem', jersey_no: 9, position: 'FWD', rating: 90 },
+      { id: 'p6', team_id: 't2', full_name: 'Rami Nasser', jersey_no: 7, position: 'MID', rating: 86 },
+      { id: 'p7', team_id: 't2', full_name: 'Basel Khoury', jersey_no: 5, position: 'DEF', rating: 83 },
+      { id: 'p8', team_id: 't2', full_name: 'Saif Al-Din', jersey_no: 1, position: 'GK', rating: 85 },
+      { id: 'p9', team_id: 't3', full_name: 'Adam Shami', jersey_no: 11, position: 'FWD', rating: 88 },
+      { id: 'p10', team_id: 't3', full_name: 'Mazen Haddad', jersey_no: 6, position: 'MID', rating: 84 },
+      { id: 'p11', team_id: 't3', full_name: 'Laith Murad', jersey_no: 3, position: 'DEF', rating: 81 },
+      { id: 'p12', team_id: 't3', full_name: 'Noor Rashid', jersey_no: 1, position: 'GK', rating: 82 },
+      { id: 'p13', team_id: 't4', full_name: 'Fares Jaber', jersey_no: 9, position: 'FWD', rating: 86 },
+      { id: 'p14', team_id: 't4', full_name: 'Hamza Awwad', jersey_no: 14, position: 'MID', rating: 82 },
+      { id: 'p15', team_id: 't4', full_name: 'Yazan Badr', jersey_no: 2, position: 'DEF', rating: 80 },
+      { id: 'p16', team_id: 't4', full_name: 'Anas Fouad', jersey_no: 1, position: 'GK', rating: 83 }
     ],
     matches: [
-      { id: 'm1', round_label: 'الجولة 1', home_team_id: 't1', away_team_id: 't3', kickoff_at: new Date(now - 72 * hour).toISOString(), status: 'finished', home_score: 3, away_score: 1, minute: 60 },
-      { id: 'm2', round_label: 'الجولة 1', home_team_id: 't2', away_team_id: 't4', kickoff_at: new Date(now - 48 * hour).toISOString(), status: 'finished', home_score: 2, away_score: 2, minute: 60 },
-      { id: 'm3', round_label: 'الجولة 2', home_team_id: 't1', away_team_id: 't2', kickoff_at: new Date(now - 0.5 * hour).toISOString(), status: 'live', home_score: 2, away_score: 1, minute: 47 },
-      { id: 'm4', round_label: 'الجولة 2', home_team_id: 't3', away_team_id: 't4', kickoff_at: new Date(now + 26 * hour).toISOString(), status: 'upcoming', home_score: 0, away_score: 0, minute: 0 },
-      { id: 'm5', round_label: 'الجولة 3', home_team_id: 't1', away_team_id: 't4', kickoff_at: new Date(now + 74 * hour).toISOString(), status: 'upcoming', home_score: 0, away_score: 0, minute: 0 }
+      { id: 'm1', round_label: 'Round 1', home_team_id: 't1', away_team_id: 't3', kickoff_at: new Date(now - 72 * hour).toISOString(), status: 'finished', home_score: 3, away_score: 1, minute: 60 },
+      { id: 'm2', round_label: 'Round 1', home_team_id: 't2', away_team_id: 't4', kickoff_at: new Date(now - 48 * hour).toISOString(), status: 'finished', home_score: 2, away_score: 2, minute: 60 },
+      { id: 'm3', round_label: 'Round 2', home_team_id: 't1', away_team_id: 't2', kickoff_at: new Date(now - 0.5 * hour).toISOString(), status: 'live', home_score: 2, away_score: 1, minute: 47 },
+      { id: 'm4', round_label: 'Round 2', home_team_id: 't3', away_team_id: 't4', kickoff_at: new Date(now + 26 * hour).toISOString(), status: 'upcoming', home_score: 0, away_score: 0, minute: 0 },
+      { id: 'm5', round_label: 'Round 3', home_team_id: 't1', away_team_id: 't4', kickoff_at: new Date(now + 74 * hour).toISOString(), status: 'upcoming', home_score: 0, away_score: 0, minute: 0 }
     ],
     events: [
       { id: 'e1', match_id: 'm1', team_id: 't1', player_id: 'p1', assist_player_id: 'p2', event_type: 'goal', minute: 12 },
@@ -1133,11 +1147,7 @@ function getInitialState() {
     suggestions: [
       { id: 's1', sender: 'خالد 10-ب', category: 'idea', message: 'يا ريت إضافة جائزة لأفضل هدف في الجولة بالتصويت.', created_at: new Date(now - 86400000).toISOString() }
     ],
-    admins: [
-      { id: 'adm1', code: 'MSS-SUP-2026', name: 'المشرف العام', tag: 'SUP-01', role: 'super_admin', active: true, permissions: { matches: true, teams: true, season: true, admins: true } },
-      { id: 'adm2', code: 'MSS-REF-102', name: 'حكم الملعب', tag: 'REF-02', role: 'referee', active: true, permissions: { matches: true, teams: false, season: false, admins: false } },
-      { id: 'adm3', code: 'MSS-MED-103', name: 'منسق الإعلام', tag: 'MED-03', role: 'media', active: true, permissions: { matches: false, teams: true, season: true, admins: false } }
-    ],
+    admins: [],
     auditLogs: [
       { id: 'log1', tag: 'SUP-01', adminName: 'المشرف العام', action: 'إنشاء الموسم', details: 'تفعيل جدول الجولة الأولى والثانية', created_at: new Date(now - 7200000).toISOString() },
       { id: 'log2', tag: 'REF-02', adminName: 'حكم الملعب', action: 'تسجيل هدف', details: 'عمر الخطيب (د 42) — صقور الثاني عشر', created_at: new Date(now - 600000).toISOString() }
@@ -1150,8 +1160,6 @@ let state = loadState();
 let currentView = 'home';
 let currentAdminTab = 'live';
 let selectedTeamId = state.teams[0]?.id || null;
-let activeAdminId = state.admins[0]?.id || 'adm1';
-let adminUnlocked = false;
 let supabaseClient = null;
 let realtimeChannel = null;
 let adminSession = null;
@@ -1173,36 +1181,173 @@ function loadState() {
   return getInitialState();
 }
 function saveState() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  try {
+    const publicSafe = { season: state.season, teams: state.teams, players: state.players, matches: state.matches, events: state.events, votes: state.votes };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(publicSafe));
+  } catch (e) {}
 }
-function loadSbCreds() {
-  if (SUPABASE_CONFIG.url && SUPABASE_CONFIG.anonKey) return SUPABASE_CONFIG;
-  try { const r = localStorage.getItem(SB_CRED_KEY); if (r) return JSON.parse(r); } catch (e) {}
-  return { url: '', anonKey: '' };
-}
+
 function uid(p) { return p + '_' + Math.random().toString(36).slice(2, 9); }
 
-function getActiveAdmin() {
-  return state.admins.find(a => a.id === activeAdminId) || state.admins[0] || { tag: 'SUP-01', name: 'Admin', permissions: { matches: true, teams: true, season: true, admins: true } };
+function escapeHtml(val) {
+  return String(val ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
-function logAdminAction(action, details) {
-  const adm = getActiveAdmin();
-  const entry = {
-    id: uid('log'),
-    tag: adm.tag,
-    adminName: adm.name,
-    action,
-    details,
-    created_at: new Date().toISOString()
-  };
-  state.auditLogs.unshift(entry);
-  if (state.auditLogs.length > 80) state.auditLogs.pop();
-  if (isCloudWriteActive()) {
-    supabaseClient.from('admin_audit_logs').insert({
-      admin_tag: adm.tag, admin_name: adm.name, action_type: action, details
-    }).then(() => {}).catch(() => {});
+function sanitizeSafeUrl(url) {
+  const raw = String(url ?? '').trim();
+  if (!raw) return '';
+  try {
+    const parsed = new URL(raw);
+    return (parsed.protocol === 'https:' || parsed.protocol === 'http:') ? parsed.href : '';
+  } catch (e) { return ''; }
+}
+
+function sanitizeColor(hex) {
+  return /^#[0-9A-Fa-f]{6}$/.test(String(hex || '')) ? hex : '#22C55E';
+}
+
+function getDeviceHash() {
+  try {
+    let h = localStorage.getItem('mss_device_hash');
+    if (!h) {
+      const arr = new Uint8Array(12);
+      crypto.getRandomValues(arr);
+      h = Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+      localStorage.setItem('mss_device_hash', h);
+    }
+    return h;
+  } catch (e) { return 'dev_' + Math.random().toString(36).slice(2); }
+}
+
+let currentAdminProfile = null;
+function hasPerm(perm) {
+  if (!currentAdminProfile || !currentAdminProfile.is_active) return false;
+  if (currentAdminProfile.role === 'super_admin') return true;
+  return Boolean(currentAdminProfile.permissions && currentAdminProfile.permissions[perm]);
+}
+
+const UPLOAD_POLICY = {
+  logos: { maxBytes: 1 * 1024 * 1024, label: '1MB' },
+  clips: { maxBytes: 2 * 1024 * 1024, label: '2MB' },
+  matchMedia: { maxBytes: 3 * 1024 * 1024, label: '3MB' }
+};
+
+const ALLOWED_VIDEO_HOSTS = new Set([
+  'youtube.com', 'www.youtube.com', 'youtu.be', 'm.youtube.com',
+  'vimeo.com', 'www.vimeo.com', 'tiktok.com', 'www.tiktok.com',
+  'snapchat.com', 'www.snapchat.com', 'instagram.com', 'www.instagram.com',
+  'streamable.com'
+]);
+
+function sanitizeVideoLink(url) {
+  const raw = String(url ?? '').trim();
+  if (!raw) return '';
+  try {
+    const parsed = new URL(raw);
+    if (parsed.protocol !== 'https:') return '';
+    const host = parsed.hostname.toLowerCase();
+    return ALLOWED_VIDEO_HOSTS.has(host) ? parsed.href : '';
+  } catch (e) { return ''; }
+}
+
+function handleDbError(error, fallbackMsg) {
+  console.error('[DB Error]', error);
+  const raw = (error && error.message) ? error.message : '';
+  let msg = fallbackMsg || (currentLang === 'en' ? 'Operation failed. Please try again.' : 'تعذر تنفيذ العملية، حاول مرة أخرى.');
+  if (raw.includes('RATE_LIMIT_EXCEEDED')) {
+    msg = currentLang === 'en' ? 'Too many requests — please wait a moment.' : 'طلبات متكررة — يرجى الانتظار قليلًا ثم المحاولة.';
+  } else if (raw.includes('PREDICTIONS_CLOSED')) {
+    msg = currentLang === 'en' ? 'Predictions are closed once the match starts.' : 'تم إغلاق التوقعات بعد بداية المباراة.';
+  } else if (raw.includes('duplicate key') || raw.includes('23505')) {
+    msg = currentLang === 'en' ? 'You have already submitted this action.' : 'سبق وسجّلت هذا الإجراء بالفعل.';
+  } else if (raw.includes('row-level security') || raw.includes('42501')) {
+    msg = currentLang === 'en' ? 'Permission denied for your admin role.' : 'لا تملك صلاحية تنفيذ هذا الإجراء.';
   }
+  showToast(msg, 'error');
+}
+
+async function withSubmitLock(btn, asyncFn) {
+  if (btn && btn.disabled) return;
+  const prevText = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.classList.add('opacity-60', 'cursor-wait'); }
+  try {
+    return await asyncFn();
+  } finally {
+    if (btn) { btn.disabled = false; btn.classList.remove('opacity-60', 'cursor-wait'); if (prevText) btn.textContent = prevText; }
+  }
+}
+
+async function uploadImageToStorage(file, folder) {
+  const ALLOWED = ['image/png', 'image/jpeg', 'image/webp'];
+  const policy = UPLOAD_POLICY[folder] || UPLOAD_POLICY.clips;
+  if (!ALLOWED.includes(file.type)) {
+    throw new Error(currentLang === 'en' ? 'Only PNG, JPG, or WebP images are allowed.' : 'يُسمح فقط بصور PNG أو JPG أو WebP.');
+  }
+  if (file.size > policy.maxBytes) {
+    throw new Error(currentLang === 'en' ? `Maximum file size for ${folder} is ${policy.label}.` : `الحد الأقصى لحجم الصورة هنا هو ${policy.label}.`);
+  }
+  if (!supabaseClient) {
+    throw new Error(currentLang === 'en' ? 'Cloud storage is not connected.' : 'التخزين السحابي غير متصل.');
+  }
+  const ext = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg';
+  const randBytes = new Uint8Array(6);
+  crypto.getRandomValues(randBytes);
+  const randHex = Array.from(randBytes, b => b.toString(16).padStart(2, '0')).join('');
+  const filePath = `${folder}/${Date.now()}_${randHex}.${ext}`;
+  const { error } = await supabaseClient.storage.from('league-assets').upload(filePath, file, { contentType: file.type, upsert: false });
+  if (error) throw error;
+  const { data } = supabaseClient.storage.from('league-assets').getPublicUrl(filePath);
+  return data.publicUrl;
+}
+
+async function deleteStorageAssetByUrl(publicUrl) {
+  if (!supabaseClient || !publicUrl || !publicUrl.includes('/storage/v1/object/public/league-assets/')) return;
+  try {
+    const relPath = publicUrl.split('/storage/v1/object/public/league-assets/')[1];
+    if (relPath) await supabaseClient.storage.from('league-assets').remove([decodeURIComponent(relPath)]);
+  } catch (err) { console.warn('Storage cleanup skipped:', err); }
+}
+
+// Accessible Modal Focus Trap & Restoration
+let activeModalEl = null;
+let lastFocusedBeforeModal = null;
+
+function openAccessibleModal(modalEl) {
+  if (!modalEl) return;
+  if (!activeModalEl) lastFocusedBeforeModal = document.activeElement;
+  activeModalEl = modalEl;
+  modalEl.classList.remove('hidden');
+  modalEl.classList.add('flex');
+  const focusables = modalEl.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+  if (focusables.length) focusables[0].focus();
+}
+
+function closeAccessibleModal(modalEl) {
+  if (!modalEl) return;
+  modalEl.classList.add('hidden');
+  modalEl.classList.remove('flex');
+  if (activeModalEl === modalEl) {
+    activeModalEl = null;
+    if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === 'function') {
+      lastFocusedBeforeModal.focus();
+    }
+    lastFocusedBeforeModal = null;
+  }
+}
+
+function getActiveAdmin() {
+  return currentAdminProfile || { admin_tag: '—', display_name: '', email: '', permissions: {} };
+}
+
+async function logAdminAction(action, details) {
+  if (!isCloudWriteActive()) return;
+  const { error } = await supabaseClient.rpc('record_audit_log', { p_action: action, p_details: details });
+  if (error) console.warn('Audit log error:', error.message);
 }
 
 // =========================================================================
@@ -1233,8 +1378,9 @@ function getTeam(id) { return state.teams.find(x => x.id === id) || { name: '—
 function getPlayer(id) { return state.players.find(x => x.id === id) || { full_name: '—', jersey_no: 0, position: 'MID' }; }
 
 function formatCrest(team, sz = 'w-10 h-10 text-xs') {
-  if (team.logo_url) {
-    return `<span class="shrink-0 ${sz} rounded-2xl overflow-hidden bg-white/10 border border-white/15 flex items-center justify-center p-1 shadow-md"><img src="${team.logo_url}" alt="${team.name}" class="w-full h-full object-contain"></span>`;
+  const safeLogo = sanitizeSafeUrl(team.logo_url);
+  if (safeLogo) {
+    return `<span class="shrink-0 ${sz} rounded-2xl overflow-hidden bg-white/10 border border-white/15 flex items-center justify-center p-1 shadow-md"><img src="${escapeHtml(safeLogo)}" alt="${escapeHtml(team.name)}" class="w-full h-full object-contain"></span>`;
   }
   const p = team.logo_preset && CLUB_PRESETS[team.logo_preset];
   if (p) {
@@ -1247,7 +1393,7 @@ function formatCrest(team, sz = 'w-10 h-10 text-xs') {
       : `<circle cx="32" cy="32" r="25" fill="${p.bg}" stroke="${p.accent}" stroke-width="3.5"/><circle cx="32" cy="32" r="19" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.5"/><text x="32" y="37" text-anchor="middle" fill="${p.bg === '#FDE100' ? '#111111' : '#FFFFFF'}" font-size="14" font-weight="900" font-family="Cairo,Inter,sans-serif">${p.code}</text>`;
     return `<span class="shrink-0 ${sz} inline-flex items-center justify-center drop-shadow-md"><svg viewBox="0 0 64 64" class="w-full h-full">${svgInner}</svg></span>`;
   }
-  return `<span class="shrink-0 ${sz} rounded-2xl flex items-center justify-center font-display font-black text-obsidian shadow-md" style="background:${team.primary_color}">${team.badge_code || 'FC'}</span>`;
+  return `<span class="shrink-0 ${sz} rounded-2xl flex items-center justify-center font-display font-black text-obsidian shadow-md" style="background:${sanitizeColor(team.primary_color)}">${escapeHtml(team.badge_code || "FC")}</span>`;
 }
 
 function formatDateTime(iso) {
@@ -1336,7 +1482,7 @@ function computeStandings(groupFilter = 'all') {
     map[tm.id] = { team: tm, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0, form: [] };
   });
   state.matches
-    .filter(m => m.status === 'finished' || m.status === 'live')
+    .filter(m => m.status === 'finished')
     .sort((a, b) => new Date(a.kickoff_at) - new Date(b.kickoff_at))
     .forEach(m => {
       const h = map[m.home_team_id], a = map[m.away_team_id];
@@ -1367,101 +1513,136 @@ function computePlayerStats() {
 }
 
 // =========================================================================
-// 5. Three.js — تحميل المجسم ثلاثي الأبعاد (pulse_football_v1.glb)
+// 5. Three.js — كرة الدوري ثلاثية الأبعاد (Shaders + مدارات + موجة ارتطام)
 // =========================================================================
 function initThreeHero() {
-  const container = document.getElementById('threeHeroContainer');
-  if (!container || typeof THREE === 'undefined') return;
-  container.innerHTML = '';
+  const st = document.getElementById('threeHeroContainer');
+  if (!st || typeof THREE === 'undefined') return;
+  st.innerHTML = '';
 
-  const scene = new THREE.Scene();
-  const w = container.clientWidth || 360, h = container.clientHeight || 360;
-  const camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 100);
-  camera.position.set(0, 0.15, 5.1);
+  const T = THREE, U = { uT: { value: 0 } };
+  const GC = 'vec3(.13,.77,.37)', YC = 'vec3(.96,.62,.04)';
+  const R = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
+  R.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  R.setClearColor(0x000000, 0);
+  R.domElement.style.width = '100%';
+  R.domElement.style.height = '100%';
+  R.domElement.style.display = 'block';
+  st.appendChild(R.domElement);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(w, h);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.outputEncoding = THREE.sRGBEncoding;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.25;
-  container.appendChild(renderer.domElement);
+  const S = new T.Scene(), C = new T.PerspectiveCamera(32, 1, 0.1, 50);
+  C.position.set(0, 2.2, 9);
+  C.lookAt(0, -0.1, 0);
 
-  // Studio PBR Lighting
-  scene.add(new THREE.HemisphereLight(0xf8fafc, 0x0f172a, 1.15));
-  const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
-  keyLight.position.set(4, 6, 5);
-  scene.add(keyLight);
-
-  const emeraldRim = new THREE.PointLight(0x4ade80, 1.5, 18);
-  emeraldRim.position.set(3.5, 1.5, -3);
-  scene.add(emeraldRim);
-
-  const coolFill = new THREE.PointLight(0x38bdf8, 1.1, 18);
-  coolFill.position.set(-3.5, -1.5, 3);
-  scene.add(coolFill);
-
-  const pivotGroup = new THREE.Group();
-  scene.add(pivotGroup);
-
-  let mixer = null;
-  const clock = new THREE.Clock();
-
-  function onModelLoaded(gltf) {
-    const model = gltf.scene;
-    const box = new THREE.Box3().setFromObject(model);
-    const size = box.getSize(new THREE.Vector3());
-    const center = box.getCenter(new THREE.Vector3());
-    const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    const scale = 2.85 / maxDim;
-
-    model.scale.setScalar(scale);
-    model.position.sub(center.multiplyScalar(scale));
-    pivotGroup.add(model);
-
-    if (gltf.animations && gltf.animations.length) {
-      mixer = new THREE.AnimationMixer(model);
-      gltf.animations.forEach(clip => {
-        const action = mixer.clipAction(clip);
-        action.play();
-      });
-    }
+  // اتجاهات أوجه المجسم: 12 خماسي + 20 سداسي
+  const ph = (1 + Math.sqrt(5)) / 2, ip = 1 / ph;
+  const V = (x, y, z) => new T.Vector3(x, y, z).normalize();
+  const P = [], H = [];
+  for (const a of [-1, 1]) for (const b of [-1, 1]) {
+    P.push(V(0, a, b * ph), V(a, b * ph, 0), V(b * ph, 0, a));
+    H.push(V(a, b, 1), V(a, b, -1), V(0, a * ph, b * ip), V(a * ip, 0, b * ph), V(a * ph, b * ip, 0));
   }
 
-  const loader = new THREE.GLTFLoader();
-  loader.load('./assets/pulse_football_v1.glb', onModelLoaded, undefined, err => console.error(err));
+  const vs = 'varying vec3 vP,vN,vV;void main(){vP=position;vec4 m=modelViewMatrix*vec4(position,1.);vN=normalMatrix*normal;vV=-m.xyz;gl_Position=projectionMatrix*m;}';
+  const fs = `uniform vec3 uP[12];uniform vec3 uH[20];uniform float uT;varying vec3 vP,vN,vV;
+void main(){
+vec3 p=normalize(vP);float b1=-9.,b2=-9.,k=0.;
+for(int i=0;i<12;i++){float s=dot(p,uP[i]);if(s>b1){b2=b1;b1=s;k=1.;}else if(s>b2)b2=s;}
+for(int i=0;i<20;i++){float s=dot(p,uH[i])*1.0265;if(s>b1){b2=b1;b1=s;k=0.;}else if(s>b2)b2=s;}
+float d=b1-b2,w=fwidth(d)*1.3;
+vec3 n=normalize(vN),v=normalize(vV),L=normalize(vec3(-.5,.7,.6));
+float df=dot(n,L),sh=smoothstep(.1,.16,df)*.55+smoothstep(-.35,-.29,df)*.45;
+vec3 col=mix(mix(vec3(.5,.62,.82),vec3(1.),sh),mix(vec3(.03,.3,.16),${GC},sh),k);
+col+=k*smoothstep(.99,.998,b1)*${YC}*(1.1+.4*sin(uT*4.));
+float ln=1.-smoothstep(.024-w,.024+w+.004,d);
+float pl=pow(max(sin(dot(p,vec3(.35,.9,.25))*5.-uT*3.2),0.),6.);
+vec3 nc=mix(${GC},${YC},.5+.5*sin(dot(p,vec3(1.,.4,.7))*3.+uT));
+col=mix(col,mix(vec3(.02,.06,.1),nc*1.7,pl),ln);
+float f=pow(1.-max(dot(n,v),0.),2.4);
+col+=mix(${GC},${YC},smoothstep(-.5,.5,n.x))*f*1.1;
+col+=smoothstep(.55,.6,pow(max(dot(n,normalize(L+v)),0.),70.))*.55*(1.-k*.5);
+gl_FragColor=vec4(col,1.);}`;
 
-  let tx = 0, ty = 0, drag = false, lx = 0, ly = 0;
-  container.addEventListener('pointerdown', e => { drag = true; lx = e.clientX; ly = e.clientY; });
-  window.addEventListener('pointerup', () => { drag = false; });
-  container.addEventListener('pointermove', e => {
-    const r = container.getBoundingClientRect();
-    if (drag) {
-      ty += (e.clientX - lx) * 0.012;
-      tx += (e.clientY - ly) * 0.012;
-      lx = e.clientX; ly = e.clientY;
-    } else {
-      tx = (((e.clientY - r.top) / r.height) * 2 - 1) * 0.22;
-      ty = (((e.clientX - r.left) / r.width) * 2 - 1) * 0.35;
-    }
+  const B = new T.Mesh(
+    new T.SphereGeometry(1, 64, 48),
+    new T.ShaderMaterial({ vertexShader: vs, fragmentShader: fs, uniforms: { uP: { value: P }, uH: { value: H }, uT: U.uT }, extensions: { derivatives: true } })
+  );
+  S.add(B);
+
+  const hm = new T.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: T.AdditiveBlending, side: T.DoubleSide, uniforms: { uT: U.uT },
+    vertexShader: 'varying vec2 vU;void main(){vU=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+    fragmentShader: `varying vec2 vU;uniform float uT;void main(){float r=length(vU-.5)*2.,a=pow(max(1.-r,0.),2.2)*(.55+.12*sin(uT*2.));gl_FragColor=vec4(mix(${GC},${YC},smoothstep(-.6,.8,(vU.x-.5)*2.+(vU.y-.5)*.8)),a);}`
+  });
+  const hl = new T.Mesh(new T.PlaneGeometry(5, 5), hm); hl.position.z = -1.6; S.add(hl);
+  const fl = new T.Mesh(new T.PlaneGeometry(3.4, 3.4), hm); fl.rotation.x = -Math.PI / 2; fl.position.y = -1.5; S.add(fl);
+
+  const sw = new T.Mesh(
+    new T.RingGeometry(0.96, 1, 96),
+    new T.MeshBasicMaterial({ color: 0xF59E0B, transparent: true, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide })
+  );
+  sw.rotation.x = -Math.PI / 2; sw.position.y = -1.5; S.add(sw);
+
+  const RG = new T.Group(); S.add(RG);
+  [[1.62, 0.5, 0.1, 0x22C55E, 0.28], [1.92, -0.7, 0.5, 0xF59E0B, 0.21], [2.2, 1.1, -0.4, 0x22C55E, 0.16]].forEach(([r, x, y, c, sp]) => {
+    const m = new T.Mesh(
+      new T.TorusGeometry(r, 0.018, 6, 160),
+      new T.ShaderMaterial({
+        transparent: true, depthWrite: false, blending: T.AdditiveBlending,
+        uniforms: { uT: U.uT, uS: { value: sp }, uC: { value: new T.Color(c) } },
+        vertexShader: 'varying float vU;void main(){vU=uv.x;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+        fragmentShader: 'varying float vU;uniform float uT,uS;uniform vec3 uC;void main(){float a=fract(vU-uT*uS);gl_FragColor=vec4(uC*1.5,pow(a,6.)*(1.-smoothstep(.96,1.,a)));}'
+      })
+    );
+    m.rotation.set(x, y, 0);
+    RG.add(m);
   });
 
-  window.addEventListener('resize', () => {
-    if (!container.clientWidth) return;
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
+  const N = 90, pg = new T.BufferGeometry(), a4 = new Float32Array(N * 4);
+  for (let i = 0; i < a4.length; i++) a4[i] = Math.random();
+  pg.setAttribute('position', new T.BufferAttribute(new Float32Array(N * 3), 3));
+  pg.setAttribute('aS', new T.BufferAttribute(a4, 4));
+  const pm = new T.ShaderMaterial({
+    transparent: true, depthWrite: false, blending: T.AdditiveBlending,
+    uniforms: { uT: U.uT, uPx: { value: R.getPixelRatio() } },
+    vertexShader: `attribute vec4 aS;uniform float uT,uPx;varying vec3 vC;varying float vA;void main(){float t=fract(uT*.07*(.5+aS.x)+aS.y),an=aS.z*6.2832+uT*(.3+aS.w*.6),rd=1.45+aS.y*1.1+aS.x*.2;vec4 m=modelViewMatrix*vec4(cos(an)*rd,(t-.5)*4.2,sin(an)*rd*.8,1.);vA=sin(t*3.1416);vC=mix(${GC},${YC},step(.5,aS.w));gl_PointSize=(3.+aS.x*8.)*vA*uPx*9./(-m.z);gl_Position=projectionMatrix*m;}`,
+    fragmentShader: 'varying vec3 vC;varying float vA;void main(){gl_FragColor=vec4(vC*1.5,smoothstep(1.,.15,length(gl_PointCoord-.5)*2.)*vA);}'
   });
+  const pt = new T.Points(pg, pm); pt.frustumCulled = false; S.add(pt);
 
-  function animate() {
-    requestAnimationFrame(animate);
-    const delta = clock.getDelta();
-    if (mixer) mixer.update(delta);
-    pivotGroup.rotation.y += (ty - pivotGroup.rotation.y) * 0.05;
-    pivotGroup.rotation.x += (tx - pivotGroup.rotation.x) * 0.05;
-    renderer.render(scene, camera);
-  }
-  animate();
+  let tm = 0, last = performance.now(), vis = true, down = 0, lx = 0, ly = 0;
+  const dv = { x: 0, y: 0 }, dr = { x: 0, y: 0 };
+  const spd = window.matchMedia('(prefers-reduced-motion:reduce)').matches ? 0.35 : 1;
+  new IntersectionObserver(e => { vis = e[0].isIntersecting; }).observe(st);
+  st.addEventListener('pointerdown', e => { down = 1; lx = e.clientX; ly = e.clientY; st.setPointerCapture(e.pointerId); });
+  st.addEventListener('pointermove', e => {
+    if (!down) return;
+    dv.y = (e.clientX - lx) * 0.012; dv.x = (e.clientY - ly) * 0.012;
+    dr.y += dv.y; dr.x += dv.x; lx = e.clientX; ly = e.clientY;
+  });
+  ['pointerup', 'pointercancel'].forEach(n => st.addEventListener(n, () => { down = 0; }));
+  const rs = () => { const w = st.clientWidth || 320; R.setSize(w, w, false); };
+  new ResizeObserver(rs).observe(st);
+  rs();
+
+  (function loop(now) {
+    requestAnimationFrame(loop);
+    const dt = Math.min((now - last) / 1000, 0.05); last = now;
+    if (!vis || document.hidden) return;
+    tm += dt * spd; U.uT.value = tm;
+    const c = tm % 6, hp = c / 1.1;
+    let y = Math.sin(tm * 1.1) * 0.1, sx = 1, sy = 1;
+    if (hp < 1) { const s = Math.sin(hp * Math.PI); y += s * 0.7; sy = 1 + 0.07 * s; sx = 1 - 0.04 * s; }
+    else { const q = 1 - (c - 1.1) / 0.4; if (q > 0) { sx = 1 + 0.14 * q; sy = 1 - 0.16 * q; } }
+    B.scale.set(sx, sy, sx); B.position.y = y + (sy - 1);
+    if (!down) { dr.y += dv.y; dr.x += dv.x; dv.x *= 0.93; dv.y *= 0.93; dr.x *= 0.97; }
+    B.rotation.set(0.38 + dr.x + Math.sin(tm * 0.6) * 0.07, tm * 0.9 + dr.y, 0.22);
+    const e = (c - 1.1) / 1.6;
+    sw.visible = e > 0 && e < 1; sw.scale.setScalar(1.1 + e * 1.3); sw.material.opacity = (1 - e) * (1 - e) * 0.9;
+    fl.scale.setScalar(1.15 - y * 0.5); hl.scale.setScalar(1 + 0.04 * Math.sin(tm * 2));
+    RG.rotation.y = tm * 0.15;
+    R.render(S, C);
+  })(performance.now());
 }
 
 // =========================================================================
@@ -1502,7 +1683,7 @@ function renderHome() {
 
     liveCard.innerHTML = `
       <div class="flex items-center justify-between mb-5">
-        <span class="text-xs font-semibold text-slate-300">${live.round_label}</span>
+        <span class="text-xs font-semibold text-slate-300">${escapeHtml(live.round_label)}</span>
         ${isLive
           ? `<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-400/35"><span class="relative w-2 h-2 rounded-full bg-emerald-400 live-dot"></span>${t('st_live')} · ${live.minute}'</span>`
           : `<span class="px-3 py-1 rounded-full bg-white/10 text-slate-300 text-xs font-semibold">${live.status === 'finished' ? t('st_finished') : t('st_upcoming')}</span>`}
@@ -1510,7 +1691,7 @@ function renderHome() {
       <div class="grid grid-cols-3 items-center gap-3 py-4">
         <div class="flex flex-col items-center text-center gap-2">
           ${formatCrest(h, 'w-14 h-14 text-base')}
-          <p class="font-display font-extrabold text-sm sm:text-base text-white">${h.name}</p>
+          <p class="font-display font-extrabold text-sm sm:text-base text-white">${escapeHtml(h.name)}</p>
         </div>
         <div class="text-center">
           <div class="font-display font-black text-4xl sm:text-5xl text-white">${live.home_score} <span class="text-emerald-400">:</span> ${live.away_score}</div>
@@ -1518,19 +1699,19 @@ function renderHome() {
         </div>
         <div class="flex flex-col items-center text-center gap-2">
           ${formatCrest(a, 'w-14 h-14 text-base')}
-          <p class="font-display font-extrabold text-sm sm:text-base text-white">${a.name}</p>
+          <p class="font-display font-extrabold text-sm sm:text-base text-white">${escapeHtml(a.name)}</p>
         </div>
       </div>
-      ${goals.length ? `<div class="mt-3 pt-3 border-t border-white/10 flex flex-wrap gap-2 justify-center">${goals.map(ev => `<span class="text-xs px-2.5 py-1 rounded-xl bg-white/5 text-slate-200">⚽ ${getPlayer(ev.player_id).full_name} (${ev.minute}')</span>`).join('')}</div>` : ''}
+      ${goals.length ? `<div class="mt-3 pt-3 border-t border-white/10 flex flex-wrap gap-2 justify-center">${goals.map(ev => `<span class="text-xs px-2.5 py-1 rounded-xl bg-white/5 text-slate-200">⚽ ${escapeHtml(getPlayer(ev.player_id).full_name)} (${ev.minute}')</span>`).join('')}</div>` : ''}
       <div class="mt-5 pt-4 border-t border-white/10 space-y-2.5">
         <div class="flex items-center justify-between text-xs">
-          <button type="button" data-open-story="${live.id}" class="text-amber-300 hover:underline font-bold">${currentLang === 'en' ? 'Share Story / Snap ✦' : 'مشاركة ستوري / سناب ✦'}</button>
+          <button type="button" data-open-story="${live.id}" class="text-amber-300 hover:underline font-bold">${currentLang === 'en' ? 'Share Snap ✦' : 'مشاركة سناب ✦'}</button>
           <button type="button" data-open-match="${live.id}" class="text-emerald-400 hover:underline font-bold">${currentLang === 'en' ? 'Comments & Vote' : 'التعليقات والتصويت'}</button>
         </div>
         <div class="h-2 rounded-full overflow-hidden flex bg-obsidian">
-          <div style="width:${hp}%; background:${h.primary_color}"></div>
+          <div style="width:${hp}%; background:${sanitizeColor(h.primary_color)}"></div>
           <div style="width:${dp}%" class="bg-slate-500"></div>
-          <div style="width:${ap}%; background:${a.primary_color}"></div>
+          <div style="width:${ap}%; background:${sanitizeColor(a.primary_color)}"></div>
         </div>
       </div>
     `;
@@ -1547,9 +1728,9 @@ function renderHome() {
     cdCard.innerHTML = `
       <div class="flex items-center justify-between mb-2">
         <span class="text-xs font-display font-bold text-amber-300">${currentLang === 'en' ? 'Next Kickoff' : 'المباراة القادمة'}</span>
-        <span class="text-[11px] text-slate-400">${upcoming.round_label}</span>
+        <span class="text-[11px] text-slate-400">${escapeHtml(upcoming.round_label)}</span>
       </div>
-      <p class="font-display font-bold text-white text-sm mb-3">${uh.name} <span class="text-emerald-400 mx-1">vs</span> ${ua.name}</p>
+      <p class="font-display font-bold text-white text-sm mb-3">${escapeHtml(uh.name)} <span class="text-emerald-400 mx-1">vs</span> ${escapeHtml(ua.name)}</p>
       <div id="countdownClock" class="grid grid-cols-4 gap-2 text-center"></div>`;
     const tick = () => {
       const el = document.getElementById('countdownClock');
@@ -1569,9 +1750,9 @@ function renderHome() {
       <div class="flex items-center gap-2.5">
         <span class="w-6 h-6 rounded-lg flex items-center justify-center font-display font-black text-xs ${i === 0 ? 'bg-amber-400 text-obsidian' : 'bg-white/10 text-slate-300'}">${i + 1}</span>
         ${formatCrest(r.team, 'w-8 h-8 text-[10px]')}
-        <p class="font-display font-bold text-sm text-white">${r.team.name}</p>
+        <p class="font-display font-bold text-sm text-white">${escapeHtml(r.team.name)}</p>
       </div>
-      <span class="font-display font-black text-sm text-emerald-400">${r.pts} ${currentLang === 'en' ? 'pts' : 'ن'}</span>
+      <span class="font-display font-black text-sm text-emerald-400">${r.pts} PTS</span>
     </div>
   `).join('');
 }
@@ -1580,7 +1761,7 @@ function renderStandings() {
   const groups = [...new Set(state.teams.map(x => x.group_name).filter(Boolean))];
   const sel = document.getElementById('standingsGroupFilter');
   const prev = sel.value || 'all';
-  sel.innerHTML = `<option value="all">${t('all_groups')}</option>` + groups.map(g => `<option value="${g}">${g}</option>`).join('');
+  sel.innerHTML = `<option value="all">${t('all_groups')}</option>` + groups.map(g => `<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join('');
   if ([...sel.options].some(o => o.value === prev)) sel.value = prev;
 
   document.getElementById('standingsTableBody').innerHTML = computeStandings(sel.value).map((r, idx) => `
@@ -1590,8 +1771,8 @@ function renderStandings() {
         <div class="flex items-center gap-2.5">
           ${formatCrest(r.team, 'w-8 h-8 text-[10px]')}
           <div>
-            <p class="font-display font-bold text-white">${r.team.name}</p>
-            <p class="text-[11px] text-slate-400">${r.team.grade}</p>
+            <p class="font-display font-bold text-white">${escapeHtml(r.team.name)}</p>
+            <p class="text-[11px] text-slate-400">${escapeHtml(r.team.grade)}</p>
           </div>
         </div>
       </td>
@@ -1607,7 +1788,7 @@ function renderStandings() {
         <div class="flex items-center justify-center gap-1">
           ${r.form.length ? r.form.map(f => {
             const c = f === 'W' ? 'bg-emerald-500 text-obsidian' : f === 'D' ? 'bg-slate-500 text-white' : 'bg-rose-500 text-white';
-            const lbl = currentLang === 'en' ? f : (f === 'W' ? 'ف' : f === 'D' ? 'ت' : 'خ');
+            const lbl = f;
             return `<span class="w-5 h-5 rounded-md text-[10px] font-bold flex items-center justify-center ${c}">${lbl}</span>`;
           }).join('') : '<span class="text-xs text-slate-500">—</span>'}
         </div>
@@ -1619,8 +1800,8 @@ function renderStandings() {
 function renderMatches() {
   const rSel = document.getElementById('matchRoundFilter'), tSel = document.getElementById('matchTeamFilter');
   const pr = rSel.value || 'all', pt = tSel.value || 'all';
-  rSel.innerHTML = `<option value="all">${t('all_rounds')}</option>` + [...new Set(state.matches.map(m => m.round_label))].map(r => `<option value="${r}">${r}</option>`).join('');
-  tSel.innerHTML = `<option value="all">${t('all_groups')}</option>` + state.teams.map(tm => `<option value="${tm.id}">${tm.name}</option>`).join('');
+  rSel.innerHTML = `<option value="all">${t('all_rounds')}</option>` + [...new Set(state.matches.map(m => m.round_label))].map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
+  tSel.innerHTML = `<option value="all">${t('all_groups')}</option>` + state.teams.map(tm => `<option value="${escapeHtml(tm.id)}">${escapeHtml(tm.name)}</option>`).join('');
   if ([...rSel.options].some(o => o.value === pr)) rSel.value = pr;
   if ([...tSel.options].some(o => o.value === pt)) tSel.value = pt;
 
@@ -1649,26 +1830,26 @@ function renderMatches() {
     return `
       <div class="liquid-glass rounded-[26px] p-5 space-y-4 hover:border-emerald-400/35 transition">
         <div class="flex items-center justify-between text-xs text-slate-400">
-          <span>${m.round_label}</span>
+          <span>${escapeHtml(m.round_label)}</span>
           ${badge}
         </div>
         <button type="button" data-open-match="${m.id}" class="w-full grid grid-cols-3 items-center gap-2 text-start">
           <div class="flex items-center gap-2.5">
             ${formatCrest(h, 'w-9 h-9 text-xs')}
-            <span class="font-display font-bold text-sm text-white truncate">${h.name}</span>
+            <span class="font-display font-bold text-sm text-white truncate">${escapeHtml(h.name)}</span>
           </div>
           <div class="text-center font-display font-black text-2xl text-white">
             ${m.status === 'upcoming' ? '<span class="text-xs text-slate-400 font-semibold">VS</span>' : `${m.home_score} <span class="text-emerald-400">:</span> ${m.away_score}`}
           </div>
           <div class="flex items-center justify-end gap-2.5">
-            <span class="font-display font-bold text-sm text-white truncate">${a.name}</span>
+            <span class="font-display font-bold text-sm text-white truncate">${escapeHtml(a.name)}</span>
             ${formatCrest(a, 'w-9 h-9 text-xs')}
           </div>
         </button>
         <div class="pt-3 border-t border-white/[0.08] flex items-center justify-between text-xs">
           <span class="text-slate-400">${formatDateTime(m.kickoff_at)}</span>
           <div class="flex items-center gap-3">
-            <button type="button" data-open-story="${m.id}" class="text-amber-300 hover:underline font-bold">${currentLang === 'en' ? 'Story / Snap' : 'ستوري / سناب'}</button>
+            <button type="button" data-open-story="${m.id}" class="text-amber-300 hover:underline font-bold">${currentLang === 'en' ? 'Snap' : 'سناب'}</button>
             <button type="button" data-open-match="${m.id}" data-open-tab="clips" class="text-sky-300 hover:underline font-bold">🎬 ${(state.clips || []).filter(cl => cl.match_id === m.id).length}</button>
             <button type="button" data-open-match="${m.id}" class="text-emerald-400 hover:underline font-bold">💬 ${cCount}</button>
           </div>
@@ -1682,7 +1863,7 @@ function renderTeamsView() {
   if (!state.teams.some(x => x.id === selectedTeamId)) selectedTeamId = state.teams[0]?.id || null;
   document.getElementById('teamsSelectorBar').innerHTML = state.teams.map(tm => {
     const active = tm.id === selectedTeamId;
-    return `<button type="button" data-select-team="${tm.id}" class="flex items-center gap-2 px-4 py-2 rounded-2xl text-xs sm:text-sm font-display font-bold transition ${active ? 'bg-emerald-500 text-obsidian shadow-lg shadow-emerald-500/20' : 'liquid-pill text-slate-200'}"><span class="w-2.5 h-2.5 rounded-full" style="background:${tm.primary_color}"></span>${tm.name}</button>`;
+    return `<button type="button" data-select-team="${tm.id}" class="flex items-center gap-2 px-4 py-2 rounded-2xl text-xs sm:text-sm font-display font-bold transition ${active ? 'bg-emerald-500 text-obsidian shadow-lg shadow-emerald-500/20' : 'liquid-pill text-slate-200'}"><span class="w-2.5 h-2.5 rounded-full" style="background:${sanitizeColor(tm.primary_color)}"></span>${escapeHtml(tm.name)}</button>`;
   }).join('');
 
   const team = getTeam(selectedTeamId);
@@ -1691,15 +1872,15 @@ function renderTeamsView() {
   const list = state.players.filter(p => q ? p.full_name.toLowerCase().includes(q) : p.team_id === selectedTeamId);
 
   const gk = list.find(p => p.position === 'GK'), defs = list.filter(p => p.position === 'DEF'), mids = list.filter(p => p.position === 'MID'), fwds = list.filter(p => p.position === 'FWD');
-  const dot = p => `<div class="flex flex-col items-center"><span class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center font-display font-black text-xs text-obsidian shadow-lg" style="background:${getTeam(p.team_id).primary_color}">${p.jersey_no}</span><span class="text-[11px] font-bold text-white bg-obsidian/80 px-2 py-0.5 rounded-lg mt-1 whitespace-nowrap">${p.full_name.split(' ')[0]}</span></div>`;
+  const dot = p => `<div class="flex flex-col items-center"><span class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center font-display font-black text-xs text-obsidian shadow-lg" style="background:${sanitizeColor(getTeam(p.team_id).primary_color)}">${escapeHtml(p.jersey_no)}</span><span class="text-[11px] font-bold text-white bg-obsidian/80 px-2 py-0.5 rounded-lg mt-1 whitespace-nowrap">${escapeHtml(p.full_name.split(" ")[0])}</span></div>`;
 
   document.getElementById('selectedTeamShowcase').innerHTML = `
     <div class="lg:col-span-5 space-y-2.5">
       <div class="flex items-center gap-3">
         ${formatCrest(team, 'w-14 h-14 text-lg')}
         <div>
-          <h3 class="font-display font-black text-2xl text-white">${q ? (currentLang === 'en' ? 'Search Results' : 'نتائج البحث') : team.name}</h3>
-          <p class="text-xs text-slate-400">${team.grade} · ${team.group_name}</p>
+          <h3 class="font-display font-black text-2xl text-white">${q ? (currentLang === "en" ? "Search Results" : "نتائج البحث") : escapeHtml(team.name)}</h3>
+          <p class="text-xs text-slate-400">${escapeHtml(team.grade)} · ${escapeHtml(team.group_name)}</p>
         </div>
       </div>
     </div>
@@ -1717,7 +1898,7 @@ function renderTeamsView() {
     const pt = getTeam(p.team_id), st = pStats[p.id] || { goals: 0, assists: 0, yellow: 0, red: 0 };
     return `
       <div class="card-3d-wrap">
-        <div class="card-3d liquid-glass rounded-[28px] p-5" style="background: linear-gradient(155deg, ${pt.primary_color}22 0%, rgba(16,24,36,0.75) 55%, rgba(9,13,20,0.92) 100%)">
+        <div class="card-3d liquid-glass rounded-[28px] p-5" style="background: linear-gradient(155deg, ${sanitizeColor(pt.primary_color)}22 0%, rgba(16,24,36,0.75) 55%, rgba(9,13,20,0.92) 100%)">
           <div class="card-3d-inner space-y-4">
             <div class="flex items-start justify-between">
               <div>
@@ -1727,9 +1908,9 @@ function renderTeamsView() {
               <span class="w-10 h-10 rounded-2xl bg-obsidian/70 border border-white/15 flex items-center justify-center font-display font-black text-base text-white">#${p.jersey_no}</span>
             </div>
             <div class="py-3 text-center border-y border-white/10">
-              <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center font-display font-black text-xl text-obsidian mb-2 shadow-md" style="background:${pt.primary_color}">${p.full_name.charAt(0)}</div>
-              <h4 class="font-display font-extrabold text-base text-white">${p.full_name}</h4>
-              <p class="text-[11px] text-slate-400">${pt.name}</p>
+              <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center font-display font-black text-xl text-obsidian mb-2 shadow-md" style="background:${sanitizeColor(pt.primary_color)}">${escapeHtml(p.full_name.charAt(0))}</div>
+              <h4 class="font-display font-extrabold text-base text-white">${escapeHtml(p.full_name)}</h4>
+              <p class="text-[11px] text-slate-400">${escapeHtml(pt.name)}</p>
             </div>
             <div class="grid grid-cols-3 gap-2 text-center">
               <div class="bg-obsidian/60 rounded-xl py-2"><p class="font-display font-black text-base text-emerald-400">${st.goals}</p><p class="text-[10px] text-slate-400">${currentLang === 'en' ? 'Goals' : 'أهداف'}</p></div>
@@ -1761,10 +1942,10 @@ function renderStatsView() {
   const as = [...all].filter(s => s.assists > 0).sort((a, b) => b.assists - a.assists).slice(0, 8);
   const cd = [...all].filter(s => s.yellow > 0 || s.red > 0);
 
-  const row = (s, i, v, col) => `<div class="flex items-center justify-between p-3 rounded-2xl liquid-glass-subtle"><div class="flex items-center gap-3"><span class="w-7 h-7 rounded-xl flex items-center justify-center font-display font-black text-xs ${i === 0 ? 'bg-amber-400 text-obsidian' : 'bg-white/10 text-slate-300'}">${i + 1}</span><div><p class="font-display font-bold text-sm text-white">${s.player.full_name}</p><p class="text-xs text-slate-400">${s.team.name}</p></div></div><span class="font-display font-black text-lg ${col}">${v}</span></div>`;
+  const row = (s, i, v, col) => `<div class="flex items-center justify-between p-3 rounded-2xl liquid-glass-subtle"><div class="flex items-center gap-3"><span class="w-7 h-7 rounded-xl flex items-center justify-center font-display font-black text-xs ${i === 0 ? 'bg-amber-400 text-obsidian' : 'bg-white/10 text-slate-300'}">${i + 1}</span><div><p class="font-display font-bold text-sm text-white">${escapeHtml(s.player.full_name)}</p><p class="text-xs text-slate-400">${escapeHtml(s.team.name)}</p></div></div><span class="font-display font-black text-lg ${col}">${v}</span></div>`;
   document.getElementById('topScorersList').innerHTML = sc.map((s, i) => row(s, i, s.goals, 'text-emerald-400')).join('') || '<p class="text-xs text-slate-400">—</p>';
   document.getElementById('topAssistsList').innerHTML = as.map((s, i) => row(s, i, s.assists, 'text-amber-300')).join('') || '<p class="text-xs text-slate-400">—</p>';
-  document.getElementById('cardsStatsList').innerHTML = cd.map(s => `<div class="flex items-center justify-between p-3 rounded-2xl liquid-glass-subtle"><div><p class="font-display font-bold text-sm text-white">${s.player.full_name}</p><p class="text-xs text-slate-400">${s.team.name}</p></div><div class="flex gap-1.5 text-xs font-bold"><span class="px-2 py-0.5 rounded-lg bg-amber-400 text-obsidian">${s.yellow} 🟨</span>${s.red ? `<span class="px-2 py-0.5 rounded-lg bg-rose-500 text-white">${s.red} 🟥</span>` : ''}</div></div>`).join('') || '<p class="text-xs text-slate-400">—</p>';
+  document.getElementById('cardsStatsList').innerHTML = cd.map(s => `<div class="flex items-center justify-between p-3 rounded-2xl liquid-glass-subtle"><div><p class="font-display font-bold text-sm text-white">${escapeHtml(s.player.full_name)}</p><p class="text-xs text-slate-400">${escapeHtml(s.team.name)}</p></div><div class="flex gap-1.5 text-xs font-bold"><span class="px-2 py-0.5 rounded-lg bg-amber-400 text-obsidian">${s.yellow} 🟨</span>${s.red ? `<span class="px-2 py-0.5 rounded-lg bg-rose-500 text-white">${s.red} 🟥</span>` : ''}</div></div>`).join('') || '<p class="text-xs text-slate-400">—</p>';
 }
 
 // =========================================================================
@@ -1782,7 +1963,7 @@ function openMatchModal(matchId, activeTab = 'overview') {
   const pred = state.votes.predictions[m.id] || { home: 0, draw: 0, away: 0 };
   const votedPred = state.votes.userVoted['pred_' + m.id];
 
-  document.getElementById('modalMatchTitle').textContent = `${m.round_label} — ${h.name} × ${a.name}`;
+  document.getElementById('modalMatchTitle').textContent = `${escapeHtml(m.round_label)} — ${escapeHtml(h.name)} × ${escapeHtml(a.name)}`;
   document.getElementById('modalMatchBody').innerHTML = `
     <div class="flex gap-2">
       <button type="button" data-open-match="${m.id}" data-open-tab="overview" class="flex-1 py-2 rounded-2xl text-xs font-bold transition ${activeTab === 'overview' ? 'bg-emerald-500 text-obsidian' : 'liquid-glass-subtle text-slate-300'}">${currentLang === 'en' ? 'Match & Chat' : 'التفاصيل والتعليقات'}</button>
@@ -1793,15 +1974,15 @@ function openMatchModal(matchId, activeTab = 'overview') {
         <form id="addClipForm" class="liquid-glass-subtle rounded-2xl p-4 space-y-2.5">
           <p class="text-xs font-display font-bold text-emerald-300">${currentLang === 'en' ? 'Add a Match Clip / Highlight' : 'أضف لقطة من المباراة'}</p>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <input id="clipAuthorInput" type="text" placeholder="${currentLang === 'en' ? 'Your name' : 'اسمك'}" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
-            <input id="clipTitleInput" type="text" placeholder="${currentLang === 'en' ? 'Clip caption (e.g. Top corner goal)' : 'وصف اللقطة (مثلاً: هدف صاروخي)'}" required class="sm:col-span-2 bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
+            <input id="clipAuthorInput" type="text" maxlength="60" placeholder="${currentLang === 'en' ? 'Your name' : 'اسمك'}" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
+            <input id="clipTitleInput" type="text" maxlength="140" placeholder="${currentLang === 'en' ? 'Clip caption (e.g. Top corner goal)' : 'وصف اللقطة (مثلاً: هدف صاروخي)'}" required class="sm:col-span-2 bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <input id="clipMinuteInput" type="number" min="1" max="120" value="${m.minute || 25}" placeholder="د" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
             <input id="clipUrlInput" type="url" dir="ltr" placeholder="${currentLang === 'en' ? 'Video link (optional)' : 'رابط الفيديو (اختياري)'}" class="sm:col-span-2 bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white text-left">
           </div>
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <input id="clipFileInput" type="file" accept="image/*,video/*" class="text-[11px] text-slate-300 file:me-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:bg-white/10 file:text-white">
+            <input id="clipFileInput" type="file" accept="image/png,image/jpeg,image/webp" class="text-[11px] text-slate-300 file:me-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:bg-white/10 file:text-white">
             <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-xs">${currentLang === 'en' ? 'Post Clip' : 'نشر اللقطة'}</button>
           </div>
         </form>
@@ -1809,16 +1990,15 @@ function openMatchModal(matchId, activeTab = 'overview') {
           ${clips.length ? clips.map(cl => `
             <div class="liquid-glass-subtle rounded-2xl p-3.5 space-y-2 text-xs">
               <div class="flex items-center justify-between gap-2">
-                <span class="font-bold text-white">${cl.title}</span>
+                <span class="font-bold text-white">${escapeHtml(cl.title)}</span>
                 <span class="shrink-0 px-2 py-0.5 rounded-lg bg-amber-400/15 text-amber-300 font-bold">${cl.minute}'</span>
               </div>
-              ${cl.media_type === 'image' && cl.media_url ? `<img src="${cl.media_url}" alt="${cl.title}" class="w-full max-h-48 object-cover rounded-xl border border-white/10">` : ''}
-              ${cl.media_type === 'video' && cl.media_url ? `<video src="${cl.media_url}" controls class="w-full max-h-48 rounded-xl border border-white/10"></video>` : ''}
+              ${cl.media_type === 'image' && sanitizeSafeUrl(cl.media_url) ? `<img src="${escapeHtml(sanitizeSafeUrl(cl.media_url))}" alt="${escapeHtml(cl.title)}" class="w-full max-h-48 object-cover rounded-xl border border-white/10">` : ''}
               <div class="flex items-center justify-between text-[11px] text-slate-400">
-                <span>${cl.author}</span>
+                <span>${escapeHtml(cl.author)}</span>
                 <div class="flex items-center gap-2">
-                  ${cl.media_type === 'link' && cl.media_url ? `<a href="${cl.media_url}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline font-bold">${currentLang === 'en' ? 'Watch Clip ↗' : 'مشاهدة اللقطة ↗'}</a>` : ''}
-                  ${adminUnlocked ? `<button type="button" data-del-clip="${cl.id}" data-mid="${m.id}" class="text-rose-400 font-bold">✕</button>` : ''}
+                  ${cl.media_type === 'link' && sanitizeSafeUrl(cl.media_url) ? `<a href="${escapeHtml(sanitizeSafeUrl(cl.media_url))}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline font-bold">${currentLang === 'en' ? 'Watch Clip ↗' : 'مشاهدة اللقطة ↗'}</a>` : ''}
+                  ${isCloudWriteActive() && hasPerm("moderation") ? `<button type="button" data-del-clip="${cl.id}" data-mid="${m.id}" class="text-rose-400 font-bold">✕</button>` : ''}
                 </div>
               </div>
             </div>
@@ -1829,13 +2009,13 @@ function openMatchModal(matchId, activeTab = 'overview') {
     <div class="liquid-glass-subtle rounded-3xl p-5 text-center space-y-4">
       <p class="text-xs text-slate-400">${formatDateTime(m.kickoff_at)}</p>
       <div class="grid grid-cols-3 items-center gap-2">
-        <div class="flex flex-col items-center gap-1.5">${formatCrest(h, 'w-12 h-12 text-sm')}<span class="font-display font-bold text-sm text-white">${h.name}</span></div>
+        <div class="flex flex-col items-center gap-1.5">${formatCrest(h, 'w-12 h-12 text-sm')}<span class="font-display font-bold text-sm text-white">${escapeHtml(h.name)}</span></div>
         <div class="font-display font-black text-4xl text-white">${m.home_score} <span class="text-emerald-400">:</span> ${m.away_score}</div>
-        <div class="flex flex-col items-center gap-1.5">${formatCrest(a, 'w-12 h-12 text-sm')}<span class="font-display font-bold text-sm text-white">${a.name}</span></div>
+        <div class="flex flex-col items-center gap-1.5">${formatCrest(a, 'w-12 h-12 text-sm')}<span class="font-display font-bold text-sm text-white">${escapeHtml(a.name)}</span></div>
       </div>
       <div class="flex flex-wrap justify-center gap-2 pt-1">
         <button type="button" data-open-story="${m.id}" class="px-4 py-2 rounded-2xl bg-gradient-to-r from-amber-400 to-emerald-400 text-obsidian font-display font-extrabold text-xs shadow-lg">
-          ${currentLang === 'en' ? 'Share Story / Snap Card' : 'مشاركة ستوري / سناب'}
+          ${currentLang === 'en' ? 'Share Snap Card' : 'مشاركة سناب'}
         </button>
       </div>
     </div>
@@ -1851,33 +2031,33 @@ function openMatchModal(matchId, activeTab = 'overview') {
     </div>
 
     <!-- Timeline -->
-    ${evs.length ? `<div class="space-y-2">${evs.map(ev => `<div class="flex items-center justify-between text-xs p-2.5 rounded-2xl liquid-glass-subtle"><span>${ev.event_type === 'goal' ? '⚽' : '🟨'} <strong>${getPlayer(ev.player_id).full_name}</strong></span><span class="text-amber-300 font-bold">${ev.minute}'</span></div>`).join('')}</div>` : ''}
+    ${evs.length ? `<div class="space-y-2">${evs.map(ev => `<div class="flex items-center justify-between text-xs p-2.5 rounded-2xl liquid-glass-subtle"><span>${ev.event_type === 'goal' ? '⚽' : '🟨'} <strong>${escapeHtml(getPlayer(ev.player_id).full_name)}</strong></span><span class="text-amber-300 font-bold">${ev.minute}'</span></div>`).join('')}</div>` : ''}
 
     <!-- Quick Prediction -->
     <div class="grid grid-cols-3 gap-2">
-      <button type="button" data-vote-pred="home" data-mid="${m.id}" class="py-2 rounded-xl text-xs font-bold border transition ${votedPred === 'home' ? 'bg-emerald-500 text-obsidian border-emerald-400' : 'liquid-glass-subtle text-white'}">${h.name} (${pred.home})</button>
+      <button type="button" data-vote-pred="home" data-mid="${m.id}" class="py-2 rounded-xl text-xs font-bold border transition ${votedPred === 'home' ? 'bg-emerald-500 text-obsidian border-emerald-400' : 'liquid-glass-subtle text-white'}">${escapeHtml(h.name)} (${pred.home})</button>
       <button type="button" data-vote-pred="draw" data-mid="${m.id}" class="py-2 rounded-xl text-xs font-bold border transition ${votedPred === 'draw' ? 'bg-emerald-500 text-obsidian border-emerald-400' : 'liquid-glass-subtle text-white'}">${currentLang === 'en' ? 'Draw' : 'تعادل'} (${pred.draw})</button>
-      <button type="button" data-vote-pred="away" data-mid="${m.id}" class="py-2 rounded-xl text-xs font-bold border transition ${votedPred === 'away' ? 'bg-emerald-500 text-obsidian border-emerald-400' : 'liquid-glass-subtle text-white'}">${a.name} (${pred.away})</button>
+      <button type="button" data-vote-pred="away" data-mid="${m.id}" class="py-2 rounded-xl text-xs font-bold border transition ${votedPred === 'away' ? 'bg-emerald-500 text-obsidian border-emerald-400' : 'liquid-glass-subtle text-white'}">${escapeHtml(a.name)} (${pred.away})</button>
     </div>
 
     <!-- Match Comments -->
     <div class="pt-4 border-t border-white/10 space-y-3">
       <h4 class="font-display font-extrabold text-sm text-white">${currentLang === 'en' ? `Match Comments (${comments.length})` : `تعليقات المباراة (${comments.length})`}</h4>
       <form id="matchCommentForm" data-mid="${m.id}" class="flex flex-col sm:flex-row gap-2">
-        <input id="commentAuthorInput" type="text" placeholder="${currentLang === 'en' ? 'Your name' : 'اسمك'}" required class="sm:w-36 bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
-        <input id="commentBodyInput" type="text" placeholder="${currentLang === 'en' ? 'Write a comment...' : 'اكتب تعليقك عن المباراة...'}" required class="flex-1 bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
+        <input id="commentAuthorInput" type="text" maxlength="60" placeholder="${currentLang === 'en' ? 'Your name' : 'اسمك'}" required class="sm:w-36 bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
+        <input id="commentBodyInput" type="text" maxlength="400" placeholder="${currentLang === 'en' ? 'Write a comment...' : 'اكتب تعليقك عن المباراة...'}" required class="flex-1 bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
         <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-xs">${currentLang === 'en' ? 'Post' : 'نشر'}</button>
       </form>
       <div class="space-y-2 max-h-48 overflow-y-auto">
         ${comments.length ? comments.map(c => `
           <div class="p-3 rounded-2xl liquid-glass-subtle flex items-start justify-between gap-2 text-xs">
             <div class="space-y-1">
-              <p class="font-bold text-emerald-300">${c.author}</p>
-              <p class="text-slate-200">${c.text}</p>
+              <p class="font-bold text-emerald-300">${escapeHtml(c.author)}</p>
+              <p class="text-slate-200">${escapeHtml(c.text)}</p>
             </div>
             <div class="flex items-center gap-2 shrink-0">
               <button type="button" data-like-comment="${c.id}" data-mid="${m.id}" class="px-2 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-slate-200">♥ ${c.likes || 0}</button>
-              ${adminUnlocked ? `<button type="button" data-del-comment="${c.id}" data-mid="${m.id}" class="text-rose-400 font-bold">✕</button>` : ''}
+              ${isCloudWriteActive() && hasPerm("moderation") ? `<button type="button" data-del-comment="${c.id}" data-mid="${m.id}" class="text-rose-400 font-bold">✕</button>` : ''}
             </div>
           </div>
         `).join('') : `<p class="text-xs text-slate-400">${currentLang === 'en' ? 'Be the first to comment!' : 'كن أول من يعلّق على المباراة!'}</p>`}
@@ -1887,45 +2067,56 @@ function openMatchModal(matchId, activeTab = 'overview') {
 
   const clipForm = document.getElementById('addClipForm');
   if (clipForm) {
-    clipForm.addEventListener('submit', e => {
+    clipForm.addEventListener('submit', async e => {
       e.preventDefault();
       const author = document.getElementById('clipAuthorInput').value.trim();
       const title = document.getElementById('clipTitleInput').value.trim();
-      const minute = parseInt(document.getElementById('clipMinuteInput').value, 10) || 1;
-      const urlVal = document.getElementById('clipUrlInput').value.trim();
+      const minute = Math.min(120, Math.max(1, parseInt(document.getElementById('clipMinuteInput').value, 10) || 1));
+      const rawUrl = document.getElementById('clipUrlInput').value.trim();
+      const urlVal = rawUrl ? sanitizeVideoLink(rawUrl) : '';
+      if (rawUrl && !urlVal) { showToast(currentLang === 'en' ? 'Use an HTTPS link from YouTube, Vimeo, TikTok, Snap, or Instagram.' : 'استخدم رابط HTTPS من يوتيوب أو سناب أو تيك توك أو إنستغرام فقط.', 'error'); return; }
       const fileInput = document.getElementById('clipFileInput');
-      const finishSave = (mediaUrl, mediaType) => {
-        state.clips.unshift({ id: uid('cl'), match_id: m.id, author, title, minute, media_url: mediaUrl, media_type: mediaType });
-        saveState(); renderMatches(); openMatchModal(m.id, 'clips');
+      try {
+        let mediaUrl = urlVal;
+        let mediaType = 'link';
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+          mediaUrl = await uploadImageToStorage(fileInput.files[0], 'clips');
+          mediaType = 'image';
+        }
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient.from('match_clips').insert({ match_id: m.id, author_name: author, title, minute, media_url: mediaUrl, media_type: mediaType }).select().single();
+          if (error) { showToast(error.message, 'error'); return; }
+          state.clips.unshift({ id: data.id, match_id: m.id, author, title, minute, media_url: mediaUrl, media_type: mediaType });
+        } else {
+          state.clips.unshift({ id: uid('cl'), match_id: m.id, author, title, minute, media_url: mediaUrl, media_type: mediaType });
+        }
+        renderMatches(); openMatchModal(m.id, 'clips');
         showToast(currentLang === 'en' ? 'Clip added!' : 'تمت إضافة اللقطة بنجاح!');
-      };
-      if (fileInput && fileInput.files && fileInput.files[0]) {
-        const f = fileInput.files[0];
-        const reader = new FileReader();
-        reader.onload = () => finishSave(reader.result, f.type.startsWith('video/') ? 'video' : 'image');
-        reader.readAsDataURL(f);
-      } else {
-        finishSave(urlVal, 'link');
+      } catch (err) {
+        showToast(err.message || 'Upload failed', 'error');
       }
     });
   }
 
   const commentForm = document.getElementById('matchCommentForm');
-  if (commentForm) commentForm.addEventListener('submit', e => {
+  if (commentForm) commentForm.addEventListener('submit', async e => {
     e.preventDefault();
     const author = document.getElementById('commentAuthorInput').value.trim();
     const text = document.getElementById('commentBodyInput').value.trim();
     if (!author || !text) return;
-    state.comments.unshift({ id: uid('c'), match_id: m.id, author, text, likes: 0, created_at: new Date().toISOString() });
-    saveState();
+    let newId = uid('c');
+    if (supabaseClient) {
+      const { data, error } = await supabaseClient.from('match_comments').insert({ match_id: m.id, author_name: author, body: text }).select().single();
+      if (error) { showToast(error.message, 'error'); return; }
+      newId = data.id;
+    }
+    state.comments.unshift({ id: newId, match_id: m.id, author, text, likes: 0, created_at: new Date().toISOString() });
     renderMatches();
     openMatchModal(m.id);
     showToast(currentLang === 'en' ? 'Comment posted!' : 'تم نشر تعليقك!');
   });
 
-  const modal = document.getElementById('matchModal');
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
+  openAccessibleModal(document.getElementById('matchModal'));
 }
 
 function drawInstagramStory(matchId, theme = 'victory') {
@@ -1934,118 +2125,151 @@ function drawInstagramStory(matchId, theme = 'victory') {
   if (!m || !canvas) return;
   const ctx = canvas.getContext('2d');
   const h = getTeam(m.home_team_id), a = getTeam(m.away_team_id);
-  const winner = m.home_score > m.away_score ? h : m.away_score > m.home_score ? a : null;
+  const winner = m.status === 'finished' && m.home_score !== m.away_score
+    ? (m.home_score > m.away_score ? h : a)
+    : null;
   const accent = theme === 'victory' && winner ? winner.primary_color : '#22C55E';
+  const accent2 = theme === 'victory' ? '#38BDF8' : '#F59E0B';
 
-  // Background
+  // Deep Aesthetic Dark Canvas
   const bg = ctx.createLinearGradient(0, 0, 1080, 1920);
-  bg.addColorStop(0, '#070B11');
-  bg.addColorStop(0.5, '#0F1824');
-  bg.addColorStop(1, '#06090F');
+  bg.addColorStop(0, '#05080F');
+  bg.addColorStop(0.5, '#0B1220');
+  bg.addColorStop(1, '#04060B');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, 1080, 1920);
 
-  // Ambient Radial Glow
-  const glow = ctx.createRadialGradient(540, 720, 40, 540, 720, 620);
-  glow.addColorStop(0, accent + '48');
-  glow.addColorStop(1, 'transparent');
-  ctx.fillStyle = glow;
+  // Soft Gen-Z Aura Mesh Blobs
+  const g1 = ctx.createRadialGradient(260, 420, 30, 260, 420, 560);
+  g1.addColorStop(0, accent + '66');
+  g1.addColorStop(1, 'transparent');
+  ctx.fillStyle = g1;
   ctx.fillRect(0, 0, 1080, 1920);
 
-  // Subtle Pitch Lines
-  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-  ctx.lineWidth = 3;
-  ctx.strokeRect(70, 90, 940, 1740);
-  ctx.beginPath();
-  ctx.arc(540, 960, 210, 0, Math.PI * 2);
-  ctx.stroke();
+  const g2 = ctx.createRadialGradient(860, 1340, 30, 860, 1340, 540);
+  g2.addColorStop(0, accent2 + '45');
+  g2.addColorStop(1, 'transparent');
+  ctx.fillStyle = g2;
+  ctx.fillRect(0, 0, 1080, 1920);
 
-  // Header Badge
-  ctx.fillStyle = 'rgba(255,255,255,0.08)';
-  ctx.beginPath();
-  ctx.roundRect(240, 175, 600, 82, 41);
-  ctx.fill();
+  // Subtle Editorial Dot Matrix
+  ctx.fillStyle = 'rgba(255,255,255,0.055)';
+  for (let gx = 90; gx < 1000; gx += 44) {
+    for (let gy = 140; gy < 1780; gy += 44) {
+      ctx.fillRect(gx, gy, 3, 3);
+    }
+  }
+
+  // Minimal Chrome Corner Brackets
   ctx.strokeStyle = 'rgba(255,255,255,0.22)';
-  ctx.stroke();
-  ctx.fillStyle = '#F8FAFC';
-  ctx.font = '800 34px Cairo, Inter, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText(state.season.name, 540, 228);
-
-  // Status Headline
-  ctx.fillStyle = accent;
-  ctx.font = '900 54px Cairo, Inter, sans-serif';
-  const headline = winner
-    ? (currentLang === 'en' ? `VICTORY · ${winner.name}` : `فوز مستحق · ${winner.name}`)
-    : (m.status === 'live' ? 'LIVE MATCHDAY' : 'FULL TIME');
-  ctx.fillText(headline, 540, 380);
-
-  ctx.fillStyle = '#94A3B8';
-  ctx.font = '600 32px Cairo, Inter, sans-serif';
-  ctx.fillText(`${m.round_label}  ·  ${formatDateTime(m.kickoff_at)}`, 540, 445);
-
-  // Liquid Glass Scoreboard Card
-  ctx.fillStyle = 'rgba(18, 28, 42, 0.78)';
-  ctx.beginPath();
-  ctx.roundRect(95, 560, 890, 620, 56);
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-
-  // Team Badges
-  const drawBadge = (cx, cy, team) => {
-    ctx.fillStyle = team.primary_color;
+  ctx.lineWidth = 4;
+  const br = 54;
+  [[72, 92, 1, 1], [1008, 92, -1, 1], [72, 1828, 1, -1], [1008, 1828, -1, -1]].forEach(([x, y, dx, dy]) => {
     ctx.beginPath();
-    ctx.roundRect(cx - 80, cy - 80, 160, 160, 42);
-    ctx.fill();
-    ctx.fillStyle = '#070B11';
-    ctx.font = '900 52px Cairo, Inter, sans-serif';
-    ctx.fillText(team.badge_code || 'FC', cx, cy + 18);
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = '800 38px Cairo, Inter, sans-serif';
-    ctx.fillText(team.name, cx, cy + 145);
-  };
-  drawBadge(290, 770, h);
-  drawBadge(790, 770, a);
-
-  // Score
-  ctx.fillStyle = '#FFFFFF';
-  ctx.font = '900 132px Cairo, Inter, sans-serif';
-  ctx.fillText(`${m.home_score} : ${m.away_score}`, 540, 810);
-
-  // Goalscorers inside Story Card
-  const goals = state.events.filter(e => e.match_id === m.id && e.event_type === 'goal').slice(0, 5);
-  ctx.fillStyle = '#CBD5E1';
-  ctx.font = '600 30px Cairo, Inter, sans-serif';
-  goals.forEach((ev, idx) => {
-    ctx.fillText(`⚽  ${getPlayer(ev.player_id).full_name}  (${ev.minute}')`, 540, 1020 + idx * 46);
+    ctx.moveTo(x, y + dy * br); ctx.lineTo(x, y); ctx.lineTo(x + dx * br, y);
+    ctx.stroke();
   });
 
-  // Footer Tag
-  ctx.fillStyle = 'rgba(255,255,255,0.55)';
-  ctx.font = '600 28px Inter, Cairo, sans-serif';
-  ctx.fillText('MODERN SYSTEMS SCHOOL  ·  مدرسة النظم الحديثة', 540, 1730);
+  // Top Pill Badge (English Only, No Date)
+  ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(255,255,255,0.09)';
+  ctx.beginPath(); ctx.roundRect(270, 168, 540, 74, 37); ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.24)'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.fillStyle = '#F8FAFC';
+  ctx.font = '800 28px Inter, sans-serif';
+  ctx.fillText("MSS FOOTBALL LEAGUE  ·  '26", 540, 215);
+
+  // Kinetic Status Headline (English Only)
+  const tagText = m.status === 'finished'
+    ? (winner ? 'WINNER TAKES ALL' : 'ALL SQUARE · FT')
+    : (m.status === 'live' ? 'LIVE RIGHT NOW' : 'MATCHDAY DROP');
+  ctx.fillStyle = accent;
+  ctx.font = '900 66px Inter, sans-serif';
+  ctx.fillText(tagText, 540, 368);
+
+  ctx.fillStyle = 'rgba(226,232,240,0.72)';
+  ctx.font = '700 32px Inter, sans-serif';
+  ctx.fillText((m.round_label || 'MATCHDAY').toUpperCase(), 540, 430);
+
+  // Floating Frosted Liquid Glass Score Card
+  ctx.fillStyle = 'rgba(15, 23, 38, 0.74)';
+  ctx.beginPath(); ctx.roundRect(86, 535, 908, 700, 64); ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.20)'; ctx.lineWidth = 3; ctx.stroke();
+
+  // Top inner specular edge
+  ctx.strokeStyle = 'rgba(255,255,255,0.38)'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(156, 537); ctx.lineTo(924, 537); ctx.stroke();
+
+  // Club Badges
+  const drawClub = (cx, cy, team, isWin) => {
+    if (isWin) {
+      ctx.fillStyle = team.primary_color + '44';
+      ctx.beginPath(); ctx.arc(cx, cy, 118, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.fillStyle = team.primary_color;
+    ctx.beginPath(); ctx.roundRect(cx - 86, cy - 86, 172, 172, 48); ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 4; ctx.stroke();
+    ctx.fillStyle = '#070B11';
+    ctx.font = '900 54px Inter, sans-serif';
+    ctx.fillText(team.badge_code || 'FC', cx, cy + 19);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '800 38px Inter, sans-serif';
+    ctx.fillText(team.name, cx, cy + 148);
+  };
+  drawClub(275, 765, h, winner && winner.id === h.id);
+  drawClub(805, 765, a, winner && winner.id === a.id);
+
+  // Oversized Score Display
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '900 144px Inter, sans-serif';
+  const scoreTxt = m.status === 'upcoming' ? 'VS' : `${m.home_score} - ${m.away_score}`;
+  ctx.fillText(scoreTxt, 540, 810);
+
+  // Winner Pill if finished
+  if (winner) {
+    ctx.fillStyle = winner.primary_color;
+    ctx.beginPath(); ctx.roundRect(330, 965, 420, 62, 31); ctx.fill();
+    ctx.fillStyle = '#070B11';
+    ctx.font = '900 28px Inter, sans-serif';
+    ctx.fillText(`${winner.name.toUpperCase()} WINS`, 540, 1006);
+  }
+
+  // Crisp Goalscorers List (English Only, No Date)
+  const goals = state.events.filter(e => e.match_id === m.id && e.event_type === 'goal').slice(0, 4);
+  ctx.fillStyle = '#E2E8F0';
+  ctx.font = '600 29px Inter, sans-serif';
+  goals.forEach((ev, idx) => {
+    ctx.fillText(`⚽  ${ev.minute}'  ${escapeHtml(getPlayer(ev.player_id).full_name)}`, 540, 1085 + idx * 42);
+  });
+
+  // Aesthetic Bottom Footer (English Only, Zero Date)
+  ctx.fillStyle = 'rgba(255,255,255,0.48)';
+  ctx.font = '700 26px Inter, sans-serif';
+  ctx.fillText('MODERN SYSTEMS SCHOOL  //  LEAGUE SNAP', 540, 1745);
 }
 
 function openStoryModal(matchId) {
   activeStoryMatchId = matchId;
   drawInstagramStory(matchId, activeStoryTheme);
-  const modal = document.getElementById('storyModal');
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
+  openAccessibleModal(document.getElementById('storyModal'));
 }
 
 // =========================================================================
 // 8. لوحة الإدارة + إدارة المشرفين + سجل النشاط (Audit Logs)
 // =========================================================================
 function updateAdminGateUI() {
-  const unlocked = Boolean(adminSession && adminSession.user) || adminUnlocked;
+  const unlocked = Boolean(adminSession && adminSession.user && currentAdminProfile && currentAdminProfile.is_active);
   document.getElementById('adminAuthGate').classList.toggle('hidden', unlocked);
   document.getElementById('adminWorkspace').classList.toggle('hidden', !unlocked);
-  const adm = getActiveAdmin();
-  document.getElementById('activeAdminTagBadge').textContent = adm.tag;
-  document.getElementById('adminUserEmailBar').textContent = `${adm.name} · ${currentLang === 'en' ? 'Access Code Verified' : 'تم التحقق بالكود الإداري'}`;
+  if (unlocked) {
+    document.getElementById('activeAdminTagBadge').textContent = currentAdminProfile.admin_tag || 'ADMIN';
+    document.getElementById('adminUserEmailBar').textContent = `${currentAdminProfile.display_name} (${currentAdminProfile.email || ''})`;
+    const tabPerms = { live: 'matches', teams: 'teams', moderation: 'moderation', governance: 'admins', settings: 'season' };
+    document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+      const req = tabPerms[btn.dataset.adminTab];
+      btn.classList.toggle('hidden', !hasPerm(req));
+    });
+  }
 }
 
 function renderAdminView() {
@@ -2056,7 +2280,7 @@ function renderAdminView() {
     presetSel.innerHTML = `<option value="custom">${currentLang === 'en' ? 'Custom Club' : 'نادٍ مخصص'}</option>` +
       Object.entries(CLUB_PRESETS).map(([k, v]) => `<option value="${k}">${v.nameAr} (${v.nameEn})</option>`).join('');
   }
-  const teamOpts = state.teams.map(tm => `<option value="${tm.id}">${tm.name}</option>`).join('');
+  const teamOpts = state.teams.map(tm => `<option value="${escapeHtml(tm.id)}">${escapeHtml(tm.name)}</option>`).join('');
   ['newMatchHome', 'newMatchAway', 'newPlayerTeam'].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -2075,9 +2299,7 @@ function renderAdminView() {
   document.getElementById('discordUrlInput').value = state.season.discord_url || '';
   document.getElementById('contactEmailInput').value = state.season.contact_email || '';
 
-  const creds = loadSbCreds();
-  document.getElementById('sbUrlInput').value = creds.url || '';
-  document.getElementById('sbKeyInput').value = creds.anonKey || '';
+
 
   // Admin Matches
   document.getElementById('adminMatchesList').innerHTML = state.matches.map(m => {
@@ -2085,7 +2307,7 @@ function renderAdminView() {
     return `
       <div class="p-4 rounded-2xl liquid-glass-subtle space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-          <span class="font-bold text-white">${m.round_label} · ${h.name} (${m.home_score}) × (${m.away_score}) ${a.name}</span>
+          <span class="font-bold text-white">${escapeHtml(m.round_label)} · ${escapeHtml(h.name)} (${m.home_score}) × (${m.away_score}) ${escapeHtml(a.name)}</span>
           <div class="flex items-center gap-1.5">
             <select data-change-status="${m.id}" class="bg-obsidian border border-white/15 rounded-lg px-2 py-1 text-xs text-white">
               <option value="upcoming" ${m.status === 'upcoming' ? 'selected' : ''}>${t('st_upcoming')}</option>
@@ -2095,23 +2317,22 @@ function renderAdminView() {
             <button type="button" data-delete-match="${m.id}" class="px-2 py-1 rounded-lg bg-rose-500/20 text-rose-300 font-bold">✕</button>
           </div>
         </div>
+        ${m.status === 'live' ? `
         <div class="flex flex-wrap gap-2">
-          <button type="button" data-open-event="goal" data-mid="${m.id}" data-tid="${h.id}" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 text-xs font-bold">+1 ${h.name}</button>
-          <button type="button" data-open-event="goal" data-mid="${m.id}" data-tid="${a.id}" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 text-xs font-bold">+1 ${a.name}</button>
-          <button type="button" data-open-event="yellow_card" data-mid="${m.id}" data-tid="${h.id}" class="px-2.5 py-1.5 rounded-xl bg-amber-500/15 text-amber-300 text-xs font-bold">🟨 ${h.badge_code}</button>
-          <button type="button" data-open-event="yellow_card" data-mid="${m.id}" data-tid="${a.id}" class="px-2.5 py-1.5 rounded-xl bg-amber-500/15 text-amber-300 text-xs font-bold">🟨 ${a.badge_code}</button>
-        </div>
+          <button type="button" data-open-event="goal" data-mid="${m.id}" data-tid="${h.id}" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 text-xs font-bold">+1 ${escapeHtml(h.name)}</button>
+          <button type="button" data-open-event="goal" data-mid="${m.id}" data-tid="${a.id}" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 text-xs font-bold">+1 ${escapeHtml(a.name)}</button>
+          <button type="button" data-open-event="yellow_card" data-mid="${m.id}" data-tid="${h.id}" class="px-2.5 py-1.5 rounded-xl bg-amber-500/15 text-amber-300 text-xs font-bold">🟨 ${escapeHtml(h.badge_code)}</button>
+          <button type="button" data-open-event="yellow_card" data-mid="${m.id}" data-tid="${a.id}" class="px-2.5 py-1.5 rounded-xl bg-amber-500/15 text-amber-300 text-xs font-bold">🟨 ${escapeHtml(a.badge_code)}</button>
+        </div>` : `<p class="text-[11px] text-slate-400">${m.status === 'upcoming' ? (currentLang === 'en' ? 'Switch status to Live to record goals & cards.' : 'حوّل الحالة إلى (مباشر) لبدء تسجيل الأهداف والبطاقات.') : (currentLang === 'en' ? 'Full Time declared — points applied to standings.' : 'مباراة منتهية — تم احتساب نقاطها في جدول الترتيب.')}</p>`}
       </div>
     `;
   }).join('');
 
   // Admin Teams & Players
-  document.getElementById('adminTeamsList').innerHTML = state.teams.map(tm => `<div class="flex items-center justify-between p-2.5 rounded-xl liquid-glass-subtle text-xs"><span class="font-bold text-white">${tm.name} (${tm.grade})</span><button type="button" data-delete-team="${tm.id}" class="text-rose-400 font-bold">✕</button></div>`).join('');
-  document.getElementById('adminPlayersList').innerHTML = state.players.map(p => `<div class="flex items-center justify-between p-2 rounded-xl liquid-glass-subtle text-xs"><span><strong class="text-white">#${p.jersey_no} ${p.full_name}</strong> · ${getTeam(p.team_id).name}</span><button type="button" data-delete-player="${p.id}" class="text-rose-400 font-bold">✕</button></div>`).join('');
+  document.getElementById('adminTeamsList').innerHTML = state.teams.map(tm => `<div class="flex items-center justify-between p-2.5 rounded-xl liquid-glass-subtle text-xs"><span class="font-bold text-white">${escapeHtml(tm.name)} (${escapeHtml(tm.grade)})</span><button type="button" data-delete-team="${tm.id}" class="text-rose-400 font-bold">✕</button></div>`).join('');
+  document.getElementById('adminPlayersList').innerHTML = state.players.map(p => `<div class="flex items-center justify-between p-2 rounded-xl liquid-glass-subtle text-xs"><span><strong class="text-white">#${p.jersey_no} ${escapeHtml(p.full_name)}</strong> · ${escapeHtml(getTeam(p.team_id).name)}</span><button type="button" data-delete-player="${p.id}" class="text-rose-400 font-bold">✕</button></div>`).join('');
 
   // Super Admin Governance: Active Switcher + Admins List + Audit Logs
-  const switcher = document.getElementById('activeAdminSwitcher');
-  switcher.innerHTML = state.admins.filter(a => a.active).map(a => `<option value="${a.id}" ${a.id === activeAdminId ? 'selected' : ''}>[${a.tag}] ${a.name}</option>`).join('');
 
   document.getElementById('adminsListContainer').innerHTML = state.admins.map(a => {
     const perms = Object.entries(a.permissions || {}).filter(([, v]) => v).map(([k]) => k).join(' · ');
@@ -2119,11 +2340,11 @@ function renderAdminView() {
       <div class="p-3.5 rounded-2xl liquid-glass-subtle flex flex-wrap items-center justify-between gap-3 text-xs">
         <div class="space-y-1">
           <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded-md bg-amber-400/20 text-amber-300 font-bold" dir="ltr">${a.tag}</span>
-            <strong class="text-white text-sm">${a.name}</strong>
+            <span class="px-2 py-0.5 rounded-md bg-amber-400/20 text-amber-300 font-bold" dir="ltr">${escapeHtml(a.tag)}</span>
+            <strong class="text-white text-sm">${escapeHtml(a.name)}</strong>
             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${a.active ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${a.active ? (currentLang === 'en' ? 'Active' : 'مفعّل') : (currentLang === 'en' ? 'Disabled' : 'موقوف')}</span>
           </div>
-          <p class="text-slate-400 font-mono" dir="ltr">${a.code || "••••"} — ${perms}</p>
+          <p class="text-slate-400 font-mono" dir="ltr">${escapeHtml(a.email || "")} — ${escapeHtml(perms)}</p>
         </div>
         <div class="flex items-center gap-2">
           <button type="button" data-toggle-admin="${a.id}" class="px-3 py-1.5 rounded-xl font-bold ${a.active ? 'bg-amber-500/15 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}">${a.active ? (currentLang === 'en' ? 'Disable' : 'إلغاء التفعيل') : (currentLang === 'en' ? 'Activate' : 'تفعيل')}</button>
@@ -2137,76 +2358,214 @@ function renderAdminView() {
   const tagFilter = document.getElementById('auditTagFilter');
   const prevTag = tagFilter.value || 'all';
   const tags = [...new Set(state.auditLogs.map(l => l.tag))];
-  tagFilter.innerHTML = `<option value="all">${currentLang === 'en' ? 'All Tags' : 'كل التاغات الإدارية'}</option>` + tags.map(tg => `<option value="${tg}">${tg}</option>`).join('');
+  tagFilter.innerHTML = `<option value="all">${currentLang === 'en' ? 'All Tags' : 'كل التاغات الإدارية'}</option>` + tags.map(tg => `<option value="${escapeHtml(tg)}">${escapeHtml(tg)}</option>`).join('');
   if ([...tagFilter.options].some(o => o.value === prevTag)) tagFilter.value = prevTag;
 
   const filteredLogs = state.auditLogs.filter(l => tagFilter.value === 'all' || l.tag === tagFilter.value);
   document.getElementById('auditLogsContainer').innerHTML = filteredLogs.map(l => `
     <div class="p-3 rounded-2xl liquid-glass-subtle flex flex-wrap items-center justify-between gap-2 text-xs">
       <div class="flex items-center gap-2.5 flex-wrap">
-        <span class="px-2 py-0.5 rounded-md bg-amber-400/15 text-amber-300 border border-amber-400/25 font-bold" dir="ltr">${l.tag}</span>
-        <span class="font-bold text-white">${l.action}</span>
-        <span class="text-slate-300">${l.details}</span>
+        <span class="px-2 py-0.5 rounded-md bg-amber-400/15 text-amber-300 border border-amber-400/25 font-bold" dir="ltr">${escapeHtml(l.tag)}</span>
+        <span class="font-bold text-white">${escapeHtml(l.action)}</span>
+        <span class="text-slate-300">${escapeHtml(l.details)}</span>
       </div>
       <span class="text-[11px] text-slate-400">${formatDateTime(l.created_at)}</span>
     </div>
   `).join('');
 
-  // Suggestions Inbox
+  // Student Content Moderation Panel (Comments & Clips/Photos)
+  const modC = document.getElementById('modCommentsList');
+  const modCl = document.getElementById('modClipsList');
+  if (modC) {
+    document.getElementById('modCommentsCount').textContent = state.comments.length;
+    modC.innerHTML = state.comments.length ? state.comments.map(c => {
+      const m = state.matches.find(x => x.id === c.match_id);
+      const mLbl = m ? `${escapeHtml(getTeam(m.home_team_id).badge_code)} vs ${escapeHtml(getTeam(m.away_team_id).badge_code)}` : '';
+      return `<div class="p-3 rounded-2xl liquid-glass-subtle flex items-start justify-between gap-2 text-xs">
+        <div class="space-y-1"><p class="font-bold text-emerald-300">${escapeHtml(c.author)} <span class="text-slate-400 font-normal">· ${mLbl}</span></p><p class="text-slate-200">${escapeHtml(c.text)}</p></div>
+        <button type="button" data-mod-del-comment="${c.id}" class="shrink-0 px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 font-bold hover:bg-rose-500/30">${currentLang === 'en' ? 'Remove' : 'إزالة'}</button>
+      </div>`;
+    }).join('') : `<p class="text-xs text-slate-400">${currentLang === 'en' ? 'No public comments.' : 'لا توجد تعليقات حاليًا.'}</p>`;
+  }
+  if (modCl) {
+    const clips = state.clips || [];
+    document.getElementById('modClipsCount').textContent = clips.length;
+    modCl.innerHTML = clips.length ? clips.map(cl => `
+      <div class="p-3 rounded-2xl liquid-glass-subtle space-y-2 text-xs">
+        <div class="flex items-start justify-between gap-2">
+          <div><p class="font-bold text-white">${escapeHtml(cl.title)}</p><p class="text-slate-400">${escapeHtml(cl.author)} · ${cl.minute}'</p></div>
+          <button type="button" data-mod-del-clip="${cl.id}" class="shrink-0 px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 font-bold hover:bg-rose-500/30">${currentLang === 'en' ? 'Remove' : 'إزالة'}</button>
+        </div>
+        ${cl.media_type === "image" && sanitizeSafeUrl(cl.media_url) ? `<img src="${escapeHtml(sanitizeSafeUrl(cl.media_url))}" alt="${escapeHtml(cl.title)}" class="w-full max-h-28 object-cover rounded-xl">` : ""}
+      </div>
+    `).join('') : `<p class="text-xs text-slate-400">${currentLang === 'en' ? 'No uploaded clips or photos.' : 'لا توجد لقطات أو صور مرفوعة.'}</p>`;
+  }
+
+  // Suggestions Inbox (with delete moderation button)
   document.getElementById('adminSuggestionsList').innerHTML = state.suggestions.length
-    ? state.suggestions.map(s => `<div class="p-3 rounded-2xl liquid-glass-subtle text-xs space-y-1"><div class="flex justify-between"><strong class="text-emerald-300">${s.sender}</strong><span class="text-slate-400">${formatDateTime(s.created_at)}</span></div><p class="text-slate-200">${s.message}</p></div>`).join('')
+    ? state.suggestions.map(s => `<div class="p-3 rounded-2xl liquid-glass-subtle text-xs space-y-1"><div class="flex justify-between items-center"><strong class="text-emerald-300">${escapeHtml(s.sender)}</strong><button type="button" data-mod-del-sug="${s.id}" class="text-rose-400 font-bold hover:underline">${currentLang === 'en' ? 'Remove' : 'حذف'}</button></div><p class="text-slate-200">${escapeHtml(s.message)}</p></div>`).join('')
     : `<p class="text-xs text-slate-400">${currentLang === 'en' ? 'No suggestions yet.' : 'لا توجد اقتراحات بعد.'}</p>`;
 }
 
 // =========================================================================
 // 9. Supabase Cloud Sync (Optional, Silent Until Configured)
 // =========================================================================
-function isCloudWriteActive() { return Boolean(supabaseClient && adminUnlocked); }
+function isCloudWriteActive() {
+  return Boolean(supabaseClient && adminSession && adminSession.user && currentAdminProfile && currentAdminProfile.is_active);
+}
 
-async function syncFromSupabase() {
+let refreshTimers = {};
+function scheduleTableRefresh(tableName) {
+  if (refreshTimers[tableName]) clearTimeout(refreshTimers[tableName]);
+  refreshTimers[tableName] = setTimeout(() => refreshSingleTable(tableName), 1000);
+}
+
+async function refreshSingleTable(tableName) {
   if (!supabaseClient) return;
   try {
-    const [sRes, tRes, pRes, mRes, eRes, aRes, lRes] = await Promise.all([
+    if (tableName === 'seasons') {
+      const { data } = await supabaseClient.from('seasons').select('*').order('created_at', { ascending: false }).limit(1);
+      if (data && data[0]) state.season = { id: data[0].id, name: data[0].name, format: data[0].format || 'flexible', announcement: data[0].announcement || '', discord_url: data[0].discord_url || '', contact_email: data[0].contact_email || 'league.students@mss.edu' };
+    } else if (tableName === 'teams') {
+      const { data } = await supabaseClient.from('teams').select('*').order('created_at', { ascending: true });
+      if (Array.isArray(data)) state.teams = data;
+    } else if (tableName === 'players') {
+      const { data } = await supabaseClient.from('players').select('*').order('jersey_no', { ascending: true });
+      if (Array.isArray(data)) state.players = data;
+    } else if (tableName === 'matches') {
+      const { data } = await supabaseClient.from('matches').select('*').order('kickoff_at', { ascending: true });
+      if (Array.isArray(data)) state.matches = data;
+    } else if (tableName === 'match_events') {
+      const { data } = await supabaseClient.from('match_events').select('*').order('minute', { ascending: true });
+      if (Array.isArray(data)) state.events = data;
+    } else if (tableName === 'match_comments') {
+      const { data } = await supabaseClient.from('match_comments').select('*').order('created_at', { ascending: false }).limit(100);
+      if (Array.isArray(data)) state.comments = data.map(c => ({ id: c.id, match_id: c.match_id, author: c.author_name, text: c.body, likes: c.likes || 0, created_at: c.created_at }));
+    } else if (tableName === 'match_clips') {
+      const { data } = await supabaseClient.from('match_clips').select('*').order('created_at', { ascending: false }).limit(60);
+      if (Array.isArray(data)) state.clips = data.map(cl => ({ id: cl.id, match_id: cl.match_id, author: cl.author_name, title: cl.title, minute: cl.minute || 0, media_url: cl.media_url || '', media_type: cl.media_type || 'link' }));
+    } else if (tableName === 'fan_votes') {
+      const { data } = await supabaseClient.from('fan_votes').select('match_id, vote_type, target_id');
+      if (Array.isArray(data)) {
+        const preds = {}, reacts = {};
+        data.forEach(v => {
+          if (v.vote_type === 'prediction') {
+            if (!preds[v.match_id]) preds[v.match_id] = { home: 0, draw: 0, away: 0 };
+            if (preds[v.match_id][v.target_id] !== undefined) preds[v.match_id][v.target_id]++;
+          } else if (v.vote_type === 'reaction') {
+            if (!reacts[v.match_id]) reacts[v.match_id] = { fire: 0, ball: 0, clap: 0, wow: 0 };
+            if (reacts[v.match_id][v.target_id] !== undefined) reacts[v.match_id][v.target_id]++;
+          }
+        });
+        state.votes.predictions = preds;
+        state.votes.reactions = reacts;
+      }
+    }
+    renderAll();
+  } catch (e) { console.warn('Refresh error:', e); }
+}
+
+async function syncPublicData() {
+  if (!supabaseClient) return;
+  try {
+    const [sRes, tRes, pRes, mRes, eRes, cRes, clRes, vRes] = await Promise.all([
       supabaseClient.from('seasons').select('*').order('created_at', { ascending: false }).limit(1),
       supabaseClient.from('teams').select('*').order('created_at', { ascending: true }),
       supabaseClient.from('players').select('*').order('jersey_no', { ascending: true }),
       supabaseClient.from('matches').select('*').order('kickoff_at', { ascending: true }),
       supabaseClient.from('match_events').select('*').order('minute', { ascending: true }),
-      supabaseClient.from('admin_profiles').select('*').order('created_at', { ascending: true }),
-      supabaseClient.from('admin_audit_logs').select('*').order('created_at', { ascending: false }).limit(50)
+      supabaseClient.from('match_comments').select('*').order('created_at', { ascending: false }).limit(100),
+      supabaseClient.from('match_clips').select('*').order('created_at', { ascending: false }).limit(60),
+      supabaseClient.from('fan_votes').select('match_id, vote_type, target_id')
     ]);
     if (sRes.data && sRes.data[0]) {
       const s = sRes.data[0];
       state.season = { id: s.id, name: s.name, format: s.format || 'flexible', announcement: s.announcement || '', discord_url: s.discord_url || '', contact_email: s.contact_email || 'league.students@mss.edu' };
     }
-    if (tRes.data && tRes.data.length) state.teams = tRes.data;
-    if (pRes.data && pRes.data.length) state.players = pRes.data;
-    if (mRes.data && mRes.data.length) state.matches = mRes.data;
-    if (eRes.data) state.events = eRes.data;
-    if (aRes.data && aRes.data.length) {
-      state.admins = aRes.data.map(a => ({ id: a.id, code: a.login_code, name: a.display_name, tag: a.admin_tag, role: a.role, active: a.is_active, permissions: a.permissions || {} }));
-    }
-    if (lRes.data && lRes.data.length) {
-      state.auditLogs = lRes.data.map(l => ({ id: l.id, tag: l.admin_tag, adminName: l.admin_name, action: l.action_type, details: l.details, created_at: l.created_at }));
+    if (Array.isArray(tRes.data) && tRes.data.length) state.teams = tRes.data;
+    else if (Array.isArray(tRes.data) && !tRes.error && state.season.id) state.teams = [];
+    if (Array.isArray(pRes.data)) state.players = pRes.data;
+    if (Array.isArray(mRes.data)) state.matches = mRes.data;
+    if (Array.isArray(eRes.data)) state.events = eRes.data;
+    if (Array.isArray(cRes.data)) state.comments = cRes.data.map(c => ({ id: c.id, match_id: c.match_id, author: c.author_name, text: c.body, likes: c.likes || 0, created_at: c.created_at }));
+    if (Array.isArray(clRes.data)) state.clips = clRes.data.map(cl => ({ id: cl.id, match_id: cl.match_id, author: cl.author_name, title: cl.title, minute: cl.minute || 0, media_url: cl.media_url || '', media_type: cl.media_type || 'link' }));
+    if (Array.isArray(vRes.data)) {
+      const preds = {}, reacts = {};
+      vRes.data.forEach(v => {
+        if (v.vote_type === 'prediction') {
+          if (!preds[v.match_id]) preds[v.match_id] = { home: 0, draw: 0, away: 0 };
+          if (preds[v.match_id][v.target_id] !== undefined) preds[v.match_id][v.target_id]++;
+        } else if (v.vote_type === 'reaction') {
+          if (!reacts[v.match_id]) reacts[v.match_id] = { fire: 0, ball: 0, clap: 0, wow: 0 };
+          if (reacts[v.match_id][v.target_id] !== undefined) reacts[v.match_id][v.target_id]++;
+        }
+      });
+      state.votes.predictions = preds;
+      state.votes.reactions = reacts;
     }
     renderAll();
-  } catch (e) {}
+  } catch (e) { console.warn('Public sync error:', e); }
+}
+
+async function syncAdminData() {
+  if (!isCloudWriteActive()) return;
+  try {
+    const [sugRes, aRes, lRes] = await Promise.all([
+      supabaseClient.from('suggestions').select('*').order('created_at', { ascending: false }).limit(80),
+      supabaseClient.from('admin_profiles').select('id, auth_user_id, email, display_name, admin_tag, role, permissions, is_active').order('created_at', { ascending: true }),
+      supabaseClient.from('admin_audit_logs').select('*').order('created_at', { ascending: false }).limit(80)
+    ]);
+    if (Array.isArray(sugRes.data)) state.suggestions = sugRes.data.map(s => ({ id: s.id, sender: s.sender_name, category: s.category, message: s.message, created_at: s.created_at }));
+    if (Array.isArray(aRes.data)) state.admins = aRes.data.map(a => ({ id: a.id, email: a.email, name: a.display_name, tag: a.admin_tag, role: a.role, active: a.is_active, permissions: a.permissions || {} }));
+    if (Array.isArray(lRes.data)) state.auditLogs = lRes.data.map(l => ({ id: l.id, tag: l.admin_tag, adminName: l.admin_name, action: l.action_type, details: l.details, created_at: l.created_at }));
+    renderAdminView();
+  } catch (e) { console.warn('Admin sync error:', e); }
+}
+
+async function loadCurrentAdminProfile() {
+  if (!supabaseClient || !adminSession || !adminSession.user) { currentAdminProfile = null; updateAdminGateUI(); return; }
+  const { data, error } = await supabaseClient
+    .from('admin_profiles')
+    .select('id, auth_user_id, email, display_name, admin_tag, role, permissions, is_active')
+    .eq('auth_user_id', adminSession.user.id)
+    .maybeSingle();
+  if (error || !data || !data.is_active) {
+    currentAdminProfile = null;
+    updateAdminGateUI();
+    return;
+  }
+  currentAdminProfile = data;
+  updateAdminGateUI();
+  await syncAdminData();
 }
 
 async function tryConnectSupabase(url, key) {
   if (!url || !key || typeof window.supabase === 'undefined') return;
   try {
     supabaseClient = window.supabase.createClient(url, key);
-    await syncFromSupabase();
+    const { data: sessData } = await supabaseClient.auth.getSession();
+    adminSession = sessData ? sessData.session : null;
+    supabaseClient.auth.onAuthStateChange((_ev, sess) => {
+      adminSession = sess;
+      loadCurrentAdminProfile();
+    });
+    await syncPublicData();
+    if (adminSession) await loadCurrentAdminProfile();
+
     if (realtimeChannel) { try { supabaseClient.removeChannel(realtimeChannel); } catch (e) {} }
     realtimeChannel = supabaseClient
       .channel('league-live')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'matches' }, () => syncFromSupabase())
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'teams' }, () => syncFromSupabase())
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'players' }, () => syncFromSupabase())
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'match_events' }, () => syncFromSupabase())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'seasons' }, () => scheduleTableRefresh('seasons'))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'matches' }, () => scheduleTableRefresh('matches'))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'teams' }, () => scheduleTableRefresh('teams'))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'players' }, () => scheduleTableRefresh('players'))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'match_events' }, () => scheduleTableRefresh('match_events'))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'match_comments' }, () => scheduleTableRefresh('match_comments'))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'match_clips' }, () => scheduleTableRefresh('match_clips'))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'fan_votes' }, () => scheduleTableRefresh('fan_votes'))
       .subscribe();
   } catch (e) {
+    console.warn('Supabase init failed:', e);
     supabaseClient = null;
   }
 }
@@ -2262,11 +2621,10 @@ function openEventModal(mid, tid, type) {
   document.getElementById('evType').value = type;
   document.getElementById('eventModalTitle').textContent = `${type === 'goal' ? '⚽' : '🟨'} ${getTeam(tid).name}`;
   document.getElementById('evAssistWrap').style.display = type === 'goal' ? 'block' : 'none';
-  const opts = players.map(p => `<option value="${p.id}">#${p.jersey_no} ${p.full_name}</option>`).join('');
+  const opts = players.map(p => `<option value="${p.id}">#${p.jersey_no} ${escapeHtml(p.full_name)}</option>`).join('');
   document.getElementById('evPlayerId').innerHTML = opts;
   document.getElementById('evAssistId').innerHTML = `<option value="">${currentLang === 'en' ? 'No assist' : 'بدون صانع هدف'}</option>` + opts;
-  const m = document.getElementById('eventModal');
-  m.classList.remove('hidden'); m.classList.add('flex');
+  openAccessibleModal(document.getElementById('eventModal'));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -2296,12 +2654,10 @@ document.addEventListener('DOMContentLoaded', () => {
       joinBtn.classList.add('hidden');
       desc.textContent = currentLang === 'en' ? 'The Discord invite link will be added shortly via Admin Settings.' : 'سيتم إضافة رابط الدعوة المباشر للسيرفر قريبًا من إعدادات الإدارة.';
     }
-    const dm = document.getElementById('discordModal');
-    dm.classList.remove('hidden'); dm.classList.add('flex');
+    openAccessibleModal(document.getElementById('discordModal'));
   });
   document.getElementById('closeDiscordModal').addEventListener('click', () => {
-    const dm = document.getElementById('discordModal');
-    dm.classList.add('hidden'); dm.classList.remove('flex');
+    closeAccessibleModal(document.getElementById('discordModal'));
   });
 
   // Info Page: Copy Email + Suggestion Box
@@ -2316,23 +2672,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  document.getElementById('suggestionForm').addEventListener('submit', e => {
+  document.getElementById('suggestionForm').addEventListener('submit', async e => {
     e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
     const sender = document.getElementById('sugName').value.trim() || (currentLang === 'en' ? 'Student' : 'طالب');
     const category = document.getElementById('sugCategory').value;
     const message = document.getElementById('sugMessage').value.trim();
     if (!message) return;
-    state.suggestions.unshift({ id: uid('s'), sender, category, message, created_at: new Date().toISOString() });
-    saveState();
-    e.target.reset();
-    renderAdminView();
-    showToast(currentLang === 'en' ? 'Thank you! Your suggestion was sent.' : 'شكرًا لك! تم استلام اقتراحك بنجاح.');
+    await withSubmitLock(btn, async () => {
+      if (supabaseClient) {
+        const { error } = await supabaseClient.from('suggestions').insert({ sender_name: sender, category, message });
+        if (error) { handleDbError(error); return; }
+      }
+      e.target.reset();
+      showToast(currentLang === 'en' ? 'Thank you! Your suggestion was sent.' : 'شكرًا لك! تم استلام اقتراحك بنجاح.');
+    });
   });
 
   // Story Modal Controls
   document.getElementById('closeStoryModal').addEventListener('click', () => {
-    const sm = document.getElementById('storyModal');
-    sm.classList.add('hidden'); sm.classList.remove('flex');
+    closeAccessibleModal(document.getElementById('storyModal'));
   });
   document.querySelectorAll('.story-theme-btn').forEach(btn => btn.addEventListener('click', () => {
     activeStoryTheme = btn.dataset.storyTheme;
@@ -2345,17 +2704,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('downloadStoryBtn').addEventListener('click', () => {
     const canvas = document.getElementById('storyCanvas');
     const a = document.createElement('a');
-    a.download = `match-story-${activeStoryMatchId || 'card'}.png`;
+    a.download = `match-snap-${activeStoryMatchId || 'card'}.png`;
     a.href = canvas.toDataURL('image/png');
     a.click();
-    showToast(currentLang === 'en' ? 'Story image downloaded!' : 'تم تحميل صورة ستوري إنستغرام!');
+    showToast(currentLang === 'en' ? 'Snap card saved!' : 'تم حفظ بطاقة سناب!');
   });
   document.getElementById('nativeShareStoryBtn').addEventListener('click', async () => {
     const canvas = document.getElementById('storyCanvas');
     try {
       canvas.toBlob(async blob => {
         if (blob && navigator.share && navigator.canShare) {
-          const file = new File([blob], 'match-story.png', { type: 'image/png' });
+          const file = new File([blob], 'match-snap.png', { type: 'image/png' });
           if (navigator.canShare({ files: [file] })) {
             await navigator.share({ files: [file], title: state.season.name });
             return;
@@ -2374,90 +2733,67 @@ document.addEventListener('DOMContentLoaded', () => {
   ['matchStatusFilter', 'matchRoundFilter', 'matchTeamFilter'].forEach(id => document.getElementById(id).addEventListener('change', renderMatches));
   document.getElementById('playerSearchInput').addEventListener('input', renderTeamsView);
   document.getElementById('auditTagFilter').addEventListener('change', renderAdminView);
-  document.getElementById('activeAdminSwitcher').addEventListener('change', e => {
-    activeAdminId = e.target.value;
-    updateAdminGateUI();
-    showToast(`${currentLang === 'en' ? 'Active Tag:' : 'التاغ النشط:'} ${getActiveAdmin().tag}`);
+  // Accessible Modal Escape & Focus Trap (a11y)
+  document.addEventListener('keydown', e => {
+    if (!activeModalEl) return;
+    if (e.key === 'Escape') {
+      closeAccessibleModal(activeModalEl);
+      return;
+    }
+    if (e.key === 'Tab') {
+      const focusables = [...activeModalEl.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')].filter(el => !el.disabled && el.offsetParent !== null);
+      if (!focusables.length) return;
+      const first = focusables[0], last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   });
 
   // Close Modals
   document.getElementById('closeMatchModal').addEventListener('click', () => {
-    const mm = document.getElementById('matchModal'); mm.classList.add('hidden'); mm.classList.remove('flex');
+    closeAccessibleModal(document.getElementById('matchModal'));
   });
   document.getElementById('closeEventModal').addEventListener('click', () => {
-    const em = document.getElementById('eventModal'); em.classList.add('hidden'); em.classList.remove('flex');
+    closeAccessibleModal(document.getElementById('eventModal'));
   });
 
-  // Admin Auth Gate (Access Code Verification via Supabase RPC + Local Fallback)
+  // Server-Verified Supabase Auth Login
   document.getElementById('adminLoginForm').addEventListener('submit', async e => {
     e.preventDefault();
-    const code = document.getElementById('adminLoginCode').value.trim().toUpperCase();
-    if (!code) return;
-
-    if (supabaseClient) {
-      try {
-        const { data, error } = await supabaseClient.rpc('verify_admin_code', { p_code: code });
-        if (!error && data && data.length) {
-          const row = data[0];
-          if (!row.is_active) {
-            showToast(currentLang === 'en' ? 'This access code is disabled.' : 'هذا الكود الإداري موقوف حاليًا.', 'error');
-            return;
-          }
-          const existing = state.admins.find(a => a.tag === row.admin_tag);
-          if (existing) activeAdminId = existing.id;
-          else {
-            state.admins.push({ id: row.id, code, name: row.display_name, tag: row.admin_tag, role: row.role, active: true, permissions: row.permissions || {} });
-            activeAdminId = row.id;
-          }
-          adminUnlocked = true;
-          document.getElementById('adminLoginCode').value = '';
-          updateAdminGateUI();
-          renderAdminView();
-          showToast(currentLang === 'en' ? `Welcome [${row.admin_tag}]!` : `أهلًا بك [${row.admin_tag}]!`);
-          return;
-        }
-      } catch (err) {}
-    }
-
-    const found = state.admins.find(a => (a.code || '').toUpperCase() === code);
-    if (!found) {
-      showToast(currentLang === 'en' ? 'Invalid access code.' : 'كود الدخول غير صحيح.', 'error');
+    if (!supabaseClient) { showToast(currentLang === 'en' ? 'Database not configured.' : 'قاعدة البيانات غير متصلة.', 'error'); return; }
+    const email = document.getElementById('adminLoginEmail').value.trim();
+    const password = document.getElementById('adminLoginPassword').value;
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) { showToast(error.message, 'error'); return; }
+    adminSession = data.session;
+    await loadCurrentAdminProfile();
+    if (!currentAdminProfile) {
+      await supabaseClient.auth.signOut();
+      showToast(currentLang === 'en' ? 'Account is not an active admin.' : 'هذا الحساب غير مفعّل كمشرف في قاعدة البيانات.', 'error');
       return;
     }
-    if (!found.active) {
-      showToast(currentLang === 'en' ? 'This access code is disabled.' : 'هذا الكود الإداري موقوف حاليًا.', 'error');
-      return;
-    }
-    activeAdminId = found.id;
-    adminUnlocked = true;
-    document.getElementById('adminLoginCode').value = '';
-    updateAdminGateUI();
-    renderAdminView();
-    showToast(currentLang === 'en' ? `Welcome [${found.tag}]!` : `أهلًا بك [${found.tag}]!`);
-  });
-
-  document.getElementById('genAdminCodeBtn').addEventListener('click', () => {
-    const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
-    document.getElementById('newAdminCode').value = `MSS-${rand}`;
+    document.getElementById('adminLoginPassword').value = '';
+    showToast(currentLang === 'en' ? `Welcome [${currentAdminProfile.admin_tag}]!` : `أهلًا بك [${currentAdminProfile.admin_tag}]!`);
   });
 
   document.getElementById('adminLogoutBtn').addEventListener('click', async () => {
     if (supabaseClient && adminSession) { try { await supabaseClient.auth.signOut(); } catch (e) {} }
     adminSession = null;
-    adminUnlocked = false;
     updateAdminGateUI();
   });
 
   // Global Delegation
-  document.body.addEventListener('click', e => {
+  document.body.addEventListener('click', async e => {
     const openM = e.target.closest('[data-open-match]');
     if (openM) { openMatchModal(openM.dataset.openMatch, openM.dataset.openTab || 'overview'); return; }
 
     const delClip = e.target.closest('[data-del-clip]');
-    if (delClip) {
+    if (delClip && isCloudWriteActive()) {
+      const { error } = await supabaseClient.from('match_clips').delete().eq('id', delClip.dataset.delClip);
+      if (error) { showToast(error.message, 'error'); return; }
       state.clips = (state.clips || []).filter(c => c.id !== delClip.dataset.delClip);
-      logAdminAction('حذف لقطة', delClip.dataset.delClip);
-      saveState(); renderMatches(); openMatchModal(delClip.dataset.mid, 'clips'); return;
+      await logAdminAction('Delete Clip', delClip.dataset.delClip);
+      renderMatches(); openMatchModal(delClip.dataset.mid, 'clips'); return;
     }
 
     const openSt = e.target.closest('[data-open-story]');
@@ -2469,102 +2805,188 @@ document.addEventListener('DOMContentLoaded', () => {
     const reactBtn = e.target.closest('[data-react]');
     if (reactBtn) {
       const mid = reactBtn.dataset.mid, k = reactBtn.dataset.react;
-      if (!state.votes.reactions[mid]) state.votes.reactions[mid] = { fire: 0, ball: 0, clap: 0, wow: 0 };
-      state.votes.reactions[mid][k] = (state.votes.reactions[mid][k] || 0) + 1;
-      saveState(); openMatchModal(mid); return;
+      await withSubmitLock(reactBtn, async () => {
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient.rpc('toggle_match_reaction', { p_match_id: mid, p_reaction: k, p_device_hash: getDeviceHash() });
+          if (error) { handleDbError(error); return; }
+          if (data && data.counts) state.votes.reactions[mid] = data.counts;
+        } else {
+          if (!state.votes.reactions[mid]) state.votes.reactions[mid] = { fire: 0, ball: 0, clap: 0, wow: 0 };
+          state.votes.reactions[mid][k] = (state.votes.reactions[mid][k] || 0) + 1;
+        }
+        saveState(); openMatchModal(mid);
+      });
+      return;
     }
 
     const predBtn = e.target.closest('[data-vote-pred]');
     if (predBtn) {
       const mid = predBtn.dataset.mid, ch = predBtn.dataset.votePred;
+      const mObj = state.matches.find(x => x.id === mid);
+      if (mObj && mObj.status !== 'upcoming') { showToast(currentLang === 'en' ? 'Predictions closed after kickoff.' : 'أُغلقت التوقعات بعد بداية المباراة.', 'error'); return; }
       if (state.votes.userVoted['pred_' + mid]) { showToast(currentLang === 'en' ? 'Already voted!' : 'سبق وسجّلت توقعك!'); return; }
-      if (!state.votes.predictions[mid]) state.votes.predictions[mid] = { home: 0, draw: 0, away: 0 };
-      state.votes.predictions[mid][ch]++;
-      state.votes.userVoted['pred_' + mid] = ch;
-      saveState(); renderHome(); openMatchModal(mid); return;
+      await withSubmitLock(predBtn, async () => {
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient.rpc('cast_match_prediction', { p_match_id: mid, p_choice: ch, p_device_hash: getDeviceHash() });
+          if (error) { handleDbError(error); return; }
+          if (data) state.votes.predictions[mid] = data;
+        } else {
+          if (!state.votes.predictions[mid]) state.votes.predictions[mid] = { home: 0, draw: 0, away: 0 };
+          state.votes.predictions[mid][ch]++;
+        }
+        state.votes.userVoted['pred_' + mid] = ch;
+        saveState(); renderHome(); openMatchModal(mid);
+      });
+      return;
     }
 
     const likeC = e.target.closest('[data-like-comment]');
     if (likeC) {
-      const c = state.comments.find(x => x.id === likeC.dataset.likeComment);
-      if (c) { c.likes = (c.likes || 0) + 1; saveState(); openMatchModal(likeC.dataset.mid); }
+      const cid = likeC.dataset.likeComment, mid = likeC.dataset.mid;
+      const c = state.comments.find(x => x.id === cid);
+      if (!c) return;
+      await withSubmitLock(likeC, async () => {
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient.rpc('toggle_comment_like', { p_comment_id: cid, p_device_hash: getDeviceHash() });
+          if (error) { handleDbError(error); return; }
+          if (data && typeof data.likes === 'number') c.likes = data.likes;
+        } else {
+          c.likes = (c.likes || 0) + 1;
+        }
+        saveState(); openMatchModal(mid);
+      });
       return;
     }
 
     const delC = e.target.closest('[data-del-comment]');
-    if (delC) {
+    if (delC && isCloudWriteActive()) {
+      const { error } = await supabaseClient.from('match_comments').delete().eq('id', delC.dataset.delComment);
+      if (error) { showToast(error.message, 'error'); return; }
       state.comments = state.comments.filter(x => x.id !== delC.dataset.delComment);
-      logAdminAction('حذف تعليق', `حذف تعليق في المباراة ${delC.dataset.mid}`);
-      saveState(); renderMatches(); openMatchModal(delC.dataset.mid); return;
+      await logAdminAction('Delete Comment', delC.dataset.delComment);
+      renderMatches(); openMatchModal(delC.dataset.mid); return;
     }
 
     const evBtn = e.target.closest('[data-open-event]');
     if (evBtn) { openEventModal(evBtn.dataset.mid, evBtn.dataset.tid, evBtn.dataset.openEvent); return; }
 
+    const modDelC = e.target.closest('[data-mod-del-comment]');
+    if (modDelC && isCloudWriteActive()) {
+      const cid = modDelC.dataset.modDelComment;
+      const { error } = await supabaseClient.from('match_comments').delete().eq('id', cid);
+      if (error) { handleDbError(error); return; }
+      state.comments = state.comments.filter(c => c.id !== cid);
+      await logAdminAction('Remove Comment', cid);
+      renderAll(); showToast(currentLang === 'en' ? 'Comment removed.' : 'تمت إزالة التعليق.'); return;
+    }
+
+    const modDelCl = e.target.closest('[data-mod-del-clip]');
+    if (modDelCl && isCloudWriteActive()) {
+      const clid = modDelCl.dataset.modDelClip;
+      const clipObj = (state.clips || []).find(c => c.id === clid);
+      const { error } = await supabaseClient.from('match_clips').delete().eq('id', clid);
+      if (error) { handleDbError(error); return; }
+      if (clipObj && clipObj.media_url) await deleteStorageAssetByUrl(clipObj.media_url);
+      state.clips = (state.clips || []).filter(c => c.id !== clid);
+      await logAdminAction('Remove Clip', clid);
+      renderAll(); showToast(currentLang === 'en' ? 'Clip removed.' : 'تمت إزالة اللقطة.'); return;
+    }
+
+    const modDelSug = e.target.closest('[data-mod-del-sug]');
+    if (modDelSug && isCloudWriteActive()) {
+      const sid = modDelSug.dataset.modDelSug;
+      const { error } = await supabaseClient.from('suggestions').delete().eq('id', sid);
+      if (error) { handleDbError(error); return; }
+      state.suggestions = state.suggestions.filter(s => s.id !== sid);
+      await logAdminAction('Delete Suggestion', sid);
+      renderAdminView(); showToast(currentLang === 'en' ? 'Suggestion deleted.' : 'تم حذف الاقتراح.'); return;
+    }
+
     const delM = e.target.closest('[data-delete-match]');
-    if (delM) {
-      state.matches = state.matches.filter(m => m.id !== delM.dataset.deleteMatch);
-      logAdminAction('حذف مباراة', `إزالة المباراة ${delM.dataset.deleteMatch}`);
+    if (delM && isCloudWriteActive()) {
+      const mid = delM.dataset.deleteMatch;
+      const { error } = await supabaseClient.from('matches').delete().eq('id', mid);
+      if (error) { handleDbError(error); return; }
+      state.matches = state.matches.filter(m => m.id !== mid);
+      state.events = state.events.filter(ev => ev.match_id !== mid);
+      await logAdminAction('Delete Match', mid);
       saveState(); renderAll(); return;
     }
 
     const delT = e.target.closest('[data-delete-team]');
-    if (delT) {
-      const nm = getTeam(delT.dataset.deleteTeam).name;
-      state.teams = state.teams.filter(x => x.id !== delT.dataset.deleteTeam);
-      state.players = state.players.filter(p => p.team_id !== delT.dataset.deleteTeam);
-      logAdminAction('حذف فريق', nm);
+    if (delT && isCloudWriteActive()) {
+      const tid = delT.dataset.deleteTeam;
+      const teamObj = getTeam(tid);
+      const { error } = await supabaseClient.from('teams').delete().eq('id', tid);
+      if (error) { handleDbError(error); return; }
+      if (teamObj.logo_url) await deleteStorageAssetByUrl(teamObj.logo_url);
+      state.teams = state.teams.filter(x => x.id !== tid);
+      state.players = state.players.filter(p => p.team_id !== tid);
+      state.matches = state.matches.filter(m => m.home_team_id !== tid && m.away_team_id !== tid);
+      await logAdminAction('Delete Team', teamObj.name);
       saveState(); renderAll(); return;
     }
 
     const delP = e.target.closest('[data-delete-player]');
-    if (delP) {
-      const nm = getPlayer(delP.dataset.deletePlayer).full_name;
-      state.players = state.players.filter(p => p.id !== delP.dataset.deletePlayer);
-      logAdminAction('حذف لاعب', nm);
+    if (delP && isCloudWriteActive()) {
+      const pid = delP.dataset.deletePlayer;
+      const nm = getPlayer(pid).full_name;
+      const { error } = await supabaseClient.from('players').delete().eq('id', pid);
+      if (error) { handleDbError(error); return; }
+      state.players = state.players.filter(p => p.id !== pid);
+      await logAdminAction('Delete Player', nm);
       saveState(); renderAll(); return;
     }
 
     const togAdm = e.target.closest('[data-toggle-admin]');
-    if (togAdm) {
+    if (togAdm && isCloudWriteActive()) {
       const adm = state.admins.find(a => a.id === togAdm.dataset.toggleAdmin);
       if (adm) {
-        adm.active = !adm.active;
-        logAdminAction(adm.active ? 'تفعيل مشرف' : 'إلغاء تفعيل مشرف', `${adm.name} [${adm.tag}]`);
-        saveState(); renderAdminView();
+        const nextActive = !adm.active;
+        const { error } = await supabaseClient.from('admin_profiles').update({ is_active: nextActive }).eq('id', adm.id);
+        if (error) { handleDbError(error); return; }
+        adm.active = nextActive;
+        await logAdminAction(nextActive ? 'Enable Admin' : 'Disable Admin', `${adm.name} [${adm.tag}]`);
+        renderAdminView();
       }
       return;
     }
 
     const remAdm = e.target.closest('[data-remove-admin]');
-    if (remAdm) {
+    if (remAdm && isCloudWriteActive()) {
       const adm = state.admins.find(a => a.id === remAdm.dataset.removeAdmin);
       if (adm) {
+        const { error } = await supabaseClient.from('admin_profiles').delete().eq('id', adm.id);
+        if (error) { handleDbError(error); return; }
         state.admins = state.admins.filter(a => a.id !== adm.id);
-        logAdminAction('إزالة معرّف إداري', `${adm.name} [${adm.tag}]`);
-        saveState(); renderAdminView();
+        await logAdminAction('Remove Admin', `${adm.name} [${adm.tag}]`);
+        renderAdminView();
       }
       return;
     }
   });
 
-  // Match Status Change
-  document.body.addEventListener('change', e => {
+  // Match Status Change (Strict State Rules + Full Supabase Sync)
+  document.body.addEventListener('change', async e => {
     const stSel = e.target.closest('[data-change-status]');
     if (stSel) {
       const m = state.matches.find(x => x.id === stSel.dataset.changeStatus);
       if (m) {
         m.status = stSel.value;
+        if (m.status === 'upcoming') { m.home_score = 0; m.away_score = 0; m.minute = 0; }
         if (m.status === 'live' && m.minute === 0) m.minute = 1;
         if (m.status === 'finished') m.minute = 60;
-        logAdminAction('تغيير حالة مباراة', `${getTeam(m.home_team_id).name} × ${getTeam(m.away_team_id).name} → ${m.status}`);
+        if (!isCloudWriteActive()) { renderAdminView(); return; }
+        const { error } = await supabaseClient.from('matches').update({ status: m.status, home_score: m.home_score, away_score: m.away_score, minute: m.minute }).eq('id', m.id);
+        if (error) { handleDbError(error); await refreshSingleTable('matches'); return; }
+        await logAdminAction('Match Status', `${getTeam(m.home_team_id).name} vs ${getTeam(m.away_team_id).name} -> ${m.status}`);
         saveState(); renderAll();
       }
     }
   });
 
-  // Admin Forms
-  document.getElementById('recordEventForm').addEventListener('submit', e => {
+  // Admin Forms (Full Live Supabase Sync + Audit Logging)
+  document.getElementById('recordEventForm').addEventListener('submit', async e => {
     e.preventDefault();
     const mid = document.getElementById('evMatchId').value;
     const tid = document.getElementById('evTeamId').value;
@@ -2573,49 +2995,70 @@ document.addEventListener('DOMContentLoaded', () => {
     const aid = document.getElementById('evAssistId').value || null;
     const minute = parseInt(document.getElementById('evMinute').value, 10) || 30;
     const m = state.matches.find(x => x.id === mid);
-    if (!m) return;
-    state.events.push({ id: uid('e'), match_id: mid, team_id: tid, player_id: pid, assist_player_id: aid, event_type: type, minute });
+    if (!m || m.status !== 'live') { showToast(currentLang === 'en' ? 'Match must be Live first.' : 'يجب أن تكون المباراة في حالة (مباشر) أولًا.', 'error'); return; }
+    if (!isCloudWriteActive()) { showToast('Admin auth required', 'error'); return; }
+    const { data: evData, error: evErr } = await supabaseClient.from('match_events').insert({ match_id: mid, team_id: tid, player_id: pid, assist_player_id: aid, event_type: type, minute }).select().single();
+    if (evErr) { handleDbError(evErr); return; }
+    state.events.push(evData || { id: uid('e'), match_id: mid, team_id: tid, player_id: pid, assist_player_id: aid, event_type: type, minute });
     if (type === 'goal') {
-      if (m.home_team_id === tid) m.home_score++; else m.away_score++;
-      if (m.status === 'upcoming') m.status = 'live';
-      m.minute = Math.max(m.minute, minute);
+      const nextH = m.home_team_id === tid ? m.home_score + 1 : m.home_score;
+      const nextA = m.away_team_id === tid ? m.away_score + 1 : m.away_score;
+      const nextMin = Math.max(m.minute, minute);
+      const { error: mErr } = await supabaseClient.from('matches').update({ home_score: nextH, away_score: nextA, minute: nextMin }).eq('id', mid);
+      if (mErr) { handleDbError(mErr); return; }
+      m.home_score = nextH; m.away_score = nextA; m.minute = nextMin;
       triggerGoalCelebration(getPlayer(pid).full_name, getTeam(tid).name);
-      logAdminAction('تسجيل هدف', `${getPlayer(pid).full_name} (${minute}') — ${getTeam(tid).name}`);
+      await logAdminAction('Goal Recorded', `${getPlayer(pid).full_name} (${minute}') - ${getTeam(tid).name}`);
     } else {
-      logAdminAction('تسجيل بطاقة', `${getPlayer(pid).full_name} (${minute}')`);
+      await logAdminAction('Card Recorded', `${getPlayer(pid).full_name} (${minute}')`);
     }
     saveState(); renderAll();
-    const em = document.getElementById('eventModal'); em.classList.add('hidden'); em.classList.remove('flex');
+    closeAccessibleModal(document.getElementById('eventModal'));
   });
 
-  document.getElementById('addMatchForm').addEventListener('submit', e => {
+  document.getElementById('addMatchForm').addEventListener('submit', async e => {
     e.preventDefault();
     const home = document.getElementById('newMatchHome').value, away = document.getElementById('newMatchAway').value;
-    if (home === away) { showToast('اختر فريقين مختلفين!', 'error'); return; }
-    state.matches.push({
-      id: uid('m'), round_label: document.getElementById('newMatchRound').value.trim(),
+    if (home === away) { showToast(currentLang === 'en' ? 'Pick two different teams.' : 'اختر فريقين مختلفين!', 'error'); return; }
+    const payload = {
+      round_label: document.getElementById('newMatchRound').value.trim(),
       home_team_id: home, away_team_id: away,
       kickoff_at: new Date(document.getElementById('newMatchTime').value).toISOString(),
       status: 'upcoming', home_score: 0, away_score: 0, minute: 0
-    });
-    logAdminAction('جدولة مباراة', `${getTeam(home).name} × ${getTeam(away).name}`);
+    };
+    if (!isCloudWriteActive()) { showToast('Admin auth required', 'error'); return; }
+    if (state.season.id) payload.season_id = state.season.id;
+    const { data, error } = await supabaseClient.from('matches').insert(payload).select().single();
+    if (error) { handleDbError(error); return; }
+    state.matches.push(data);
+    await logAdminAction('Schedule Match', `${getTeam(home).name} vs ${getTeam(away).name}`);
     saveState(); renderAll(); showToast(currentLang === 'en' ? 'Match scheduled!' : 'تمت إضافة المباراة!');
   });
 
-  document.getElementById('autoGenerateScheduleBtn').addEventListener('click', () => {
+  document.getElementById('autoGenerateScheduleBtn').addEventListener('click', async () => {
     if (state.teams.length < 2) return;
     const r = state.matches.length + 1, base = Date.now() + 48 * 3600 * 1000;
+    const batch = [];
     for (let i = 0; i + 1 < state.teams.length; i += 2) {
-      state.matches.push({ id: uid('m'), round_label: `الجولة ${r}`, home_team_id: state.teams[i].id, away_team_id: state.teams[i + 1].id, kickoff_at: new Date(base + i * 3600 * 1000).toISOString(), status: 'upcoming', home_score: 0, away_score: 0, minute: 0 });
+      const item = { round_label: `Round ${r}`, home_team_id: state.teams[i].id, away_team_id: state.teams[i + 1].id, kickoff_at: new Date(base + i * 3600 * 1000).toISOString(), status: 'upcoming', home_score: 0, away_score: 0, minute: 0 };
+      if (state.season.id) item.season_id = state.season.id;
+      batch.push(item);
     }
-    logAdminAction('توليد جولة سريعة', `الجولة ${r}`);
-    saveState(); renderAll(); showToast(currentLang === 'en' ? 'Round generated!' : 'تم توليد الجولة!');
+    if (isCloudWriteActive()) {
+      const { error } = await supabaseClient.from('matches').insert(batch);
+      if (error) { showToast(error.message, 'error'); return; }
+      await refreshSingleTable('matches');
+    } else {
+      batch.forEach(it => state.matches.push({ id: uid('m'), ...it }));
+    }
+    await logAdminAction('Generate Round', `Round ${r}`);
+    renderAll(); showToast(currentLang === 'en' ? 'Round generated!' : 'تم توليد الجولة!');
   });
 
   document.getElementById('newTeamPreset').addEventListener('change', e => {
     const p = CLUB_PRESETS[e.target.value];
     if (!p) return;
-    document.getElementById('newTeamName').value = currentLang === 'en' ? p.nameEn : p.nameAr;
+    document.getElementById('newTeamName').value = p.nameEn;
     document.getElementById('newTeamBadge').value = p.code;
     document.getElementById('newTeamColor').value = p.color;
   });
@@ -2625,81 +3068,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const nm = document.getElementById('newTeamName').value.trim();
     const preset = document.getElementById('newTeamPreset').value;
     const fileInput = document.getElementById('newTeamLogoFile');
-    const saveTeam = (logoDataUrl) => {
-      state.teams.push({
-        id: uid('t'), name: nm, grade: document.getElementById('newTeamGrade').value.trim(),
-        group_name: document.getElementById('newTeamGroup').value.trim() || 'المجموعة أ',
+    const saveTeam = async (logoDataUrl) => {
+      const payload = {
+        name: nm, grade: document.getElementById('newTeamGrade').value.trim(),
+        group_name: document.getElementById('newTeamGroup').value.trim() || 'Group A',
         badge_code: (document.getElementById('newTeamBadge').value.trim() || 'FC').toUpperCase(),
         primary_color: document.getElementById('newTeamColor').value,
-        logo_preset: preset,
-        logo_url: logoDataUrl || ''
-      });
-      logAdminAction('إضافة فريق', nm);
+        logo_preset: preset, logo_url: logoDataUrl || ''
+      };
+      if (!isCloudWriteActive()) { showToast('Admin auth required', 'error'); return; }
+      if (state.season.id) payload.season_id = state.season.id;
+      const { data, error } = await supabaseClient.from('teams').insert(payload).select().single();
+      if (error) { if (logoDataUrl) await deleteStorageAssetByUrl(logoDataUrl); handleDbError(error); return; }
+      state.teams.push(data);
+      await logAdminAction('Add Team', nm);
       e.target.reset(); saveState(); renderAll(); showToast(currentLang === 'en' ? 'Team added!' : 'تمت إضافة الفريق!');
     };
     if (fileInput && fileInput.files && fileInput.files[0]) {
-      const reader = new FileReader();
-      reader.onload = () => saveTeam(reader.result);
-      reader.readAsDataURL(fileInput.files[0]);
+      uploadImageToStorage(fileInput.files[0], 'logos')
+        .then(url => saveTeam(url))
+        .catch(err => showToast(err.message || 'Logo upload failed', 'error'));
     } else {
       saveTeam('');
     }
   });
 
-  document.getElementById('addPlayerForm').addEventListener('submit', e => {
+  document.getElementById('addPlayerForm').addEventListener('submit', async e => {
     e.preventDefault();
     const nm = document.getElementById('newPlayerName').value.trim();
-    state.players.push({
-      id: uid('p'), team_id: document.getElementById('newPlayerTeam').value, full_name: nm,
+    const payload = {
+      team_id: document.getElementById('newPlayerTeam').value, full_name: nm,
       jersey_no: parseInt(document.getElementById('newPlayerNumber').value, 10) || 10,
       position: document.getElementById('newPlayerPos').value,
       rating: parseInt(document.getElementById('newPlayerRating').value, 10) || 82
-    });
-    logAdminAction('إضافة لاعب', nm);
+    };
+    if (!isCloudWriteActive()) { showToast('Admin auth required', 'error'); return; }
+    const { data, error } = await supabaseClient.from('players').insert(payload).select().single();
+    if (error) { handleDbError(error); return; }
+    state.players.push(data);
+    await logAdminAction('Add Player', nm);
     e.target.reset(); saveState(); renderAll(); showToast(currentLang === 'en' ? 'Player added!' : 'تمت إضافة اللاعب!');
   });
 
   document.getElementById('createAdminForm').addEventListener('submit', async e => {
     e.preventDefault();
+    if (!isCloudWriteActive()) { showToast('Admin auth required', 'error'); return; }
     const name = document.getElementById('newAdminName').value.trim();
-    const code = document.getElementById('newAdminCode').value.trim().toUpperCase();
+    const auth_user_id = document.getElementById('newAdminAuthId').value.trim();
+    const email = document.getElementById('newAdminEmail').value.trim().toLowerCase();
     const tag = document.getElementById('newAdminTag').value.trim().toUpperCase();
     const role = document.getElementById('newAdminRole').value;
     const permissions = {
       matches: document.getElementById('permMatches').checked,
       teams: document.getElementById('permTeams').checked,
+      moderation: document.getElementById('permModeration').checked,
       season: document.getElementById('permSeason').checked,
       admins: document.getElementById('permAdmins').checked
     };
-    if (isCloudWriteActive()) {
-      try {
-        await supabaseClient.from('admin_profiles').insert({
-          display_name: name, login_code: code, admin_tag: tag, role, permissions, is_active: true
-        });
-      } catch (err) {}
-    }
-    state.admins.push({ id: uid('adm'), name, code, tag, role, active: true, permissions });
-    logAdminAction('إنشاء كود مشرف', `${name} [${tag}]`);
-    e.target.reset(); saveState(); renderAdminView();
-    showToast(currentLang === 'en' ? `Admin [${tag}] code created!` : `تم إنشاء كود المشرف [${tag}] بنجاح!`);
+    const { error } = await supabaseClient.from('admin_profiles').insert({
+      auth_user_id, email, display_name: name, admin_tag: tag, role, permissions, is_active: true
+    });
+    if (error) { showToast(error.message, 'error'); return; }
+    await logAdminAction('Create Admin', `${name} [${tag}]`);
+    e.target.reset();
+    await syncAdminData();
+    showToast(currentLang === 'en' ? `Admin [${tag}] activated!` : `تم ربط وتفعيل المشرف [${tag}] بنجاح!`);
   });
 
-  document.getElementById('seasonSettingsForm').addEventListener('submit', e => {
+  document.getElementById('seasonSettingsForm').addEventListener('submit', async e => {
     e.preventDefault();
-    state.season.name = document.getElementById('seasonNameInput').value.trim();
-    state.season.announcement = document.getElementById('seasonAnnouncementInput').value.trim();
-    state.season.discord_url = document.getElementById('discordUrlInput').value.trim();
-    state.season.contact_email = document.getElementById('contactEmailInput').value.trim();
-    logAdminAction('تحديث الإعدادات', 'تعديل اسم الموسم أو الروابط');
+    const patch = {
+      name: document.getElementById('seasonNameInput').value.trim(),
+      announcement: document.getElementById('seasonAnnouncementInput').value.trim(),
+      discord_url: document.getElementById('discordUrlInput').value.trim(),
+      contact_email: document.getElementById('contactEmailInput').value.trim()
+    };
+    if (!isCloudWriteActive() || !state.season.id) { showToast('Admin auth required', 'error'); return; }
+    const { error } = await supabaseClient.from('seasons').update(patch).eq('id', state.season.id);
+    if (error) { handleDbError(error); return; }
+    state.season = { ...state.season, ...patch };
+    await logAdminAction('Update Settings', patch.name);
     saveState(); renderAll(); showToast(currentLang === 'en' ? 'Settings saved!' : 'تم حفظ الإعدادات!');
   });
 
-  document.getElementById('supabaseConfigForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const url = document.getElementById('sbUrlInput').value.trim(), anonKey = document.getElementById('sbKeyInput').value.trim();
-    try { localStorage.setItem(SB_CRED_KEY, JSON.stringify({ url, anonKey })); } catch (err) {}
-    tryConnectSupabase(url, anonKey);
-  });
+
 
   // Apply optional links from config.js
   if (window.APP_CONFIG) {
@@ -2712,8 +3164,7 @@ document.addEventListener('DOMContentLoaded', () => {
   switchView('home');
   switchAdminTab('live');
   initThreeHero();
-  const c = loadSbCreds();
-  if (c.url && c.anonKey) tryConnectSupabase(c.url, c.anonKey);
+  if (SUPABASE_CONFIG.url && SUPABASE_CONFIG.anonKey) tryConnectSupabase(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
 });
 </script>
 </body>
