@@ -46,7 +46,7 @@ tailwind.config = {
     background-color: var(--bg-base);
     color: #F4F7FB;
     font-family: 'IBM Plex Sans Arabic', 'Inter', sans-serif;
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
   }
   html[lang="en"] body {
@@ -283,7 +283,7 @@ tailwind.config = {
         <span data-i18n="lang_label">لغة العرض</span>
       </label>
       <select id="sidebarLangSelect" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs font-semibold text-white focus:outline-none focus:border-emerald-400">
-        <option value="ar">العربية (عربي)</option>
+        <option value="ar">العربية</option>
         <option value="en">English (EN)</option>
       </select>
     </div>
@@ -293,7 +293,7 @@ tailwind.config = {
   <div class="flex-1 min-w-0 flex flex-col">
 
     <!-- Minimal Liquid Glass Top Utility Bar -->
-    <header class="sticky top-0 z-30 px-4 sm:px-8 py-3.5 bg-obsidian/65 backdrop-blur-xl border-b border-white/[0.07]">
+    <header class="sticky top-0 z-40 px-4 sm:px-8 py-3.5 bg-obsidian/80 backdrop-blur-xl border-b border-white/[0.08]">
       <div class="max-w-6xl mx-auto flex items-center justify-between gap-3">
         <div class="flex items-center gap-3 min-w-0">
           <button id="openSidebarBtn" type="button" class="lg:hidden liquid-pill px-3.5 h-10 rounded-xl flex items-center gap-2 text-white text-xs font-bold border-emerald-400/35">
@@ -485,7 +485,7 @@ tailwind.config = {
           <div id="foundersDrawer" class="founders-reveal max-h-0 opacity-0">
             <div class="pt-3 border-t border-white/[0.08] flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-slate-400">
               <span data-i18n="founders_label" class="text-slate-500">المبادرون:</span>
-              <span class="text-slate-300 font-medium" dir="ltr"><span class="text-emerald-300 font-extrabold px-1.5 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-400/30">Bilal.M ★</span> · Saad.T · Ali.D · Rayan.B · Sadi.S · Amir.S</span>
+              <span class="text-slate-300 font-medium inline-flex flex-wrap items-end gap-x-1.5 gap-y-1" dir="ltr"><span class="inline-flex flex-col items-center leading-none"><span class="text-[8px] tracking-[0.14em] uppercase text-amber-300/75 font-semibold mb-0.5 flex items-center gap-0.5"><svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm0 2h14v2H5v-2z"/></svg>OWNER</span><span class="text-amber-200/95 font-semibold">Bilal.M</span></span><span>· Saad.T · Ali.D · Rayan.B · Sadi.S · Amir.S</span></span>
             </div>
           </div>
         </div>
@@ -596,53 +596,93 @@ tailwind.config = {
             </div>
           </div>
 
-          <!-- Admin Tab 2: Teams & Players -->
-          <div id="admin-tab-teams" class="admin-tab hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="liquid-glass rounded-[28px] p-5 space-y-4">
-              <h3 data-i18n="add_team_title" class="font-display font-extrabold text-base text-white">إضافة فريق</h3>
-              <form id="addTeamForm" class="space-y-3">
-                <div>
-                  <label for="newTeamPreset" data-i18n="lbl_club_preset" class="block text-xs text-slate-400 mb-1">اختر شعار نادٍ كبير جاهز (أو ارفع شعار PNG خاص)</label>
-                  <select id="newTeamPreset" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white"></select>
+          <!-- Admin Tab 2: Teams & Players Management Studio -->
+          <div id="admin-tab-teams" class="admin-tab hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Column: Clubs Directory + Add New Club -->
+            <div class="lg:col-span-5 space-y-5">
+              <div class="liquid-glass rounded-[28px] p-5 space-y-3.5">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 data-i18n="admin_clubs_dir" class="font-display font-extrabold text-base text-white">الأندية المسجّلة</h3>
+                  <span id="adminClubsCountBadge" class="text-xs px-2.5 py-0.5 rounded-full bg-white/10 text-slate-300">0</span>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
-                  <input id="newTeamName" type="text" placeholder="Club Name in English (e.g. Real Madrid)" dir="ltr" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
-                  <input id="newTeamGrade" type="text" placeholder="Grade (e.g. 12-A)" dir="ltr" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
-                </div>
-                <div class="grid grid-cols-3 gap-3">
-                  <input id="newTeamGroup" type="text" value="Group A" dir="ltr" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
-                  <input id="newTeamBadge" type="text" maxlength="3" value="RMA" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white uppercase">
-                  <input id="newTeamColor" type="color" value="#F59E0B" class="w-full h-10 bg-obsidian/80 border border-white/15 rounded-xl p-1 cursor-pointer">
-                </div>
-                <div>
-                  <label for="newTeamLogoFile" data-i18n="lbl_upload_png" class="block text-xs text-slate-400 mb-1">رفع شعار PNG مخصص (اختياري)</label>
-                  <input id="newTeamLogoFile" type="file" accept="image/png,image/jpeg,image/webp" class="w-full text-xs text-slate-300 file:me-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:bg-white/10 file:text-white hover:file:bg-white/20">
-                </div>
-                <button type="submit" data-i18n="btn_save_team" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm">حفظ الفريق</button>
-              </form>
-              <div id="adminTeamsList" class="space-y-2 pt-3 border-t border-white/10"></div>
+                <p data-i18n="admin_clubs_hint" class="text-[11px] text-slate-400">اضغط على أي نادٍ لفتح إدارة بياناته وتشكيلته ولاعبيه.</p>
+                <div id="adminTeamsList" class="space-y-2 max-h-[260px] overflow-y-auto"></div>
+              </div>
+
+              <details class="liquid-glass rounded-[28px] p-5 group" open>
+                <summary class="cursor-pointer list-none flex items-center justify-between font-display font-extrabold text-base text-emerald-300">
+                  <span data-i18n="add_team_title">إضافة نادٍ جديد</span>
+                  <span class="text-xs text-slate-400 group-open:rotate-180 transition">▾</span>
+                </summary>
+                <form id="addTeamForm" class="space-y-3 pt-4">
+                  <div>
+                    <label for="newTeamPreset" data-i18n="lbl_club_preset" class="block text-xs text-slate-400 mb-1">اختر شعار نادٍ كبير جاهز (أو ارفع شعار PNG خاص)</label>
+                    <select id="newTeamPreset" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white"></select>
+                  </div>
+                  <div>
+                    <input id="newTeamName" type="text" placeholder="اسم النادي (مثلاً: Real Madrid)" dir="ltr" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                  </div>
+                  <div class="grid grid-cols-3 gap-3">
+                    <input id="newTeamGroup" type="text" value="Group A" dir="ltr" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                    <input id="newTeamBadge" type="text" maxlength="3" value="RMA" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white uppercase">
+                    <input id="newTeamColor" type="color" value="#F59E0B" class="w-full h-10 bg-obsidian/80 border border-white/15 rounded-xl p-1 cursor-pointer">
+                  </div>
+                  <div>
+                    <label for="newTeamLogoFile" data-i18n="lbl_upload_png" class="block text-xs text-slate-400 mb-1">رفع شعار PNG مخصص (اختياري)</label>
+                    <input id="newTeamLogoFile" type="file" accept="image/png,image/jpeg,image/webp" class="w-full text-xs text-slate-300 file:me-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:bg-white/10 file:text-white hover:file:bg-white/20">
+                  </div>
+                  <button type="submit" data-i18n="btn_save_team" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm">حفظ النادي</button>
+                </form>
+              </details>
             </div>
 
-            <div class="liquid-glass rounded-[28px] p-5 space-y-4">
-              <h3 data-i18n="add_player_title" class="font-display font-extrabold text-base text-white">إضافة لاعب</h3>
-              <form id="addPlayerForm" class="space-y-3">
-                <div class="grid grid-cols-2 gap-3">
-                  <input id="newPlayerName" type="text" placeholder="Player Name in English (e.g. Kareem Mansour)" dir="ltr" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
-                  <select id="newPlayerTeam" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white"></select>
+            <!-- Right Column: Selected Club Full Management Workspace -->
+            <div class="lg:col-span-7 space-y-5">
+              <!-- Club Editor + Mini Tactical Pitch -->
+              <div id="adminSelectedClubPanel" class="liquid-glass rounded-[28px] p-5 space-y-4"></div>
+
+              <!-- Add Player (Zero-filled smart auto-generation) + Squad Roster -->
+              <div class="liquid-glass rounded-[28px] p-5 space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <h3 data-i18n="add_player_title" class="font-display font-extrabold text-base text-white">إضافة لاعب</h3>
+                  <span data-i18n="player_autogen_hint" class="text-[11px] text-slate-400">اترك 00 للتوليد التلقائي (الرقم 1-99 · الطاقة 80-95)</span>
                 </div>
-                <div class="grid grid-cols-3 gap-3">
-                  <input id="newPlayerNumber" type="number" min="1" max="99" value="10" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
-                  <select id="newPlayerPos" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
-                    <option value="FWD">FWD</option>
-                    <option value="MID">MID</option>
-                    <option value="DEF">DEF</option>
-                    <option value="GK">GK</option>
-                  </select>
-                  <input id="newPlayerRating" type="number" min="60" max="99" value="84" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                <form id="addPlayerForm" class="space-y-3">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input id="newPlayerName" type="text" placeholder="اسم اللاعب (مثلاً: Kareem Mansour)" dir="ltr" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                    <select id="newPlayerTeam" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white"></select>
+                  </div>
+                  <div class="grid grid-cols-3 gap-3">
+                    <div>
+                      <label for="newPlayerNumber" class="block text-[10px] text-slate-400 mb-1" data-i18n="lbl_jersey_num">الرقم (00 = عشوائي)</label>
+                      <input id="newPlayerNumber" type="text" inputmode="numeric" maxlength="2" value="00" placeholder="00" dir="ltr" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white text-center font-mono">
+                    </div>
+                    <div>
+                      <label for="newPlayerPos" class="block text-[10px] text-slate-400 mb-1" data-i18n="lbl_position_opt">المركز (اختياري)</label>
+                      <select id="newPlayerPos" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                        <option value="">هجوم (افتراضي)</option>
+                        <option value="FWD">FWD — هجوم</option>
+                        <option value="MID">MID — وسط</option>
+                        <option value="DEF">DEF — دفاع</option>
+                        <option value="GK">GK — حارس</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="newPlayerRating" class="block text-[10px] text-slate-400 mb-1" data-i18n="lbl_rating_num">الطاقة (00 = عشوائي)</label>
+                      <input id="newPlayerRating" type="text" inputmode="numeric" maxlength="2" value="00" placeholder="00" dir="ltr" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white text-center font-mono">
+                    </div>
+                  </div>
+                  <button type="submit" data-i18n="btn_save_player" class="w-full py-2.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-obsidian font-display font-extrabold text-sm">إضافة اللاعب</button>
+                </form>
+
+                <div class="pt-3 border-t border-white/10 space-y-2">
+                  <div class="flex items-center justify-between text-xs text-slate-400">
+                    <span id="adminRosterTitle" class="font-bold text-slate-200">لاعبو النادي</span>
+                    <span id="adminRosterCount">0</span>
+                  </div>
+                  <div id="adminPlayersList" class="space-y-2 max-h-72 overflow-y-auto"></div>
                 </div>
-                <button type="submit" data-i18n="btn_save_player" class="w-full py-2.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-obsidian font-display font-extrabold text-sm">إضافة اللاعب</button>
-              </form>
-              <div id="adminPlayersList" class="space-y-2 pt-3 border-t border-white/10 max-h-64 overflow-y-auto"></div>
+              </div>
             </div>
           </div>
 
@@ -654,17 +694,23 @@ tailwind.config = {
                 <h3 data-i18n="gov_create_title" class="font-display font-extrabold text-base text-amber-300">إنشاء معرّف مشرف جديد</h3>
                 <form id="createAdminForm" class="space-y-3">
                   <input id="newAdminName" type="text" maxlength="60" placeholder="اسم المشرف" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
-                  <input id="newAdminAuthId" type="text" placeholder="Auth User UUID (من Supabase Users)" dir="ltr" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-emerald-300 font-mono text-left">
                   <div class="grid grid-cols-2 gap-3">
                     <input id="newAdminEmail" type="email" placeholder="ref@mss.edu" dir="ltr" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white text-left">
-                    <input id="newAdminTag" type="text" placeholder="Tag (e.g. REF-02)" dir="ltr" maxlength="10" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-amber-300 font-bold uppercase text-left">
+                    <input id="newAdminTag" type="text" placeholder="Tag (e.g. REF-02)" dir="ltr" maxlength="12" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-amber-300 font-bold uppercase text-left">
                   </div>
-                  <select id="newAdminRole" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
-                    <option value="moderator">Moderator</option>
-                    <option value="referee">Referee</option>
-                    <option value="media">Media</option>
-                    <option value="super_admin">Super Admin</option>
-                  </select>
+                  <div class="flex items-center gap-2">
+                    <input id="newAdminPassword" type="text" minlength="8" maxlength="72" placeholder="كلمة مرور الحساب (8+ أحرف)" dir="ltr" autocomplete="new-password" required class="flex-1 bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-emerald-300 font-mono text-left">
+                    <button id="genAdminPassBtn" type="button" class="shrink-0 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-slate-200 transition">توليد</button>
+                  </div>
+                  <div class="space-y-1.5">
+                    <select id="newAdminRole" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+                      <option value="moderator">Rank 3 · مدير دوري (Moderator)</option>
+                      <option value="referee">Rank 2 · حكم ملعب (Referee)</option>
+                      <option value="media">Rank 1 · إعلام ومحتوى (Media)</option>
+                      <option value="super_admin">Rank 4 · مشرف عام (Super Admin)</option>
+                    </select>
+                    <p id="roleHierarchyHint" class="text-[11px] text-slate-400">الرتبة تحدد التسلسل القيادي (كل رتبة تتحكم فقط بالرتب الأدنى منها) وتضبط الصلاحيات المقترحة تلقائيًا.</p>
+                  </div>
                   <div class="grid grid-cols-2 gap-2 pt-1 text-xs text-slate-300">
                     <label class="flex items-center gap-2"><input id="permMatches" type="checkbox" checked class="accent-emerald-500"> <span data-i18n="perm_matches">إدارة المباريات</span></label>
                     <label class="flex items-center gap-2"><input id="permTeams" type="checkbox" class="accent-emerald-500"> <span data-i18n="perm_teams">إدارة الفرق</span></label>
@@ -672,8 +718,16 @@ tailwind.config = {
                     <label class="flex items-center gap-2"><input id="permSeason" type="checkbox" class="accent-emerald-500"> <span data-i18n="perm_season">الأخبار والإعدادات</span></label>
                     <label class="flex items-center gap-2"><input id="permAdmins" type="checkbox" class="accent-amber-400"> <span data-i18n="perm_admins">إدارة المشرفين</span></label>
                   </div>
-                  <button type="submit" data-i18n="btn_create_admin" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm">ربط المشرف وتفعيله</button>
+                  <button id="createAdminSubmitBtn" type="submit" data-i18n="btn_create_admin" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm">إنشاء حساب المشرف وتفعيله</button>
                 </form>
+                <div id="createdAdminCredsBox" class="hidden p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-400/30 space-y-2 text-xs">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-emerald-300">بيانات دخول المشرف الجديد (تُعرض مرة واحدة)</span>
+                    <button id="hideCreatedCredsBtn" type="button" class="text-slate-400 hover:text-white font-bold">✕</button>
+                  </div>
+                  <pre id="createdAdminCredsText" dir="ltr" class="bg-obsidian/80 rounded-xl p-2.5 text-[11px] text-slate-200 font-mono whitespace-pre-wrap select-all"></pre>
+                  <button id="copyCreatedCredsBtn" type="button" class="w-full py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 font-bold transition">نسخ بيانات الدخول</button>
+                </div>
               </div>
 
               <!-- Manage Existing Admins -->
@@ -806,6 +860,58 @@ tailwind.config = {
       </a>
       <button id="closeDiscordModal" type="button" data-i18n="btn_close" class="liquid-pill flex-1 py-2.5 rounded-2xl text-sm font-bold text-slate-200">إغلاق</button>
     </div>
+  </div>
+</div>
+
+<!-- ==================== EDIT / TRANSFER PLAYER MODAL (ADMIN) ==================== -->
+<div id="editPlayerModal" role="dialog" aria-modal="true" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-md p-4">
+  <div class="liquid-glass rounded-[28px] max-w-md w-full p-6 space-y-4">
+    <div class="flex items-center justify-between border-b border-white/10 pb-3">
+      <h3 data-i18n="edit_player_modal_title" class="font-display font-extrabold text-base text-white">تعديل أو نقل اللاعب</h3>
+      <button id="closeEditPlayerModal" type="button" aria-label="Close" class="w-8 h-8 rounded-xl bg-white/10 text-white font-bold">✕</button>
+    </div>
+    <form id="editPlayerForm" class="space-y-3">
+      <input type="hidden" id="editPlayerId">
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">اسم اللاعب</label>
+        <input id="editPlayerName" type="text" required dir="ltr" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+      </div>
+      <div>
+        <label class="block text-xs text-slate-400 mb-1">النادي (للنقل اختر ناديًا آخر)</label>
+        <select id="editPlayerTeam" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white"></select>
+      </div>
+      <div class="grid grid-cols-3 gap-3">
+        <div>
+          <label class="block text-[11px] text-slate-400 mb-1">الرقم</label>
+          <input id="editPlayerNumber" type="number" min="1" max="99" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white text-center">
+        </div>
+        <div>
+          <label class="block text-[11px] text-slate-400 mb-1">المركز</label>
+          <select id="editPlayerPos" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white">
+            <option value="FWD">FWD</option>
+            <option value="MID">MID</option>
+            <option value="DEF">DEF</option>
+            <option value="GK">GK</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[11px] text-slate-400 mb-1">الطاقة</label>
+          <input id="editPlayerRating" type="number" min="60" max="99" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-sm text-white text-center">
+        </div>
+      </div>
+      <button type="submit" class="w-full py-2.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-sm">حفظ التعديلات</button>
+    </form>
+  </div>
+</div>
+
+<!-- ==================== FULL MATCH & EVENTS EDITOR MODAL (ADMIN) ==================== -->
+<div id="adminMatchEditModal" role="dialog" aria-modal="true" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-md p-4">
+  <div class="liquid-glass rounded-[32px] max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-5">
+    <div class="flex items-center justify-between border-b border-white/10 pb-3">
+      <h3 id="adminMatchEditTitle" class="font-display font-extrabold text-lg text-white">إدارة وتعديل المباراة</h3>
+      <button id="closeAdminMatchEditModal" type="button" aria-label="Close" class="w-8 h-8 rounded-xl bg-white/10 text-white font-bold">✕</button>
+    </div>
+    <div id="adminMatchEditBody" class="space-y-5"></div>
   </div>
 </div>
 
@@ -1160,6 +1266,33 @@ let state = loadState();
 let currentView = 'home';
 let currentAdminTab = 'live';
 let selectedTeamId = state.teams[0]?.id || null;
+let adminSelectedTeamId = state.teams[0]?.id || null;
+
+const ROLE_HIERARCHY = {
+  owner:       { rank: 5, labelAr: 'المالك (Owner)', labelEn: 'Owner', descAr: 'صلاحية كاملة على النظام وجميع الرتب الإدارية.', descEn: 'Full system authority over all admin ranks.' },
+  super_admin: { rank: 4, labelAr: 'رتبة 4 · مشرف عام', labelEn: 'Rank 4 · Super Admin', descAr: 'يدير جميع الأقسام والرتب الأدنى منه.', descEn: 'Manages all sections and lower ranks.', preset: { matches: true, teams: true, moderation: true, season: true, admins: true } },
+  moderator:   { rank: 3, labelAr: 'رتبة 3 · مدير دوري', labelEn: 'Rank 3 · League Admin', descAr: 'يدير المباريات والفرق ومحتوى الطلاب، ويتحكم بالرتب الأدنى منه فقط.', descEn: 'Manages matches, teams, and moderation; controls lower ranks only.', preset: { matches: true, teams: true, moderation: true, season: false, admins: false } },
+  referee:     { rank: 2, labelAr: 'رتبة 2 · حكم ملعب', labelEn: 'Rank 2 · Referee', descAr: 'مخصص لإدارة المباريات المباشرة وتسجيل الأهداف والبطاقات.', descEn: 'Focused on live match control, goals, and cards.', preset: { matches: true, teams: false, moderation: false, season: false, admins: false } },
+  media:       { rank: 1, labelAr: 'رتبة 1 · إعلام ومحتوى', labelEn: 'Rank 1 · Media', descAr: 'مخصص لمراجعة لقطات وتعليقات الطلاب.', descEn: 'Focused on moderating student clips and comments.', preset: { matches: false, teams: false, moderation: true, season: false, admins: false } }
+};
+
+function getAdminRank(role, tag = '') {
+  if (String(tag || '').toUpperCase() === 'SUP-01') return 5;
+  return (ROLE_HIERARCHY[role] && ROLE_HIERARCHY[role].rank) || 0;
+}
+function getAdminRoleBadge(role, tag = '') {
+  const isOwner = String(tag || '').toUpperCase() === 'SUP-01';
+  const meta = isOwner ? ROLE_HIERARCHY.owner : (ROLE_HIERARCHY[role] || ROLE_HIERARCHY.media);
+  return currentLang === 'en' ? meta.labelEn : meta.labelAr;
+}
+function canManageTargetAdmin(targetAdmin) {
+  if (!currentAdminProfile || !targetAdmin) return false;
+  if (targetAdmin.id === currentAdminProfile.id) return false;
+  if (String(targetAdmin.tag || '').toUpperCase() === 'SUP-01') return false;
+  const myRank = getAdminRank(currentAdminProfile.role, currentAdminProfile.admin_tag);
+  const targetRank = getAdminRank(targetAdmin.role, targetAdmin.tag);
+  return myRank > targetRank;
+}
 let supabaseClient = null;
 let realtimeChannel = null;
 let adminSession = null;
@@ -1411,7 +1544,7 @@ function applyLanguage(lang) {
   document.documentElement.lang = currentLang;
   document.documentElement.dir = currentLang === 'en' ? 'ltr' : 'rtl';
 
-  document.getElementById('topLangCode').textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+  document.getElementById('topLangCode').textContent = currentLang === 'ar' ? 'EN' : 'العربية';
   document.getElementById('sidebarLangSelect').value = currentLang;
 
   // Adjust mobile sidebar hidden transform direction
@@ -1772,7 +1905,7 @@ function renderStandings() {
           ${formatCrest(r.team, 'w-8 h-8 text-[10px]')}
           <div>
             <p class="font-display font-bold text-white">${escapeHtml(r.team.name)}</p>
-            <p class="text-[11px] text-slate-400">${escapeHtml(r.team.grade)}</p>
+            ${r.team.grade ? `<p class="text-[11px] text-slate-400">${escapeHtml(r.team.grade)}</p>` : ""}
           </div>
         </div>
       </td>
@@ -1880,7 +2013,7 @@ function renderTeamsView() {
         ${formatCrest(team, 'w-14 h-14 text-lg')}
         <div>
           <h3 class="font-display font-black text-2xl text-white">${q ? (currentLang === "en" ? "Search Results" : "نتائج البحث") : escapeHtml(team.name)}</h3>
-          <p class="text-xs text-slate-400">${escapeHtml(team.grade)} · ${escapeHtml(team.group_name)}</p>
+          <p class="text-xs text-slate-400">${team.grade ? `${escapeHtml(team.grade)} · ` : ""}${escapeHtml(team.group_name || "")}</p>
         </div>
       </div>
     </div>
@@ -2301,14 +2434,16 @@ function renderAdminView() {
 
 
 
-  // Admin Matches
+  // Admin Matches (with Full Match & Events Editor button)
   document.getElementById('adminMatchesList').innerHTML = state.matches.map(m => {
     const h = getTeam(m.home_team_id), a = getTeam(m.away_team_id);
+    const evCount = state.events.filter(ev => ev.match_id === m.id).length;
     return `
       <div class="p-4 rounded-2xl liquid-glass-subtle space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
           <span class="font-bold text-white">${escapeHtml(m.round_label)} · ${escapeHtml(h.name)} (${m.home_score}) × (${m.away_score}) ${escapeHtml(a.name)}</span>
           <div class="flex items-center gap-1.5">
+            <button type="button" data-edit-match="${m.id}" class="px-2.5 py-1 rounded-lg bg-sky-500/15 text-sky-300 border border-sky-400/25 font-bold hover:bg-sky-500/25 transition">${currentLang === 'en' ? `Manage (${evCount})` : `إدارة وتعديل (${evCount})`}</button>
             <select data-change-status="${m.id}" class="bg-obsidian border border-white/15 rounded-lg px-2 py-1 text-xs text-white">
               <option value="upcoming" ${m.status === 'upcoming' ? 'selected' : ''}>${t('st_upcoming')}</option>
               <option value="live" ${m.status === 'live' ? 'selected' : ''}>${t('st_live')}</option>
@@ -2323,32 +2458,175 @@ function renderAdminView() {
           <button type="button" data-open-event="goal" data-mid="${m.id}" data-tid="${a.id}" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 text-xs font-bold">+1 ${escapeHtml(a.name)}</button>
           <button type="button" data-open-event="yellow_card" data-mid="${m.id}" data-tid="${h.id}" class="px-2.5 py-1.5 rounded-xl bg-amber-500/15 text-amber-300 text-xs font-bold">🟨 ${escapeHtml(h.badge_code)}</button>
           <button type="button" data-open-event="yellow_card" data-mid="${m.id}" data-tid="${a.id}" class="px-2.5 py-1.5 rounded-xl bg-amber-500/15 text-amber-300 text-xs font-bold">🟨 ${escapeHtml(a.badge_code)}</button>
-        </div>` : `<p class="text-[11px] text-slate-400">${m.status === 'upcoming' ? (currentLang === 'en' ? 'Switch status to Live to record goals & cards.' : 'حوّل الحالة إلى (مباشر) لبدء تسجيل الأهداف والبطاقات.') : (currentLang === 'en' ? 'Full Time declared — points applied to standings.' : 'مباراة منتهية — تم احتساب نقاطها في جدول الترتيب.')}</p>`}
+          <button type="button" data-open-event="red_card" data-mid="${m.id}" data-tid="${h.id}" class="px-2.5 py-1.5 rounded-xl bg-rose-500/15 text-rose-300 text-xs font-bold">🟥 ${escapeHtml(h.badge_code)}</button>
+          <button type="button" data-open-event="red_card" data-mid="${m.id}" data-tid="${a.id}" class="px-2.5 py-1.5 rounded-xl bg-rose-500/15 text-rose-300 text-xs font-bold">🟥 ${escapeHtml(a.badge_code)}</button>
+        </div>` : `<p class="text-[11px] text-slate-400">${m.status === 'upcoming' ? (currentLang === 'en' ? 'Switch status to Live to record goals, or open Manage to edit details.' : 'حوّل الحالة إلى (مباشر) لتسجيل الأحداث، أو اضغط (إدارة وتعديل) لتغيير التفاصيل.') : (currentLang === 'en' ? 'Full Time declared — points applied. Click Manage to adjust events.' : 'مباراة منتهية — تم احتساب نقاطها. يمكنك التعديل عبر زر (إدارة وتعديل).')}</p>`}
       </div>
     `;
   }).join('');
 
-  // Admin Teams & Players
-  document.getElementById('adminTeamsList').innerHTML = state.teams.map(tm => `<div class="flex items-center justify-between p-2.5 rounded-xl liquid-glass-subtle text-xs"><span class="font-bold text-white">${escapeHtml(tm.name)} (${escapeHtml(tm.grade)})</span><button type="button" data-delete-team="${tm.id}" class="text-rose-400 font-bold">✕</button></div>`).join('');
-  document.getElementById('adminPlayersList').innerHTML = state.players.map(p => `<div class="flex items-center justify-between p-2 rounded-xl liquid-glass-subtle text-xs"><span><strong class="text-white">#${p.jersey_no} ${escapeHtml(p.full_name)}</strong> · ${escapeHtml(getTeam(p.team_id).name)}</span><button type="button" data-delete-player="${p.id}" class="text-rose-400 font-bold">✕</button></div>`).join('');
+  // Admin Teams Directory & Full Selected Club Studio
+  if (!state.teams.some(x => x.id === adminSelectedTeamId)) adminSelectedTeamId = state.teams[0]?.id || null;
+  const clubsCountEl = document.getElementById('adminClubsCountBadge');
+  if (clubsCountEl) clubsCountEl.textContent = state.teams.length;
 
-  // Super Admin Governance: Active Switcher + Admins List + Audit Logs
+  document.getElementById('adminTeamsList').innerHTML = state.teams.length ? state.teams.map(tm => {
+    const pCount = state.players.filter(p => p.team_id === tm.id).length;
+    const active = tm.id === adminSelectedTeamId;
+    return `
+      <div class="flex items-center justify-between p-2.5 rounded-xl transition cursor-pointer ${active ? 'bg-emerald-500/15 border border-emerald-400/40' : 'liquid-glass-subtle hover:border-white/20'}" data-admin-select-team="${tm.id}">
+        <div class="flex items-center gap-2.5 min-w-0">
+          ${formatCrest(tm, 'w-8 h-8 text-[10px]')}
+          <div class="min-w-0">
+            <p class="font-bold text-xs text-white truncate">${escapeHtml(tm.name)}</p>
+            <p class="text-[10px] text-slate-400">${escapeHtml(tm.group_name || '')} · ${pCount} ${currentLang === 'en' ? 'players' : 'لاعب'}</p>
+          </div>
+        </div>
+        <span class="text-[10px] font-bold ${active ? 'text-emerald-300' : 'text-slate-400'}">${active ? (currentLang === 'en' ? 'Selected' : 'محدّد') : '←'}</span>
+      </div>`;
+  }).join('') : `<p class="text-xs text-slate-400">${currentLang === 'en' ? 'No clubs yet.' : 'لا توجد أندية بعد.'}</p>`;
 
+  const clubPanel = document.getElementById('adminSelectedClubPanel');
+  const selClub = state.teams.find(x => x.id === adminSelectedTeamId);
+  const newPlayerTeamSel = document.getElementById('newPlayerTeam');
+  if (newPlayerTeamSel && selClub) newPlayerTeamSel.value = selClub.id;
+
+  if (clubPanel) {
+    if (!selClub) {
+      clubPanel.innerHTML = `<p class="text-xs text-slate-400">${currentLang === 'en' ? 'Select or create a club to manage its details and squad.' : 'اختر ناديًا من القائمة أو أضف ناديًا جديدًا لإدارته.'}</p>`;
+    } else {
+      const clubPlayers = state.players.filter(p => p.team_id === selClub.id);
+      const gk = clubPlayers.find(p => p.position === 'GK');
+      const defs = clubPlayers.filter(p => p.position === 'DEF');
+      const mids = clubPlayers.filter(p => p.position === 'MID');
+      const fwds = clubPlayers.filter(p => p.position === 'FWD');
+      const miniDot = pl => `<span title="${escapeHtml(pl.full_name)}" class="px-2 py-0.5 rounded-lg bg-obsidian/85 border border-white/20 text-[10px] font-bold text-white whitespace-nowrap">#${pl.jersey_no} ${escapeHtml(pl.full_name.split(' ')[0])}</span>`;
+      const presetOptions = `<option value="custom" ${!selClub.logo_preset || selClub.logo_preset === 'custom' ? 'selected' : ''}>${currentLang === 'en' ? 'Custom Club' : 'نادٍ مخصص'}</option>` +
+        Object.entries(CLUB_PRESETS).map(([k, v]) => `<option value="${k}" ${selClub.logo_preset === k ? 'selected' : ''}>${v.nameAr} (${v.nameEn})</option>`).join('');
+
+      clubPanel.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
+          <div class="flex items-center gap-3">
+            ${formatCrest(selClub, 'w-11 h-11 text-sm')}
+            <div>
+              <h3 class="font-display font-extrabold text-base text-white">${escapeHtml(selClub.name)}</h3>
+              <p class="text-[11px] text-slate-400">${escapeHtml(selClub.group_name || '')} · ${clubPlayers.length} ${currentLang === 'en' ? 'players' : 'لاعب'}</p>
+            </div>
+          </div>
+          <button type="button" data-delete-team="${selClub.id}" class="px-3 py-1.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-400/25 text-xs font-bold transition">${currentLang === 'en' ? 'Delete Club' : 'حذف النادي'}</button>
+        </div>
+
+        <!-- Mini Tactical Squad Map -->
+        <div class="rounded-2xl p-3.5 border border-emerald-400/25 space-y-2.5" style="background: repeating-linear-gradient(0deg, rgba(22,101,52,0.22) 0px, rgba(22,101,52,0.22) 26px, rgba(21,128,61,0.14) 26px, rgba(21,128,61,0.14) 52px);">
+          <div class="flex items-center justify-between text-[10px] text-emerald-200/80 font-bold">
+            <span>${currentLang === 'en' ? 'Squad Tactical Map' : 'خريطة تشكيلة النادي'}</span>
+            <span>FWD ${fwds.length} · MID ${mids.length} · DEF ${defs.length} · GK ${gk ? 1 : 0}</span>
+          </div>
+          <div class="flex flex-wrap justify-around gap-1.5">${fwds.map(miniDot).join('') || '<span class="text-[10px] text-emerald-200/40">FWD</span>'}</div>
+          <div class="flex flex-wrap justify-around gap-1.5">${mids.map(miniDot).join('') || '<span class="text-[10px] text-emerald-200/40">MID</span>'}</div>
+          <div class="flex flex-wrap justify-around gap-1.5">${defs.map(miniDot).join('') || '<span class="text-[10px] text-emerald-200/40">DEF</span>'}</div>
+          <div class="flex justify-center">${gk ? miniDot(gk) : '<span class="text-[10px] text-emerald-200/40">GK</span>'}</div>
+        </div>
+
+        <!-- Edit Club Form -->
+        <form id="editClubForm" data-team-id="${selClub.id}" class="space-y-3 pt-1">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input id="editClubName" type="text" value="${escapeHtml(selClub.name)}" dir="ltr" required class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white" placeholder="Club Name">
+            <select id="editClubPreset" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">${presetOptions}</select>
+          </div>
+          <div class="grid grid-cols-3 gap-3">
+            <input id="editClubGroup" type="text" value="${escapeHtml(selClub.group_name || 'Group A')}" dir="ltr" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white" placeholder="Group">
+            <input id="editClubBadge" type="text" maxlength="3" value="${escapeHtml(selClub.badge_code || 'FC')}" class="bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white uppercase" placeholder="Code">
+            <input id="editClubColor" type="color" value="${sanitizeColor(selClub.primary_color)}" class="w-full h-9 bg-obsidian/80 border border-white/15 rounded-xl p-1 cursor-pointer">
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <input id="editClubLogoFile" type="file" accept="image/png,image/jpeg,image/webp" class="text-[11px] text-slate-300 file:me-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:bg-white/10 file:text-white">
+            <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-xs">${currentLang === 'en' ? 'Save Club Changes' : 'حفظ تعديلات النادي'}</button>
+          </div>
+        </form>
+      `;
+
+      const editClubForm = document.getElementById('editClubForm');
+      if (editClubForm) {
+        editClubForm.addEventListener('submit', async e => {
+          e.preventDefault();
+          if (!isCloudWriteActive()) { showToast(currentLang === 'en' ? 'Admin auth required.' : 'يجب تسجيل الدخول كمشرف أولًا.', 'error'); return; }
+          const tid = editClubForm.dataset.teamId;
+          const patch = {
+            name: document.getElementById('editClubName').value.trim(),
+            logo_preset: document.getElementById('editClubPreset').value,
+            group_name: document.getElementById('editClubGroup').value.trim() || 'Group A',
+            badge_code: (document.getElementById('editClubBadge').value.trim() || 'FC').toUpperCase(),
+            primary_color: document.getElementById('editClubColor').value
+          };
+          const fileInput = document.getElementById('editClubLogoFile');
+          try {
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+              patch.logo_url = await uploadImageToStorage(fileInput.files[0], 'logos');
+            }
+            const { error } = await supabaseClient.from('teams').update(patch).eq('id', tid);
+            if (error) { handleDbError(error); return; }
+            const idx = state.teams.findIndex(t => t.id === tid);
+            if (idx !== -1) state.teams[idx] = { ...state.teams[idx], ...patch };
+            await logAdminAction('Update Club', patch.name);
+            saveState(); renderAll();
+            showToast(currentLang === 'en' ? 'Club updated!' : 'تم تحديث بيانات النادي بنجاح!');
+          } catch (err) {
+            showToast(err.message || 'Update failed', 'error');
+          }
+        });
+      }
+    }
+  }
+
+  // Selected Club Squad Roster (with Edit / Transfer & Delete)
+  const rosterPlayers = selClub ? state.players.filter(p => p.team_id === selClub.id) : state.players;
+  const rTitle = document.getElementById('adminRosterTitle');
+  const rCount = document.getElementById('adminRosterCount');
+  if (rTitle) rTitle.textContent = selClub ? (currentLang === 'en' ? `${selClub.name} Roster` : `لاعبو ${selClub.name}`) : (currentLang === 'en' ? 'All Players' : 'كل اللاعبين');
+  if (rCount) rCount.textContent = rosterPlayers.length;
+
+  document.getElementById('adminPlayersList').innerHTML = rosterPlayers.length ? rosterPlayers.map(p => `
+    <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl liquid-glass-subtle text-xs">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="w-7 h-7 rounded-lg bg-obsidian/80 border border-white/10 flex items-center justify-center font-mono font-bold text-emerald-300 shrink-0">#${p.jersey_no}</span>
+        <div class="min-w-0">
+          <p class="font-bold text-white truncate">${escapeHtml(p.full_name)}</p>
+          <p class="text-[10px] text-slate-400">${escapeHtml(p.position)} · OVR ${p.rating}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button type="button" data-edit-player="${p.id}" class="px-2.5 py-1 rounded-lg bg-sky-500/15 text-sky-300 font-bold hover:bg-sky-500/25 transition">${currentLang === 'en' ? 'Edit' : 'تعديل'}</button>
+        <button type="button" data-delete-player="${p.id}" class="px-2 py-1 rounded-lg bg-rose-500/15 text-rose-300 font-bold hover:bg-rose-500/25 transition">✕</button>
+      </div>
+    </div>
+  `).join('') : `<p class="text-xs text-slate-400">${currentLang === 'en' ? 'No players in this club yet.' : 'لا يوجد لاعبون في هذا النادي بعد.'}</p>`;
+
+  // Super Admin Governance: Role Hierarchy + Anti-Self-Disable
   document.getElementById('adminsListContainer').innerHTML = state.admins.map(a => {
     const perms = Object.entries(a.permissions || {}).filter(([, v]) => v).map(([k]) => k).join(' · ');
+    const isSelf = currentAdminProfile && a.id === currentAdminProfile.id;
+    const isOwner = String(a.tag || '').toUpperCase() === 'SUP-01';
+    const manageable = canManageTargetAdmin(a);
+    const rankLabel = getAdminRoleBadge(a.role, a.tag);
     return `
       <div class="p-3.5 rounded-2xl liquid-glass-subtle flex flex-wrap items-center justify-between gap-3 text-xs">
         <div class="space-y-1">
-          <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded-md bg-amber-400/20 text-amber-300 font-bold" dir="ltr">${escapeHtml(a.tag)}</span>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2 py-0.5 rounded-md ${isOwner ? 'bg-amber-400/25 text-amber-200 border border-amber-300/40' : 'bg-amber-400/15 text-amber-300'} font-bold" dir="ltr">${escapeHtml(a.tag)}</span>
             <strong class="text-white text-sm">${escapeHtml(a.name)}</strong>
+            <span class="px-2 py-0.5 rounded-md bg-white/10 text-slate-200 text-[10px] font-semibold">${escapeHtml(rankLabel)}</span>
             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${a.active ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${a.active ? (currentLang === 'en' ? 'Active' : 'مفعّل') : (currentLang === 'en' ? 'Disabled' : 'موقوف')}</span>
           </div>
-          <p class="text-slate-400 font-mono" dir="ltr">${escapeHtml(a.email || "")} — ${escapeHtml(perms)}</p>
+          <p class="text-slate-400 font-mono" dir="ltr">${escapeHtml(a.email || '')} — ${escapeHtml(perms)}</p>
         </div>
         <div class="flex items-center gap-2">
-          <button type="button" data-toggle-admin="${a.id}" class="px-3 py-1.5 rounded-xl font-bold ${a.active ? 'bg-amber-500/15 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}">${a.active ? (currentLang === 'en' ? 'Disable' : 'إلغاء التفعيل') : (currentLang === 'en' ? 'Activate' : 'تفعيل')}</button>
-          ${a.role !== 'super_admin' ? `<button type="button" data-remove-admin="${a.id}" class="px-2.5 py-1.5 rounded-xl bg-rose-500/15 text-rose-300 font-bold">✕</button>` : ''}
+          ${isSelf
+            ? `<span class="px-2.5 py-1 rounded-xl bg-white/5 text-slate-400 text-[11px] font-semibold">${currentLang === 'en' ? 'Your account' : 'حسابك'}</span>`
+            : manageable
+              ? `<button type="button" data-toggle-admin="${a.id}" class="px-3 py-1.5 rounded-xl font-bold ${a.active ? 'bg-amber-500/15 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}">${a.active ? (currentLang === 'en' ? 'Disable' : 'إلغاء التفعيل') : (currentLang === 'en' ? 'Activate' : 'تفعيل')}</button>
+                 <button type="button" data-remove-admin="${a.id}" class="px-2.5 py-1.5 rounded-xl bg-rose-500/15 text-rose-300 font-bold">✕</button>`
+              : `<span class="px-2.5 py-1 rounded-xl bg-white/5 text-slate-500 text-[11px]">${currentLang === 'en' ? 'Protected rank' : 'رتبة محمية'}</span>`}
         </div>
       </div>
     `;
@@ -2615,16 +2893,160 @@ function switchAdminTab(tab) {
 
 function openEventModal(mid, tid, type) {
   const players = state.players.filter(p => p.team_id === tid);
-  if (!players.length) { showToast('أضف لاعبين للفريق أولًا.', 'error'); return; }
+  if (!players.length) { showToast(currentLang === 'en' ? 'Add players to this club first.' : 'أضف لاعبين للنادي أولًا.', 'error'); return; }
   document.getElementById('evMatchId').value = mid;
   document.getElementById('evTeamId').value = tid;
   document.getElementById('evType').value = type;
-  document.getElementById('eventModalTitle').textContent = `${type === 'goal' ? '⚽' : '🟨'} ${getTeam(tid).name}`;
+  const icon = type === 'goal' ? '⚽' : type === 'red_card' ? '🟥' : '🟨';
+  document.getElementById('eventModalTitle').textContent = `${icon} ${getTeam(tid).name}`;
   document.getElementById('evAssistWrap').style.display = type === 'goal' ? 'block' : 'none';
   const opts = players.map(p => `<option value="${p.id}">#${p.jersey_no} ${escapeHtml(p.full_name)}</option>`).join('');
   document.getElementById('evPlayerId').innerHTML = opts;
   document.getElementById('evAssistId').innerHTML = `<option value="">${currentLang === 'en' ? 'No assist' : 'بدون صانع هدف'}</option>` + opts;
   openAccessibleModal(document.getElementById('eventModal'));
+}
+
+function openEditPlayerModal(playerId) {
+  const pl = state.players.find(x => x.id === playerId);
+  if (!pl) return;
+  document.getElementById('editPlayerId').value = pl.id;
+  document.getElementById('editPlayerName').value = pl.full_name;
+  document.getElementById('editPlayerNumber').value = pl.jersey_no;
+  document.getElementById('editPlayerPos').value = pl.position || 'FWD';
+  document.getElementById('editPlayerRating').value = pl.rating || 82;
+  const tSel = document.getElementById('editPlayerTeam');
+  tSel.innerHTML = state.teams.map(tm => `<option value="${escapeHtml(tm.id)}" ${tm.id === pl.team_id ? 'selected' : ''}>${escapeHtml(tm.name)}</option>`).join('');
+  openAccessibleModal(document.getElementById('editPlayerModal'));
+}
+
+function openAdminMatchEditModal(matchId) {
+  const m = state.matches.find(x => x.id === matchId);
+  if (!m) return;
+  const h = getTeam(m.home_team_id), a = getTeam(m.away_team_id);
+  const evs = state.events.filter(e => e.match_id === m.id).sort((x, y) => x.minute - y.minute);
+  const teamOpts = (selId) => state.teams.map(tm => `<option value="${escapeHtml(tm.id)}" ${tm.id === selId ? 'selected' : ''}>${escapeHtml(tm.name)}</option>`).join('');
+  const dtLocal = (() => {
+    try {
+      const d = new Date(m.kickoff_at);
+      const off = d.getTimezoneOffset() * 60000;
+      return new Date(d.getTime() - off).toISOString().slice(0, 16);
+    } catch (e) { return ''; }
+  })();
+
+  document.getElementById('adminMatchEditTitle').textContent = `${escapeHtml(m.round_label)} — ${escapeHtml(h.name)} × ${escapeHtml(a.name)}`;
+  document.getElementById('adminMatchEditBody').innerHTML = `
+    <form id="editMatchDetailsForm" data-mid="${m.id}" class="liquid-glass-subtle rounded-2xl p-4 space-y-3">
+      <p class="text-xs font-display font-bold text-emerald-300">${currentLang === 'en' ? 'Match Details & Score' : 'تعديل تفاصيل المباراة والنتيجة'}</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label class="block text-[11px] text-slate-400 mb-1">${currentLang === 'en' ? 'Home Team' : 'الفريق المضيف'}</label>
+          <select id="emHomeTeam" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">${teamOpts(m.home_team_id)}</select>
+        </div>
+        <div>
+          <label class="block text-[11px] text-slate-400 mb-1">${currentLang === 'en' ? 'Away Team' : 'الفريق الضيف'}</label>
+          <select id="emAwayTeam" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">${teamOpts(m.away_team_id)}</select>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+        <div>
+          <label class="block text-[10px] text-slate-400 mb-1">${currentLang === 'en' ? 'Round' : 'الجولة'}</label>
+          <input id="emRound" type="text" value="${escapeHtml(m.round_label)}" dir="ltr" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-2.5 py-2 text-xs text-white">
+        </div>
+        <div>
+          <label class="block text-[10px] text-slate-400 mb-1">${currentLang === 'en' ? 'Status' : 'الحالة'}</label>
+          <select id="emStatus" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-2.5 py-2 text-xs text-white">
+            <option value="upcoming" ${m.status === 'upcoming' ? 'selected' : ''}>${t('st_upcoming')}</option>
+            <option value="live" ${m.status === 'live' ? 'selected' : ''}>${t('st_live')}</option>
+            <option value="finished" ${m.status === 'finished' ? 'selected' : ''}>${t('st_finished')}</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-[10px] text-slate-400 mb-1">${escapeHtml(h.badge_code)} ${currentLang === 'en' ? 'Score' : 'أهداف'}</label>
+          <input id="emHomeScore" type="number" min="0" max="99" value="${m.home_score}" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-2.5 py-2 text-xs text-white text-center font-bold">
+        </div>
+        <div>
+          <label class="block text-[10px] text-slate-400 mb-1">${escapeHtml(a.badge_code)} ${currentLang === 'en' ? 'Score' : 'أهداف'}</label>
+          <input id="emAwayScore" type="number" min="0" max="99" value="${m.away_score}" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-2.5 py-2 text-xs text-white text-center font-bold">
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-end">
+        <div class="sm:col-span-2">
+          <label class="block text-[10px] text-slate-400 mb-1">${currentLang === 'en' ? 'Kickoff Date & Time' : 'موعد المباراة'}</label>
+          <input id="emKickoff" type="datetime-local" value="${dtLocal}" required class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white">
+        </div>
+        <div>
+          <label class="block text-[10px] text-slate-400 mb-1">${currentLang === 'en' ? 'Minute' : 'الدقيقة'}</label>
+          <input id="emMinute" type="number" min="0" max="120" value="${m.minute || 0}" class="w-full bg-obsidian/80 border border-white/15 rounded-xl px-3 py-2 text-xs text-white text-center">
+        </div>
+      </div>
+      <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-obsidian font-display font-extrabold text-xs">${currentLang === 'en' ? 'Save Match Changes' : 'حفظ تعديلات المباراة'}</button>
+    </form>
+
+    <!-- Visual Events Timeline + Swap Player / Delete Event -->
+    <div class="liquid-glass-subtle rounded-2xl p-4 space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <p class="text-xs font-display font-bold text-amber-300">${currentLang === 'en' ? `Match Events & Player Swaps (${evs.length})` : `أحداث المباراة وتبديل اللاعبين (${evs.length})`}</p>
+        <div class="flex flex-wrap gap-1.5">
+          <button type="button" data-open-event="goal" data-mid="${m.id}" data-tid="${h.id}" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-[11px] font-bold">+⚽ ${escapeHtml(h.badge_code)}</button>
+          <button type="button" data-open-event="goal" data-mid="${m.id}" data-tid="${a.id}" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-[11px] font-bold">+⚽ ${escapeHtml(a.badge_code)}</button>
+          <button type="button" data-open-event="yellow_card" data-mid="${m.id}" data-tid="${h.id}" class="px-2 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-[11px] font-bold">+🟨 ${escapeHtml(h.badge_code)}</button>
+          <button type="button" data-open-event="yellow_card" data-mid="${m.id}" data-tid="${a.id}" class="px-2 py-1 rounded-lg bg-amber-500/15 text-amber-300 text-[11px] font-bold">+🟨 ${escapeHtml(a.badge_code)}</button>
+        </div>
+      </div>
+      <div class="space-y-2.5 max-h-72 overflow-y-auto">
+        ${evs.length ? evs.map(ev => {
+          const teamPlayers = state.players.filter(p => p.team_id === ev.team_id);
+          const pOpts = teamPlayers.map(p => `<option value="${p.id}" ${p.id === ev.player_id ? 'selected' : ''}>#${p.jersey_no} ${escapeHtml(p.full_name)}</option>`).join('');
+          const aOpts = `<option value="">${currentLang === 'en' ? 'No assist' : 'بدون صانع'}</option>` + teamPlayers.map(p => `<option value="${p.id}" ${p.id === ev.assist_player_id ? 'selected' : ''}>#${p.jersey_no} ${escapeHtml(p.full_name)}</option>`).join('');
+          const icon = ev.event_type === 'goal' ? '⚽' : ev.event_type === 'red_card' ? '🟥' : '🟨';
+          return `
+            <div class="p-2.5 rounded-xl bg-obsidian/70 border border-white/10 space-y-2 text-xs" data-ev-row="${ev.id}">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="font-bold text-white">${icon} ${escapeHtml(getTeam(ev.team_id).name)}</span>
+                <div class="flex items-center gap-1.5">
+                  <button type="button" data-save-event="${ev.id}" data-mid="${m.id}" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold hover:bg-emerald-500/30">${currentLang === 'en' ? 'Save' : 'حفظ'}</button>
+                  <button type="button" data-del-event="${ev.id}" data-mid="${m.id}" class="px-2 py-1 rounded-lg bg-rose-500/20 text-rose-300 font-bold hover:bg-rose-500/30">✕</button>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <select class="ev-edit-player bg-obsidian border border-white/15 rounded-lg px-2 py-1.5 text-[11px] text-white">${pOpts}</select>
+                ${ev.event_type === 'goal' ? `<select class="ev-edit-assist bg-obsidian border border-white/15 rounded-lg px-2 py-1.5 text-[11px] text-slate-300">${aOpts}</select>` : `<span class="text-[11px] text-slate-500 self-center px-1">${ev.event_type === 'red_card' ? 'Red Card' : 'Yellow Card'}</span>`}
+                <input type="number" min="1" max="120" value="${ev.minute}" class="ev-edit-min bg-obsidian border border-white/15 rounded-lg px-2 py-1.5 text-[11px] text-amber-300 text-center font-mono">
+              </div>
+            </div>`;
+        }).join('') : `<p class="text-xs text-slate-400 text-center py-3">${currentLang === 'en' ? 'No events recorded yet.' : 'لا توجد أحداث مسجّلة لهذه المباراة بعد.'}</p>`}
+      </div>
+    </div>
+  `;
+
+  const emForm = document.getElementById('editMatchDetailsForm');
+  if (emForm) {
+    emForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!isCloudWriteActive()) { showToast(currentLang === 'en' ? 'Admin auth required.' : 'يجب تسجيل الدخول كمشرف أولًا.', 'error'); return; }
+      const home_team_id = document.getElementById('emHomeTeam').value;
+      const away_team_id = document.getElementById('emAwayTeam').value;
+      if (home_team_id === away_team_id) { showToast(currentLang === 'en' ? 'Pick two different teams.' : 'اختر فريقين مختلفين!', 'error'); return; }
+      const patch = {
+        home_team_id,
+        away_team_id,
+        round_label: document.getElementById('emRound').value.trim(),
+        status: document.getElementById('emStatus').value,
+        home_score: Math.max(0, parseInt(document.getElementById('emHomeScore').value, 10) || 0),
+        away_score: Math.max(0, parseInt(document.getElementById('emAwayScore').value, 10) || 0),
+        minute: Math.max(0, parseInt(document.getElementById('emMinute').value, 10) || 0),
+        kickoff_at: new Date(document.getElementById('emKickoff').value).toISOString()
+      };
+      const { error } = await supabaseClient.from('matches').update(patch).eq('id', m.id);
+      if (error) { handleDbError(error); return; }
+      Object.assign(m, patch);
+      await logAdminAction('Update Match', `${getTeam(home_team_id).name} ${patch.home_score}-${patch.away_score} ${getTeam(away_team_id).name}`);
+      saveState(); renderAll(); openAdminMatchEditModal(m.id);
+      showToast(currentLang === 'en' ? 'Match updated!' : 'تم تحديث المباراة بنجاح!');
+    });
+  }
+
+  openAccessibleModal(document.getElementById('adminMatchEditModal'));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -2755,6 +3177,52 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('closeEventModal').addEventListener('click', () => {
     closeAccessibleModal(document.getElementById('eventModal'));
+  });
+  document.getElementById('closeEditPlayerModal').addEventListener('click', () => {
+    closeAccessibleModal(document.getElementById('editPlayerModal'));
+  });
+  document.getElementById('closeAdminMatchEditModal').addEventListener('click', () => {
+    closeAccessibleModal(document.getElementById('adminMatchEditModal'));
+  });
+
+  // Role selector auto-presets recommended permissions + shows rank hierarchy description
+  const roleSelEl = document.getElementById('newAdminRole');
+  if (roleSelEl) {
+    const syncRolePreset = () => {
+      const meta = ROLE_HIERARCHY[roleSelEl.value];
+      if (!meta || !meta.preset) return;
+      document.getElementById('permMatches').checked = meta.preset.matches;
+      document.getElementById('permTeams').checked = meta.preset.teams;
+      document.getElementById('permModeration').checked = meta.preset.moderation;
+      document.getElementById('permSeason').checked = meta.preset.season;
+      document.getElementById('permAdmins').checked = meta.preset.admins;
+      const hint = document.getElementById('roleHierarchyHint');
+      if (hint) hint.textContent = currentLang === 'en' ? meta.descEn : meta.descAr;
+    };
+    roleSelEl.addEventListener('change', syncRolePreset);
+    syncRolePreset();
+  }
+
+  // Save Edited / Transferred Player
+  document.getElementById('editPlayerForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!isCloudWriteActive()) { showToast(currentLang === 'en' ? 'Admin auth required.' : 'يجب تسجيل الدخول كمشرف أولًا.', 'error'); return; }
+    const pid = document.getElementById('editPlayerId').value;
+    const patch = {
+      full_name: document.getElementById('editPlayerName').value.trim(),
+      team_id: document.getElementById('editPlayerTeam').value,
+      jersey_no: Math.min(99, Math.max(1, parseInt(document.getElementById('editPlayerNumber').value, 10) || 1)),
+      position: document.getElementById('editPlayerPos').value || 'FWD',
+      rating: Math.min(99, Math.max(60, parseInt(document.getElementById('editPlayerRating').value, 10) || 82))
+    };
+    const { error } = await supabaseClient.from('players').update(patch).eq('id', pid);
+    if (error) { handleDbError(error); return; }
+    const idx = state.players.findIndex(x => x.id === pid);
+    if (idx !== -1) state.players[idx] = { ...state.players[idx], ...patch };
+    await logAdminAction('Update Player', `${patch.full_name} (#${patch.jersey_no})`);
+    saveState(); renderAll();
+    closeAccessibleModal(document.getElementById('editPlayerModal'));
+    showToast(currentLang === 'en' ? 'Player updated!' : 'تم تحديث بيانات اللاعب بنجاح!');
   });
 
   // Server-Verified Supabase Auth Login
@@ -2938,10 +3406,65 @@ document.addEventListener('DOMContentLoaded', () => {
       saveState(); renderAll(); return;
     }
 
+    const adminSelT = e.target.closest('[data-admin-select-team]');
+    if (adminSelT) { adminSelectedTeamId = adminSelT.dataset.adminSelectTeam; renderAdminView(); return; }
+
+    const editPBtn = e.target.closest('[data-edit-player]');
+    if (editPBtn) { openEditPlayerModal(editPBtn.dataset.editPlayer); return; }
+
+    const editMBtn = e.target.closest('[data-edit-match]');
+    if (editMBtn) { openAdminMatchEditModal(editMBtn.dataset.editMatch); return; }
+
+    const saveEvBtn = e.target.closest('[data-save-event]');
+    if (saveEvBtn && isCloudWriteActive()) {
+      const evId = saveEvBtn.dataset.saveEvent, mid = saveEvBtn.dataset.mid;
+      const row = saveEvBtn.closest('[data-ev-row]');
+      const evObj = state.events.find(x => x.id === evId);
+      if (row && evObj) {
+        const player_id = row.querySelector('.ev-edit-player')?.value || evObj.player_id;
+        const assistSel = row.querySelector('.ev-edit-assist');
+        const assist_player_id = assistSel ? (assistSel.value || null) : evObj.assist_player_id;
+        const minute = Math.min(120, Math.max(1, parseInt(row.querySelector('.ev-edit-min')?.value, 10) || evObj.minute));
+        const { error } = await supabaseClient.from('match_events').update({ player_id, assist_player_id, minute }).eq('id', evId);
+        if (error) { handleDbError(error); return; }
+        evObj.player_id = player_id; evObj.assist_player_id = assist_player_id; evObj.minute = minute;
+        await logAdminAction('Edit Match Event', `${getPlayer(player_id).full_name} (${minute}')`);
+        saveState(); renderAll(); openAdminMatchEditModal(mid);
+        showToast(currentLang === 'en' ? 'Event updated!' : 'تم تعديل الحدث وتبديل اللاعب بنجاح!');
+      }
+      return;
+    }
+
+    const delEvBtn = e.target.closest('[data-del-event]');
+    if (delEvBtn && isCloudWriteActive()) {
+      const evId = delEvBtn.dataset.delEvent, mid = delEvBtn.dataset.mid;
+      const evObj = state.events.find(x => x.id === evId);
+      const { error } = await supabaseClient.from('match_events').delete().eq('id', evId);
+      if (error) { handleDbError(error); return; }
+      state.events = state.events.filter(x => x.id !== evId);
+      if (evObj && evObj.event_type === 'goal') {
+        const mObj = state.matches.find(x => x.id === mid);
+        if (mObj) {
+          const nextH = mObj.home_team_id === evObj.team_id ? Math.max(0, mObj.home_score - 1) : mObj.home_score;
+          const nextA = mObj.away_team_id === evObj.team_id ? Math.max(0, mObj.away_score - 1) : mObj.away_score;
+          await supabaseClient.from('matches').update({ home_score: nextH, away_score: nextA }).eq('id', mid);
+          mObj.home_score = nextH; mObj.away_score = nextA;
+        }
+      }
+      await logAdminAction('Delete Match Event', evId);
+      saveState(); renderAll(); openAdminMatchEditModal(mid);
+      showToast(currentLang === 'en' ? 'Event removed!' : 'تم حذف الحدث.');
+      return;
+    }
+
     const togAdm = e.target.closest('[data-toggle-admin]');
     if (togAdm && isCloudWriteActive()) {
       const adm = state.admins.find(a => a.id === togAdm.dataset.toggleAdmin);
       if (adm) {
+        if (!canManageTargetAdmin(adm)) {
+          showToast(currentLang === 'en' ? 'You cannot modify your own account or an equal/higher rank.' : 'لا يمكنك تعديل حسابك أو رتبة مساوية/أعلى منك.', 'error');
+          return;
+        }
         const nextActive = !adm.active;
         const { error } = await supabaseClient.from('admin_profiles').update({ is_active: nextActive }).eq('id', adm.id);
         if (error) { handleDbError(error); return; }
@@ -2956,6 +3479,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (remAdm && isCloudWriteActive()) {
       const adm = state.admins.find(a => a.id === remAdm.dataset.removeAdmin);
       if (adm) {
+        if (!canManageTargetAdmin(adm)) {
+          showToast(currentLang === 'en' ? 'You cannot remove your own account or an equal/higher rank.' : 'لا يمكنك حذف حسابك أو رتبة مساوية/أعلى منك.', 'error');
+          return;
+        }
         const { error } = await supabaseClient.from('admin_profiles').delete().eq('id', adm.id);
         if (error) { handleDbError(error); return; }
         state.admins = state.admins.filter(a => a.id !== adm.id);
@@ -2995,7 +3522,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const aid = document.getElementById('evAssistId').value || null;
     const minute = parseInt(document.getElementById('evMinute').value, 10) || 30;
     const m = state.matches.find(x => x.id === mid);
-    if (!m || m.status !== 'live') { showToast(currentLang === 'en' ? 'Match must be Live first.' : 'يجب أن تكون المباراة في حالة (مباشر) أولًا.', 'error'); return; }
+    if (!m || m.status === 'upcoming') { showToast(currentLang === 'en' ? 'Match must be Live or Finished to record events.' : 'يجب أن تكون المباراة (مباشر) أو (منتهية) لتسجيل الأحداث.', 'error'); return; }
     if (!isCloudWriteActive()) { showToast('Admin auth required', 'error'); return; }
     const { data: evData, error: evErr } = await supabaseClient.from('match_events').insert({ match_id: mid, team_id: tid, player_id: pid, assist_player_id: aid, event_type: type, minute }).select().single();
     if (evErr) { handleDbError(evErr); return; }
@@ -3014,6 +3541,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     saveState(); renderAll();
     closeAccessibleModal(document.getElementById('eventModal'));
+    const matchEditM = document.getElementById('adminMatchEditModal');
+    if (matchEditM && !matchEditM.classList.contains('hidden')) openAdminMatchEditModal(mid);
   });
 
   document.getElementById('addMatchForm').addEventListener('submit', async e => {
@@ -3070,7 +3599,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('newTeamLogoFile');
     const saveTeam = async (logoDataUrl) => {
       const payload = {
-        name: nm, grade: document.getElementById('newTeamGrade').value.trim(),
+        name: nm, grade: '',
         group_name: document.getElementById('newTeamGroup').value.trim() || 'Group A',
         badge_code: (document.getElementById('newTeamBadge').value.trim() || 'FC').toUpperCase(),
         primary_color: document.getElementById('newTeamColor').value,
@@ -3081,8 +3610,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const { data, error } = await supabaseClient.from('teams').insert(payload).select().single();
       if (error) { if (logoDataUrl) await deleteStorageAssetByUrl(logoDataUrl); handleDbError(error); return; }
       state.teams.push(data);
+      adminSelectedTeamId = data.id;
       await logAdminAction('Add Team', nm);
-      e.target.reset(); saveState(); renderAll(); showToast(currentLang === 'en' ? 'Team added!' : 'تمت إضافة الفريق!');
+      e.target.reset(); saveState(); renderAll(); showToast(currentLang === 'en' ? 'Club added!' : 'تمت إضافة النادي بنجاح!');
     };
     if (fileInput && fileInput.files && fileInput.files[0]) {
       uploadImageToStorage(fileInput.files[0], 'logos')
@@ -3096,28 +3626,92 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addPlayerForm').addEventListener('submit', async e => {
     e.preventDefault();
     const nm = document.getElementById('newPlayerName').value.trim();
+    const tid = document.getElementById('newPlayerTeam').value;
+    const rawNum = (document.getElementById('newPlayerNumber').value || '').trim();
+    const rawRat = (document.getElementById('newPlayerRating').value || '').trim();
+    const rawPos = (document.getElementById('newPlayerPos').value || '').trim();
+
+    let jerseyNo = parseInt(rawNum, 10);
+    if (!rawNum || rawNum === '00' || isNaN(jerseyNo) || jerseyNo < 1 || jerseyNo > 99) {
+      const used = new Set(state.players.filter(p => p.team_id === tid).map(p => Number(p.jersey_no)));
+      const avail = [];
+      for (let n = 1; n <= 99; n++) if (!used.has(n)) avail.push(n);
+      jerseyNo = avail.length ? avail[Math.floor(Math.random() * avail.length)] : (Math.floor(Math.random() * 99) + 1);
+    }
+
+    let ratingVal = parseInt(rawRat, 10);
+    if (!rawRat || rawRat === '00' || isNaN(ratingVal) || ratingVal < 60 || ratingVal > 99) {
+      ratingVal = Math.floor(Math.random() * (95 - 80 + 1)) + 80; // 80–95
+    }
+
+    const posVal = ['FWD', 'MID', 'DEF', 'GK'].includes(rawPos) ? rawPos : 'FWD';
+
     const payload = {
-      team_id: document.getElementById('newPlayerTeam').value, full_name: nm,
-      jersey_no: parseInt(document.getElementById('newPlayerNumber').value, 10) || 10,
-      position: document.getElementById('newPlayerPos').value,
-      rating: parseInt(document.getElementById('newPlayerRating').value, 10) || 82
+      team_id: tid,
+      full_name: nm,
+      jersey_no: jerseyNo,
+      position: posVal,
+      rating: ratingVal
     };
     if (!isCloudWriteActive()) { showToast('Admin auth required', 'error'); return; }
     const { data, error } = await supabaseClient.from('players').insert(payload).select().single();
     if (error) { handleDbError(error); return; }
     state.players.push(data);
-    await logAdminAction('Add Player', nm);
-    e.target.reset(); saveState(); renderAll(); showToast(currentLang === 'en' ? 'Player added!' : 'تمت إضافة اللاعب!');
+    await logAdminAction('Add Player', `${nm} (#${jerseyNo}, ${posVal}, OVR ${ratingVal})`);
+    e.target.reset();
+    document.getElementById('newPlayerNumber').value = '00';
+    document.getElementById('newPlayerRating').value = '00';
+    if (tid) document.getElementById('newPlayerTeam').value = tid;
+    saveState(); renderAll();
+    showToast(currentLang === 'en' ? `Player added (#${jerseyNo} · ${posVal} · OVR ${ratingVal})` : `تمت إضافة اللاعب (#${jerseyNo} · ${posVal} · طاقة ${ratingVal})`);
   });
+
+  const genPassBtn = document.getElementById('genAdminPassBtn');
+  if (genPassBtn) {
+    genPassBtn.addEventListener('click', () => {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$';
+      const arr = new Uint8Array(12);
+      crypto.getRandomValues(arr);
+      document.getElementById('newAdminPassword').value = Array.from(arr, b => chars[b % chars.length]).join('');
+    });
+  }
+
+  const hideCredsBtn = document.getElementById('hideCreatedCredsBtn');
+  if (hideCredsBtn) {
+    hideCredsBtn.addEventListener('click', () => {
+      document.getElementById('createdAdminCredsBox').classList.add('hidden');
+      document.getElementById('createdAdminCredsText').textContent = '';
+    });
+  }
+
+  const copyCredsBtn = document.getElementById('copyCreatedCredsBtn');
+  if (copyCredsBtn) {
+    copyCredsBtn.addEventListener('click', () => {
+      const txt = document.getElementById('createdAdminCredsText').textContent || '';
+      if (!txt) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(() => showToast(currentLang === 'en' ? 'Credentials copied!' : 'تم نسخ بيانات الدخول!'));
+      } else {
+        const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (err) {} ta.remove();
+        showToast(currentLang === 'en' ? 'Credentials copied!' : 'تم نسخ بيانات الدخول!');
+      }
+    });
+  }
 
   document.getElementById('createAdminForm').addEventListener('submit', async e => {
     e.preventDefault();
-    if (!isCloudWriteActive()) { showToast('Admin auth required', 'error'); return; }
+    if (!isCloudWriteActive()) { showToast(currentLang === 'en' ? 'Admin auth required.' : 'يجب تسجيل الدخول كمشرف أولًا.', 'error'); return; }
+    const btn = document.getElementById('createAdminSubmitBtn');
     const name = document.getElementById('newAdminName').value.trim();
-    const auth_user_id = document.getElementById('newAdminAuthId').value.trim();
     const email = document.getElementById('newAdminEmail').value.trim().toLowerCase();
+    const password = document.getElementById('newAdminPassword').value;
     const tag = document.getElementById('newAdminTag').value.trim().toUpperCase();
     const role = document.getElementById('newAdminRole').value;
+    if (password.length < 8) {
+      showToast(currentLang === 'en' ? 'Password must be at least 8 characters.' : 'كلمة المرور يجب أن تكون 8 أحرف على الأقل.', 'error');
+      return;
+    }
     const permissions = {
       matches: document.getElementById('permMatches').checked,
       teams: document.getElementById('permTeams').checked,
@@ -3125,14 +3719,33 @@ document.addEventListener('DOMContentLoaded', () => {
       season: document.getElementById('permSeason').checked,
       admins: document.getElementById('permAdmins').checked
     };
-    const { error } = await supabaseClient.from('admin_profiles').insert({
-      auth_user_id, email, display_name: name, admin_tag: tag, role, permissions, is_active: true
+    await withSubmitLock(btn, async () => {
+      const { data, error } = await supabaseClient.functions.invoke('create-admin', {
+        body: { display_name: name, email, password, admin_tag: tag, role, permissions }
+      });
+      if (error || (data && data.error)) {
+        let errMsg = (data && data.error) || (error && error.message) || 'Failed to create admin.';
+        if (error && error.context && typeof error.context.json === 'function') {
+          try {
+            const j = await error.context.json();
+            if (j && j.error) errMsg = j.error;
+          } catch (_e) {}
+        }
+        showToast(errMsg, 'error');
+        return;
+      }
+      e.target.reset();
+      const credsBox = document.getElementById('createdAdminCredsBox');
+      const credsText = document.getElementById('createdAdminCredsText');
+      if (credsBox && credsText) {
+        credsText.textContent = `Tag: ${tag}
+Email: ${email}
+Password: ${password}`;
+        credsBox.classList.remove('hidden');
+      }
+      await syncAdminData();
+      showToast(currentLang === 'en' ? `Admin [${tag}] created & activated!` : `تم إنشاء وتفعيل حساب المشرف [${tag}] بنجاح!`);
     });
-    if (error) { showToast(error.message, 'error'); return; }
-    await logAdminAction('Create Admin', `${name} [${tag}]`);
-    e.target.reset();
-    await syncAdminData();
-    showToast(currentLang === 'en' ? `Admin [${tag}] activated!` : `تم ربط وتفعيل المشرف [${tag}] بنجاح!`);
   });
 
   document.getElementById('seasonSettingsForm').addEventListener('submit', async e => {
